@@ -2693,6 +2693,13 @@ select option:not(:checked) {
 
 /*#######################################################################*/
 
+#main-API-selector-block {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: nowrap;
+}
+
 #rm_api_block {
     display: none;
     overflow-y: auto;

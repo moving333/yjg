@@ -1,5 +1,5 @@
 import { DOMPurify } from '../lib.js';
-import { callPopup, getRequestHeaders } from '../script.js';
+import { callPopup, event_types, eventSource, getRequestHeaders } from '../script.js';
 
 export const SECRET_KEYS = {
     HORDE: 'api_key_horde',
@@ -125,6 +125,11 @@ async function viewSecrets() {
 
 export let secret_state = {};
 
+/**
+ * Write a secret to the backend.
+ * @param {string} key Secret key
+ * @param {string} value Secret value
+ */
 export async function writeSecret(key, value) {
     try {
         const response = await fetch('/api/secrets/write', {
@@ -134,12 +139,9 @@ export async function writeSecret(key, value) {
         });
 
         if (response.ok) {
-            const text = await response.text();
-
-            if (text == 'ok') {
-                secret_state[key] = !!value;
-                updateSecretDisplay();
-            }
+            secret_state[key] = !!value;
+            updateSecretDisplay();
+            await eventSource.emit(event_types.SECRET_WRITTEN, key);
         }
     } catch {
         console.error('Could not write secret value: ', key);

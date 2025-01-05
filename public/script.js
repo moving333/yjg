@@ -497,6 +497,7 @@ export const event_types = {
     CONNECTION_PROFILE_LOADED: 'connection_profile_loaded',
     TOOL_CALLS_PERFORMED: 'tool_calls_performed',
     TOOL_CALLS_RENDERED: 'tool_calls_rendered',
+    SECRET_WRITTEN: 'secret_written',
 };
 
 export const eventSource = new EventEmitter();
