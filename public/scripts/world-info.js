@@ -586,6 +586,8 @@ class WorldInfoTimedEffects {
         this.#checkTimedEffectOfType('sticky', this.#buffer.sticky, this.#onEnded.sticky.bind(this));
         this.#checkTimedEffectOfType('cooldown', this.#buffer.cooldown, this.#onEnded.cooldown.bind(this));
         this.#checkDelayEffect(this.#buffer.delay);
+
+        console.debug('[WI][DEBUG] Timed effects:', this.#buffer);
     }
 
     /**
@@ -3970,9 +3972,14 @@ export async function checkWorldInfo(chat, maxContext, isDryRun) {
                 }
             }
 
+            console.debug('[WI][DEBUG] entry:', entry);
+            console.debug('[WI][DEBUG] hash:', entry.hash);
+
             const isSticky = timedEffects.isEffectActive('sticky', entry);
             const isCooldown = timedEffects.isEffectActive('cooldown', entry);
             const isDelay = timedEffects.isEffectActive('delay', entry);
+
+            console.debug('[WI][DEBUG] timed effects:', { isSticky, isCooldown, isDelay });
 
             if (isDelay) {
                 log('suppressed by delay');
