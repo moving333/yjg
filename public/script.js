@@ -3429,6 +3429,15 @@ export async function generateRaw(prompt, api, instructOverride, quietToLoud, sy
     const responseLengthCustomized = typeof responseLength === 'number' && responseLength > 0;
     const isInstruct = power_user.instruct.enabled && api !== 'openai' && api !== 'novel' && !instructOverride;
     const isQuiet = true;
+    const getInstructFormatParams = (/** @type {string} */ mes) => ({
+        name: name1,
+        mes: mes,
+        isUser: false,
+        isNarrator: true,
+        forceAvatar: '',
+        forceOutputSequence: false,
+        timestamp: moment(),
+    });
     let eventHook = () => { };
 
     if (systemPrompt) {
@@ -3439,8 +3448,8 @@ export async function generateRaw(prompt, api, instructOverride, quietToLoud, sy
 
     prompt = substituteParams(prompt);
     prompt = api == 'novel' ? adjustNovelInstructionPrompt(prompt) : prompt;
-    prompt = isInstruct ? formatInstructModeChat(name1, prompt, false, true, '', name1, name2, false) : prompt;
-    prompt = isInstruct ? (prompt + formatInstructModePrompt(name2, false, '', name1, name2, isQuiet, quietToLoud)) : (prompt + '\n');
+    prompt = isInstruct ? formatInstructModeChat(getInstructFormatParams(prompt)) : prompt;
+    prompt = isInstruct ? (prompt + formatInstructModePrompt(name2, false, '', isQuiet, quietToLoud)) : (prompt + '\n');
 
     try {
         if (responseLengthCustomized) {
@@ -4016,7 +4025,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     const mesExamplesRawArray = [...mesExamplesArray];
 
     if (mesExamplesArray && isInstruct) {
-        mesExamplesArray = formatInstructModeExamples(mesExamplesArray, name1, name2);
+        mesExamplesArray = formatInstructModeExamples(mesExamplesArray);
     }
 
     if (skipWIAN !== true) {
@@ -4336,7 +4345,16 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
             // here name1 is forced for all quiet prompts..why?
             const name = name1;
             //checks if we are in instruct, if so, formats the chat as such, otherwise just adds the quiet prompt
-            const quietAppend = isInstruct ? formatInstructModeChat(name, quiet_prompt, false, true, '', name1, name2, false) : `\n${quiet_prompt}`;
+            const quietInstructParams = {
+                name: name,
+                mes: quiet_prompt,
+                isUser: false,
+                isNarrator: true,
+                forceAvatar: '',
+                forceOutputSequence: false,
+                timestamp: moment(),
+            };
+            const quietAppend = isInstruct ? formatInstructModeChat(quietInstructParams) : `\n${quiet_prompt}`;
 
             //This begins to fix quietPrompts (particularly /sysgen) for instruct
             //previously instruct input sequence was being appended to the last chat message w/o '\n'
@@ -4366,7 +4384,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
         if (isInstruct && !isContinue) {
             const name = (quiet_prompt && !quietToLoud && !isImpersonate) ? (quietName ?? 'System') : (isImpersonate ? name1 : name2);
             const isQuiet = quiet_prompt && type == 'quiet';
-            lastMesString += formatInstructModePrompt(name, isImpersonate, promptBias, name1, name2, isQuiet, quietToLoud);
+            lastMesString += formatInstructModePrompt(name, isImpersonate, promptBias, isQuiet, quietToLoud);
         }
 
         // Get non-instruct impersonation line
@@ -5147,7 +5165,16 @@ function formatMessageHistoryItem(chatItem, isInstruct, forceOutputSequence) {
     let textResult = chatItem?.name && shouldPrependName ? `${itemName}: ${chatItem.mes}\n` : `${chatItem.mes}\n`;
 
     if (isInstruct) {
-        textResult = formatInstructModeChat(itemName, chatItem.mes, chatItem.is_user, isNarratorType, chatItem.force_avatar, name1, name2, forceOutputSequence);
+        const instructFormatParams = {
+            name: itemName,
+            mes: chatItem.mes,
+            isUser: chatItem.is_user,
+            isNarrator: isNarratorType,
+            forceAvatar: chatItem.force_avatar,
+            forceOutputSequence: forceOutputSequence,
+            timestamp: timestampToMoment(chatItem.send_date),
+        };
+        textResult = formatInstructModeChat(instructFormatParams);
     }
 
     return textResult;

@@ -8,6 +8,7 @@ import {
     context_presets,
 } from './power-user.js';
 import { regexFromString, resetScrollHeight } from './utils.js';
+import { moment } from '../lib.js';
 
 /**
  * @type {any[]} Instruct mode presets.
@@ -254,8 +255,10 @@ export function getInstructStoppingSequences() {
         // Cohee: oobabooga's textgen always appends newline before the sequence as a stopping string
         // But it's a problem for Metharme which doesn't use newlines to separate them.
         const wrap = (s) => power_user.instruct.wrap ? '\n' + s : s;
+        // Should not contain timestamp macros
+        const hasTimestamp = /{{timestamp}}/gi.test(sequence) || /{{timestamp::(.*?)}}/gi.test(sequence);
         // Sequence must be a non-empty string
-        if (typeof sequence === 'string' && sequence.length > 0) {
+        if (typeof sequence === 'string' && sequence.length > 0 && !hasTimestamp) {
             // If sequence is just a whitespace or newline - we don't want to make it a stopping string
             // User can always add it as a custom stop string if really needed
             if (sequence.trim().length > 0) {
@@ -310,18 +313,34 @@ export const force_output_sequence = {
 };
 
 /**
+ * Replaces instruct mode macros in the given sequence string.
+ * @param {string} sequence Sequence string.
+ * @param {string} name Item name.
+ * @param {import('moment').Moment} timestamp Message timestamp.
+ * @returns {string} Sequence string with macros replaced.
+ */
+function replaceSequenceMacros(sequence, name, timestamp) {
+    sequence = substituteParams(sequence);
+    sequence = sequence.replace(/{{name}}/gi, name || 'System');
+    sequence = sequence.replace(/{{timestamp}}/gi, () => timestamp.format('YYYY-MM-DD HH:mm:ss'));
+    sequence = sequence.replace(/{{timestamp::(.*?)}}/gi, (_, format) => timestamp.format(format));
+    return sequence;
+}
+
+/**
  * Formats instruct mode chat message.
- * @param {string} name Character name.
- * @param {string} mes Message text.
- * @param {boolean} isUser Is the message from the user.
- * @param {boolean} isNarrator Is the message from the narrator.
- * @param {string} forceAvatar Force avatar string.
- * @param {string} name1 User name.
- * @param {string} name2 Character name.
- * @param {boolean|number} forceOutputSequence Force to use first/last output sequence (if configured).
+ * @param {InstructFormatParams} params Message parameters.
+ * @typedef {object} InstructFormatParams Instruct mode chat message parameters.
+ * @property {string} name Character name.
+ * @property {string} mes Message text.
+ * @property {boolean} isUser Is the message from the user.
+ * @property {boolean} isNarrator Is the message from the narrator.
+ * @property {string} forceAvatar Force avatar string.
+ * @property {boolean|number} forceOutputSequence Force to use first/last output sequence (if configured).
+ * @property {import('moment').Moment} timestamp Message timestamp.
  * @returns {string} Formatted instruct mode chat message.
  */
-export function formatInstructModeChat(name, mes, isUser, isNarrator, forceAvatar, name1, name2, forceOutputSequence) {
+export function formatInstructModeChat({ name, mes, isUser, isNarrator, forceAvatar, forceOutputSequence, timestamp }) {
     let includeNames = isNarrator ? false : power_user.instruct.names_behavior === names_behavior_types.ALWAYS;
 
     if (!isNarrator && power_user.instruct.names_behavior === names_behavior_types.FORCE && ((selected_group && name !== name1) || (forceAvatar && name !== name1))) {
@@ -372,11 +391,8 @@ export function formatInstructModeChat(name, mes, isUser, isNarrator, forceAvata
     let suffix = getSuffix() || '';
 
     if (power_user.instruct.macro) {
-        prefix = substituteParams(prefix, name1, name2);
-        prefix = prefix.replace(/{{name}}/gi, name || 'System');
-
-        suffix = substituteParams(suffix, name1, name2);
-        suffix = suffix.replace(/{{name}}/gi, name || 'System');
+        prefix = replaceSequenceMacros(prefix, (name || 'System'), timestamp);
+        suffix = replaceSequenceMacros(suffix, (name || 'System'), timestamp);
     }
 
     if (!suffix && power_user.instruct.wrap) {
@@ -420,11 +436,9 @@ export function formatInstructModeSystemPrompt(systemPrompt) {
 /**
  * Formats example messages according to instruct mode settings.
  * @param {string[]} mesExamplesArray Example messages array.
- * @param {string} name1 User name.
- * @param {string} name2 Character name.
  * @returns {string[]} Formatted example messages string.
  */
-export function formatInstructModeExamples(mesExamplesArray, name1, name2) {
+export function formatInstructModeExamples(mesExamplesArray) {
     const blockHeading = power_user.context.example_separator ? `${substituteParams(power_user.context.example_separator)}\n` : '';
 
     if (power_user.instruct.skip_examples) {
@@ -440,15 +454,10 @@ export function formatInstructModeExamples(mesExamplesArray, name1, name2) {
     let outputSuffix = power_user.instruct.output_suffix || '';
 
     if (power_user.instruct.macro) {
-        inputPrefix = substituteParams(inputPrefix, name1, name2);
-        outputPrefix = substituteParams(outputPrefix, name1, name2);
-        inputSuffix = substituteParams(inputSuffix, name1, name2);
-        outputSuffix = substituteParams(outputSuffix, name1, name2);
-
-        inputPrefix = inputPrefix.replace(/{{name}}/gi, name1);
-        outputPrefix = outputPrefix.replace(/{{name}}/gi, name2);
-        inputSuffix = inputSuffix.replace(/{{name}}/gi, name1);
-        outputSuffix = outputSuffix.replace(/{{name}}/gi, name2);
+        inputPrefix = replaceSequenceMacros(inputPrefix, name1, moment());
+        outputPrefix = replaceSequenceMacros(outputPrefix, name2, moment());
+        inputSuffix = replaceSequenceMacros(inputSuffix, name1, moment());
+        outputSuffix = replaceSequenceMacros(outputSuffix, name2, moment());
 
         if (!inputSuffix && power_user.instruct.wrap) {
             inputSuffix = '\n';
@@ -499,13 +508,11 @@ export function formatInstructModeExamples(mesExamplesArray, name1, name2) {
  * @param {string} name Character name.
  * @param {boolean} isImpersonate Is generation in impersonation mode.
  * @param {string} promptBias Prompt bias string.
- * @param {string} name1 User name.
- * @param {string} name2 Character name.
  * @param {boolean} isQuiet Is quiet mode generation.
  * @param {boolean} isQuietToLoud Is quiet to loud generation.
  * @returns {string} Formatted instruct mode last prompt line.
  */
-export function formatInstructModePrompt(name, isImpersonate, promptBias, name1, name2, isQuiet, isQuietToLoud) {
+export function formatInstructModePrompt(name, isImpersonate, promptBias, isQuiet, isQuietToLoud) {
     const includeNames = name && (power_user.instruct.names_behavior === names_behavior_types.ALWAYS || (!!selected_group && power_user.instruct.names_behavior === names_behavior_types.FORCE)) && !(isQuiet && !isQuietToLoud);
 
     function getSequence() {
@@ -545,8 +552,7 @@ export function formatInstructModePrompt(name, isImpersonate, promptBias, name1,
     }
 
     if (power_user.instruct.macro) {
-        sequence = substituteParams(sequence, name1, name2);
-        sequence = sequence.replace(/{{name}}/gi, name || 'System');
+        sequence = replaceSequenceMacros(sequence, (name || 'System'), moment());
     }
 
     const separator = power_user.instruct.wrap ? '\n' : '';
