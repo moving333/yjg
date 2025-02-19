@@ -177,29 +177,13 @@ export function humanizedDateTime() {
     return `${dt.year}-${dt.month}-${dt.day}@${dt.hour}h${dt.minute}m${dt.second}s`;
 }
 
-//this is a common format version to display a timestamp on each chat message
-//returns something like: June 19, 2023 2:20pm
+/**
+ * Gets the current date and time for message timestamps.
+ * @returns {string} - A string representing the current date and time in ISO format.
+ */
 export function getMessageTimeStamp() {
-    const date = Date.now();
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const d = new Date(date);
-    const month = months[d.getMonth()];
-    const day = d.getDate();
-    const year = d.getFullYear();
-    let hours = d.getHours();
-    const minutes = ('0' + d.getMinutes()).slice(-2);
-    let meridiem = 'am';
-    if (hours >= 12) {
-        meridiem = 'pm';
-        hours -= 12;
-    }
-    if (hours === 0) {
-        hours = 12;
-    }
-    const formattedDate = month + ' ' + day + ', ' + year + ' ' + hours + ':' + minutes + meridiem;
-    return formattedDate;
+    return new Date().toISOString();
 }
-
 
 // triggers:
 $('#rm_button_create').on('click', function () {                 //when "+New Character" is clicked
