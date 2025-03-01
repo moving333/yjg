@@ -1,23 +1,24 @@
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const sanitize = require('sanitize-filename');
-const writeFileAtomicSync = require('write-file-atomic').sync;
-const { jsonParser, urlencodedParser } = require('../express-common');
-const { AVATAR_WIDTH, AVATAR_HEIGHT } = require('../constants');
-const { getImages, tryParse } = require('../util');
+import path from 'node:path';
+import fs from 'node:fs';
 
-// image processing related library imports
-const jimp = require('jimp');
+import express from 'express';
+import sanitize from 'sanitize-filename';
+import jimp from 'jimp';
+import { sync as writeFileAtomicSync } from 'write-file-atomic';
 
-const router = express.Router();
+import { jsonParser, urlencodedParser } from '../express-common.js';
+import { AVATAR_WIDTH, AVATAR_HEIGHT } from '../constants.js';
+import { getImages, tryParse } from '../util.js';
+import { getFileNameValidationFunction } from '../middleware/validateFileName.js';
+
+export const router = express.Router();
 
 router.post('/get', jsonParser, function (request, response) {
     var images = getImages(request.user.directories.avatars);
     response.send(JSON.stringify(images));
 });
 
-router.post('/delete', jsonParser, function (request, response) {
+router.post('/delete', jsonParser, getFileNameValidationFunction('avatar'), function (request, response) {
     if (!request.body) return response.sendStatus(400);
 
     if (request.body.avatar !== sanitize(request.body.avatar)) {
@@ -58,5 +59,3 @@ router.post('/upload', urlencodedParser, async (request, response) => {
         return response.status(400).send('Is not a valid image');
     }
 });
-
-module.exports = { router };

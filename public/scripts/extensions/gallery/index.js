@@ -26,9 +26,11 @@ let paginationVisiblePages = 10;
 let paginationMaxLinesPerPage = 2;
 let galleryMaxRows = 3;
 
-$('body').on('click', '.dragClose', function () {
-    const relatedId = $(this).data('related-id');  // Get the ID of the related draggable
-    $(`body > .draggable[id="${relatedId}"]`).remove();  // Remove the associated draggable
+// Remove all draggables associated with the gallery
+$('#movingDivs').on('click', '.dragClose', function () {
+    const relatedId = $(this).data('related-id');
+    if (!relatedId) return;
+    $(`#movingDivs > .draggable[id="${relatedId}"]`).remove();
 });
 
 const CUSTOM_GALLERY_REMOVED_EVENT = 'galleryRemoved';
@@ -167,9 +169,9 @@ async function showCharGallery() {
 
     try {
         let url = selected_group || this_chid;
-        if (!selected_group && this_chid) {
+        if (!selected_group && this_chid !== undefined) {
             const char = characters[this_chid];
-            url = char.avatar.replace('.png', '');
+            url = char.name;
         }
 
         const items = await getGalleryItems(url);
@@ -275,7 +277,7 @@ function makeMovable(id = 'gallery') {
     const newElement = $(template);
     newElement.css('background-color', 'var(--SmartThemeBlurTintColor)');
     newElement.attr('forChar', id);
-    newElement.attr('id', `${id}`);
+    newElement.attr('id', id);
     newElement.find('.drag-grabber').attr('id', `${id}header`);
     newElement.find('.dragTitle').text('Image Gallery');
     //add a div for the gallery
@@ -290,7 +292,7 @@ function makeMovable(id = 'gallery') {
 
     $('#dragGallery').css('display', 'block');
 
-    $('body').append(newElement);
+    $('#movingDivs').append(newElement);
 
     loadMovingUIState();
     $(`.draggable[forChar="${id}"]`).css('display', 'block');
@@ -362,8 +364,8 @@ function makeDragImg(id, url) {
         }
     }
 
-    // Step 3: Attach it to the body
-    document.body.appendChild(newElement);
+    // Step 3: Attach it to the movingDivs container
+    document.getElementById('movingDivs').appendChild(newElement);
 
     // Step 4: Call dragElement and loadMovingUIState
     const appendedElement = document.getElementById(uniqueId);
@@ -453,9 +455,9 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
 async function listGalleryCommand(args) {
     try {
         let url = args.char ?? (args.group ? groups.find(it => it.name == args.group)?.id : null) ?? (selected_group || this_chid);
-        if (!args.char && !args.group && !selected_group && this_chid) {
+        if (!args.char && !args.group && !selected_group && this_chid !== undefined) {
             const char = characters[this_chid];
-            url = char.avatar.replace('.png', '');
+            url = char.name;
         }
 
         const items = await getGalleryItems(url);

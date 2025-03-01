@@ -1,3 +1,5 @@
+import { Fuse } from '../lib.js';
+
 import { callPopup, chat_metadata, eventSource, event_types, generateQuietPrompt, getCurrentChatId, getRequestHeaders, getThumbnailUrl, saveSettingsDebounced } from '../script.js';
 import { saveMetadataDebounced } from './extensions.js';
 import { SlashCommand } from './slash-commands/SlashCommand.js';
@@ -10,6 +12,7 @@ const LIST_METADATA_KEY = 'chat_backgrounds';
 export let background_settings = {
     name: '__transparent.png',
     url: generateUrlParameter('__transparent.png', false),
+    fitting: 'classic',
 };
 
 export function loadBackgroundSettings(settings) {
@@ -17,7 +20,12 @@ export function loadBackgroundSettings(settings) {
     if (!backgroundSettings || !backgroundSettings.name || !backgroundSettings.url) {
         backgroundSettings = background_settings;
     }
+    if (!backgroundSettings.fitting) {
+        backgroundSettings.fitting = 'classic';
+    }
     setBackground(backgroundSettings.name, backgroundSettings.url);
+    setFittingClass(backgroundSettings.fitting);
+    $('#background_fitting').val(backgroundSettings.fitting);
 }
 
 /**
@@ -88,8 +96,13 @@ function highlightLockedBackground() {
     });
 }
 
+/**
+ * Locks the background for the current chat
+ * @param {Event} e Click event
+ * @returns {string} Empty string
+ */
 function onLockBackgroundClick(e) {
-    e.stopPropagation();
+    e?.stopPropagation();
 
     const chatName = getCurrentChatId();
 
@@ -98,7 +111,7 @@ function onLockBackgroundClick(e) {
         return '';
     }
 
-    const relativeBgImage = getUrlParameter(this);
+    const relativeBgImage = getUrlParameter(this) ?? background_settings.url;
 
     saveBackgroundMetadata(relativeBgImage);
     setCustomBackground();
@@ -106,8 +119,13 @@ function onLockBackgroundClick(e) {
     return '';
 }
 
+/**
+ * Locks the background for the current chat
+ * @param {Event} e Click event
+ * @returns {string} Empty string
+ */
 function onUnlockBackgroundClick(e) {
-    e.stopPropagation();
+    e?.stopPropagation();
     removeBackgroundMetadata();
     unsetCustomBackground();
     highlightLockedBackground();
@@ -313,7 +331,7 @@ async function onDeleteBackgroundClick(e) {
     }
 }
 
-const autoBgPrompt = 'Pause your roleplay and choose a location ONLY from the provided list that is the most suitable for the current scene. Do not output any other text:\n{0}';
+const autoBgPrompt = 'Ignore previous instructions and choose a location ONLY from the provided list that is the most suitable for the current scene. Do not output any other text:\n{0}';
 
 async function autoBackgroundCommand() {
     /** @type {HTMLElement[]} */
@@ -331,6 +349,14 @@ async function autoBackgroundCommand() {
     const bestMatch = fuse.search(reply, { limit: 1 });
 
     if (bestMatch.length == 0) {
+        for (const option of options) {
+            if (String(reply).toLowerCase().includes(option.text.toLowerCase())) {
+                console.debug('Fallback choosing background:', option);
+                option.element.click();
+                return '';
+            }
+        }
+
         toastr.warning('No match found. Please try again.');
         return '';
     }
@@ -460,6 +486,18 @@ function highlightNewBackground(bg) {
     flashHighlight(newBg);
 }
 
+/**
+ * Sets the fitting class for the background element
+ * @param {string} fitting Fitting type
+ */
+function setFittingClass(fitting) {
+    const backgrounds = $('#bg1, #bg_custom');
+    for (const option of ['cover', 'contain', 'stretch', 'center']) {
+        backgrounds.toggleClass(option, option === fitting);
+    }
+    background_settings.fitting = fitting;
+}
+
 function onBackgroundFilterInput() {
     const filterValue = String($(this).val()).toLowerCase();
     $('#bg_menu_content > div').each(function () {
@@ -485,12 +523,12 @@ export function initBackgrounds() {
     $('#add_bg_button').on('change', onBackgroundUploadSelected);
     $('#bg-filter').on('input', onBackgroundFilterInput);
     SlashCommandParser.addCommandObject(SlashCommand.fromProps({ name: 'lockbg',
-        callback: onLockBackgroundClick,
+        callback: () => onLockBackgroundClick(new CustomEvent('click')),
         aliases: ['bglock'],
         helpString: 'Locks a background for the currently selected chat',
     }));
     SlashCommandParser.addCommandObject(SlashCommand.fromProps({ name: 'unlockbg',
-        callback: onUnlockBackgroundClick,
+        callback: () => onUnlockBackgroundClick(new CustomEvent('click')),
         aliases: ['bgunlock'],
         helpString: 'Unlocks a background for the currently selected chat',
     }));
@@ -500,4 +538,9 @@ export function initBackgrounds() {
         helpString: 'Automatically changes the background based on the chat context using the AI request prompt',
     }));
 
+    $('#background_fitting').on('input', function () {
+        background_settings.fitting = String($(this).val());
+        setFittingClass(background_settings.fitting);
+        saveSettingsDebounced();
+    });
 }

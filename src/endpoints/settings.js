@@ -1,15 +1,19 @@
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
-const _ = require('lodash');
-const writeFileAtomicSync = require('write-file-atomic').sync;
-const { SETTINGS_FILE } = require('../constants');
-const { getConfigValue, generateTimestamp, removeOldBackups } = require('../util');
-const { jsonParser } = require('../express-common');
-const { getAllUserHandles, getUserDirectories } = require('../users');
+import fs from 'node:fs';
+import path from 'node:path';
 
-const ENABLE_EXTENSIONS = getConfigValue('enableExtensions', true);
-const ENABLE_ACCOUNTS = getConfigValue('enableUserAccounts', false);
+import express from 'express';
+import _ from 'lodash';
+import { sync as writeFileAtomicSync } from 'write-file-atomic';
+
+import { SETTINGS_FILE } from '../constants.js';
+import { getConfigValue, generateTimestamp, removeOldBackups } from '../util.js';
+import { jsonParser } from '../express-common.js';
+import { getAllUserHandles, getUserDirectories } from '../users.js';
+import { getFileNameValidationFunction } from '../middleware/validateFileName.js';
+
+const ENABLE_EXTENSIONS = !!getConfigValue('extensions.enabled', true, 'boolean');
+const ENABLE_EXTENSIONS_AUTO_UPDATE = !!getConfigValue('extensions.autoUpdate', true, 'boolean');
+const ENABLE_ACCOUNTS = !!getConfigValue('enableUserAccounts', false, 'boolean');
 
 // 10 minutes
 const AUTOSAVE_INTERVAL = 10 * 60 * 1000;
@@ -101,7 +105,7 @@ function readPresetsFromDirectory(directoryPath, options = {}) {
             fileNames.push(removeFileExtension ? item.replace(/\.[^/.]+$/, '') : item);
         } catch {
             // skip
-            console.log(`${item} is not a valid JSON`);
+            console.warn(`${item} is not a valid JSON`);
         }
     });
 
@@ -116,7 +120,7 @@ async function backupSettings() {
             backupUserSettings(handle, true);
         }
     } catch (err) {
-        console.log('Could not backup settings file', err);
+        console.error('Could not backup settings file', err);
     }
 }
 
@@ -189,7 +193,7 @@ function getLatestBackup(handle) {
     return path.join(userDirectories.backups, latestBackup);
 }
 
-const router = express.Router();
+export const router = express.Router();
 
 router.post('/save', jsonParser, function (request, response) {
     try {
@@ -198,7 +202,7 @@ router.post('/save', jsonParser, function (request, response) {
         triggerAutoSave(request.user.profile.handle);
         response.send({ result: 'ok' });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         response.send(err);
     }
 });
@@ -250,6 +254,7 @@ router.post('/get', jsonParser, (request, response) => {
 
     const instruct = readAndParseFromDirectory(request.user.directories.instruct);
     const context = readAndParseFromDirectory(request.user.directories.context);
+    const sysprompt = readAndParseFromDirectory(request.user.directories.sysprompt);
 
     response.send({
         settings,
@@ -267,7 +272,9 @@ router.post('/get', jsonParser, (request, response) => {
         quickReplyPresets,
         instruct,
         context,
+        sysprompt,
         enable_extensions: ENABLE_EXTENSIONS,
+        enable_extensions_auto_update: ENABLE_EXTENSIONS_AUTO_UPDATE,
         enable_accounts: ENABLE_ACCOUNTS,
     });
 });
@@ -285,12 +292,12 @@ router.post('/get-snapshots', jsonParser, async (request, response) => {
 
         response.json(result);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         response.sendStatus(500);
     }
 });
 
-router.post('/load-snapshot', jsonParser, async (request, response) => {
+router.post('/load-snapshot', jsonParser, getFileNameValidationFunction('name'), async (request, response) => {
     try {
         const userFilesPattern = getFilePrefix(request.user.profile.handle);
 
@@ -309,7 +316,7 @@ router.post('/load-snapshot', jsonParser, async (request, response) => {
 
         response.send(content);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         response.sendStatus(500);
     }
 });
@@ -319,12 +326,12 @@ router.post('/make-snapshot', jsonParser, async (request, response) => {
         backupUserSettings(request.user.profile.handle, false);
         response.sendStatus(204);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         response.sendStatus(500);
     }
 });
 
-router.post('/restore-snapshot', jsonParser, async (request, response) => {
+router.post('/restore-snapshot', jsonParser, getFileNameValidationFunction('name'), async (request, response) => {
     try {
         const userFilesPattern = getFilePrefix(request.user.profile.handle);
 
@@ -345,7 +352,7 @@ router.post('/restore-snapshot', jsonParser, async (request, response) => {
 
         response.sendStatus(204);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         response.sendStatus(500);
     }
 });
@@ -353,8 +360,6 @@ router.post('/restore-snapshot', jsonParser, async (request, response) => {
 /**
  * Initializes the settings endpoint
  */
-async function init() {
+export async function init() {
     await backupSettings();
 }
-
-module.exports = { router, init };

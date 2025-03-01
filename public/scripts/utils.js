@@ -1,9 +1,20 @@
+import {
+    moment,
+    DOMPurify,
+    Readability,
+    isProbablyReaderable,
+} from '../lib.js';
+
 import { getContext } from './extensions.js';
-import { getRequestHeaders } from '../script.js';
+import { characters, getRequestHeaders, this_chid } from '../script.js';
 import { isMobile } from './RossAscends-mods.js';
-import { collapseNewlines } from './power-user.js';
+import { collapseNewlines, power_user } from './power-user.js';
 import { debounce_timeout } from './constants.js';
-import { Popup } from './popup.js';
+import { Popup, POPUP_RESULT, POPUP_TYPE } from './popup.js';
+import { SlashCommandClosure } from './slash-commands/SlashCommandClosure.js';
+import { getTagsList } from './tags.js';
+import { groups, selected_group } from './group-chats.js';
+import { getCurrentLocale } from './i18n.js';
 
 /**
  * Pagination status string template.
@@ -20,8 +31,50 @@ export const navigation_option = {
     previous: -1000,
 };
 
+/**
+ * Determines if a value is an object.
+ * @param {any} item The item to check.
+ * @returns {boolean} True if the item is an object, false otherwise.
+ */
+function isObject(item) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+/**
+ * Merges properties of two objects. If the property is an object, it will be merged recursively.
+ * @param {object} target The target object
+ * @param {object} source The source object
+ * @returns {object} Merged object
+ */
+export function deepMerge(target, source) {
+    let output = Object.assign({}, target);
+    if (isObject(target) && isObject(source)) {
+        Object.keys(source).forEach(key => {
+            if (isObject(source[key])) {
+                if (!(key in target))
+                    Object.assign(output, { [key]: source[key] });
+                else
+                    output[key] = deepMerge(target[key], source[key]);
+            } else {
+                Object.assign(output, { [key]: source[key] });
+            }
+        });
+    }
+    return output;
+}
+
 export function escapeHtml(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/**
+ * Make string safe for use as a CSS selector.
+ * @param {string} str String to sanitize
+ * @param {string} replacement Replacement for invalid characters
+ * @returns {string} Sanitized string
+ */
+export function sanitizeSelector(str, replacement = '_') {
+    return String(str).replace(/[^a-z0-9_-]/ig, replacement);
 }
 
 export function isValidUrl(value) {
@@ -30,6 +83,74 @@ export function isValidUrl(value) {
         return true;
     } catch (_) {
         return false;
+    }
+}
+
+/**
+ * Converts string to a value of a given type. Includes pythonista-friendly aliases.
+ * @param {string|SlashCommandClosure} value String value
+ * @param {string} type Type to convert to
+ * @returns {any} Converted value
+ */
+export function convertValueType(value, type) {
+    if (value instanceof SlashCommandClosure || typeof type !== 'string') {
+        return value;
+    }
+
+    switch (type.trim().toLowerCase()) {
+        case 'string':
+        case 'str':
+            return String(value);
+
+        case 'null':
+            return null;
+
+        case 'undefined':
+        case 'none':
+            return undefined;
+
+        case 'number':
+            return Number(value);
+
+        case 'int':
+            return parseInt(value, 10);
+
+        case 'float':
+            return parseFloat(value);
+
+        case 'boolean':
+        case 'bool':
+            return isTrueBoolean(value);
+
+        case 'list':
+        case 'array':
+            try {
+                const parsedArray = JSON.parse(value);
+                if (Array.isArray(parsedArray)) {
+                    return parsedArray;
+                }
+                // The value is not an array
+                return [];
+            } catch {
+                return [];
+            }
+
+        case 'object':
+        case 'dict':
+        case 'dictionary':
+            try {
+                const parsedObject = JSON.parse(value);
+                if (typeof parsedObject === 'object') {
+                    return parsedObject;
+                }
+                // The value is not an object
+                return {};
+            } catch {
+                return {};
+            }
+
+        default:
+            return value;
     }
 }
 
@@ -271,6 +392,26 @@ export function getStringHash(str, seed = 0) {
 }
 
 /**
+ * Copy text to clipboard. Use navigator.clipboard.writeText if available, otherwise use document.execCommand.
+ * @param {string} text - The text to copy to the clipboard.
+ * @returns {Promise<void>} A promise that resolves when the text has been copied to the clipboard.
+ */
+export function copyText(text) {
+    if (navigator.clipboard) {
+        return navigator.clipboard.writeText(text);
+    }
+
+    const parent = document.querySelector('dialog[open]:last-of-type') ?? document.body;
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    parent.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    parent.removeChild(textArea);
+}
+
+/**
  * Map of debounced functions to their timers.
  * Weak map is used to avoid memory leaks.
  * @type {WeakMap<function, any>}
@@ -334,12 +475,12 @@ export function debouncedThrottle(func, limit = 300) {
     let last, deferTimer;
     let db = debounce(func);
 
-    return function() {
+    return function () {
         let now = +new Date, args = arguments;
-        if(!last || (last && now < last + limit)) {
+        if (!last || (last && now < last + limit)) {
             clearTimeout(deferTimer);
             db.apply(this, args);
-            deferTimer = setTimeout(function() {
+            deferTimer = setTimeout(function () {
                 last = now;
                 func.apply(this, args);
             }, limit);
@@ -536,14 +677,26 @@ export function sortByCssOrder(a, b) {
 }
 
 /**
+ * Trims leading and trailing whitespace from the input string based on a configuration setting.
+ * @param {string} input - The string to be trimmed
+ * @returns {string} The trimmed string if trimming is enabled; otherwise, returns the original string
+ */
+
+export function trimSpaces(input) {
+    if (!input || typeof input !== 'string') {
+        return input;
+    }
+    return power_user.trim_spaces ? input.trim() : input;
+}
+
+/**
  * Trims a string to the end of a nearest sentence.
  * @param {string} input The string to trim.
- * @param {boolean} include_newline Whether to include a newline character in the trimmed string.
  * @returns {string} The trimmed string.
  * @example
  * trimToEndSentence('Hello, world! I am from'); // 'Hello, world!'
  */
-export function trimToEndSentence(input, include_newline = false) {
+export function trimToEndSentence(input) {
     if (!input) {
         return '';
     }
@@ -555,18 +708,14 @@ export function trimToEndSentence(input, include_newline = false) {
     const characters = Array.from(input);
     for (let i = characters.length - 1; i >= 0; i--) {
         const char = characters[i];
+        const emoji = isEmoji(char);
 
-        if (punctuation.has(char) || isEmoji(char)) {
-            if (i > 0 && /[\s\n]/.test(characters[i - 1])) {
+        if (punctuation.has(char) || emoji) {
+            if (!emoji && i > 0 && /[\s\n]/.test(characters[i - 1])) {
                 last = i - 1;
             } else {
                 last = i;
             }
-            break;
-        }
-
-        if (include_newline && char === '\n') {
-            last = i;
             break;
         }
     }
@@ -706,8 +855,8 @@ export function isOdd(number) {
 
 /**
  * Compare two moment objects for sorting.
- * @param {moment.Moment} a The first moment object.
- * @param {moment.Moment} b The second moment object.
+ * @param {import('moment').Moment} a The first moment object.
+ * @param {import('moment').Moment} b The second moment object.
  * @returns {number} A negative number if a is before b, a positive number if a is after b, or 0 if they are equal.
  */
 export function sortMoments(a, b) {
@@ -726,7 +875,7 @@ const dateCache = new Map();
  * Cached version of moment() to avoid re-parsing the same date strings.
  * Important: Moment objects are mutable, so use clone() before modifying them!
  * @param {string|number} timestamp String or number representing a date.
- * @returns {moment.Moment} Moment object
+ * @returns {import('moment').Moment} Moment object
  */
 export function timestampToMoment(timestamp) {
     if (dateCache.has(timestamp)) {
@@ -734,7 +883,7 @@ export function timestampToMoment(timestamp) {
     }
 
     const iso8601 = parseTimestamp(timestamp);
-    const objMoment = iso8601 ? moment(iso8601) : moment.invalid();
+    const objMoment = iso8601 ? moment(iso8601).locale(getCurrentLocale()) : moment.invalid();
 
     dateCache.set(timestamp, objMoment);
     return objMoment;
@@ -858,13 +1007,18 @@ export function getImageSizeFromDataURL(dataUrl) {
     });
 }
 
-export function getCharaFilename(chid) {
+/**
+ * Gets the filename of the character avatar without extension
+ * @param {number?} [chid=null] - Character ID. If not provided, uses the current character ID
+ * @param {object} [options={}] - Options arguments
+ * @param {string?} [options.manualAvatarKey=null] - Manually take the following avatar key, instead of using the chid to determine the name
+ * @returns {string?} The filename of the character avatar without extension, or null if the character ID is invalid
+ */
+export function getCharaFilename(chid = null, { manualAvatarKey = null } = {}) {
     const context = getContext();
-    const fileName = context.characters[chid ?? context.characterId]?.avatar;
+    const fileName = manualAvatarKey ?? context.characters[chid ?? context.characterId]?.avatar;
 
-    if (fileName) {
-        return fileName.replace(/\.[^/.]+$/, '');
-    }
+    return fileName?.replace(/\.[^/.]+$/, '') ?? null;
 }
 
 /**
@@ -1367,6 +1521,15 @@ export function uuidv4() {
     });
 }
 
+/**
+ * Collapses multiple spaces in a strings into one.
+ * @param {string} s String to process
+ * @returns {string} String with collapsed spaces
+ */
+export function collapseSpaces(s) {
+    return s.replace(/\s+/g, ' ').trim();
+}
+
 function postProcessText(text, collapse = true) {
     // Remove carriage returns
     text = text.replace(/\r/g, '');
@@ -1417,38 +1580,9 @@ export async function getReadableText(document, textSelector = 'body') {
  * @returns {Promise<string>} A promise that resolves to the parsed text.
  */
 export async function extractTextFromPDF(blob) {
-    async function initPdfJs() {
-        const promises = [];
-
-        const workerPromise = new Promise((resolve, reject) => {
-            const workerScript = document.createElement('script');
-            workerScript.type = 'module';
-            workerScript.async = true;
-            workerScript.src = 'lib/pdf.worker.mjs';
-            workerScript.onload = resolve;
-            workerScript.onerror = reject;
-            document.head.appendChild(workerScript);
-        });
-
-        promises.push(workerPromise);
-
-        const pdfjsPromise = new Promise((resolve, reject) => {
-            const pdfjsScript = document.createElement('script');
-            pdfjsScript.type = 'module';
-            pdfjsScript.async = true;
-            pdfjsScript.src = 'lib/pdf.mjs';
-            pdfjsScript.onload = resolve;
-            pdfjsScript.onerror = reject;
-            document.head.appendChild(pdfjsScript);
-        });
-
-        promises.push(pdfjsPromise);
-
-        return Promise.all(promises);
-    }
-
     if (!('pdfjsLib' in window)) {
-        await initPdfJs();
+        await import('../lib/pdf.min.mjs');
+        await import('../lib/pdf.worker.min.mjs');
     }
 
     const buffer = await getFileBuffer(blob);
@@ -1487,30 +1621,9 @@ export async function extractTextFromMarkdown(blob) {
 }
 
 export async function extractTextFromEpub(blob) {
-    async function initEpubJs() {
-        const epubScript = new Promise((resolve, reject) => {
-            const epubScript = document.createElement('script');
-            epubScript.async = true;
-            epubScript.src = 'lib/epub.min.js';
-            epubScript.onload = resolve;
-            epubScript.onerror = reject;
-            document.head.appendChild(epubScript);
-        });
-
-        const jszipScript = new Promise((resolve, reject) => {
-            const jszipScript = document.createElement('script');
-            jszipScript.async = true;
-            jszipScript.src = 'lib/jszip.min.js';
-            jszipScript.onload = resolve;
-            jszipScript.onerror = reject;
-            document.head.appendChild(jszipScript);
-        });
-
-        return Promise.all([epubScript, jszipScript]);
-    }
-
     if (!('ePub' in window)) {
-        await initEpubJs();
+        await import('../lib/jszip.min.js');
+        await import('../lib/epub.min.js');
     }
 
     const book = ePub(blob);
@@ -1638,17 +1751,17 @@ export function hasAnimation(control) {
 
 /**
  * Run an action once an animation on a control ends. If the control has no animation, the action will be executed immediately.
- *
+ * The action will be executed after the animation ends or after the timeout, whichever comes first.
  * @param {HTMLElement} control - The control element to listen for animation end event
  * @param {(control:*?) => void} callback - The callback function to be executed when the animation ends
+ * @param {number} [timeout=500] - The timeout in milliseconds to wait for the animation to end before executing the callback
  */
-export function runAfterAnimation(control, callback) {
+export function runAfterAnimation(control, callback, timeout = 500) {
     if (hasAnimation(control)) {
-        const onAnimationEnd = () => {
-            control.removeEventListener('animationend', onAnimationEnd);
-            callback(control);
-        };
-        control.addEventListener('animationend', onAnimationEnd);
+        Promise.race([
+            new Promise((r) => setTimeout(r, timeout)), // Fallback timeout
+            new Promise((r) => control.addEventListener('animationend', r, { once: true })),
+        ]).finally(() => callback(control));
     } else {
         callback(control);
     }
@@ -1728,20 +1841,24 @@ export function select2ModifyOptions(element, items, { select = false, changeEve
     /** @type {Select2Option[]} */
     const dataItems = items.map(x => typeof x === 'string' ? { id: getSelect2OptionId(x), text: x } : x);
 
-    const existingValues = [];
+    const optionsToSelect = [];
+    const newOptions = [];
+
     dataItems.forEach(item => {
         // Set the value, creating a new option if necessary
         if (element.find('option[value=\'' + item.id + '\']').length) {
-            if (select) existingValues.push(item.id);
+            if (select) optionsToSelect.push(item.id);
         } else {
             // Create a DOM Option and optionally pre-select by default
             var newOption = new Option(item.text, item.id, select, select);
             // Append it to the select
-            element.append(newOption);
-            if (select) element.trigger('change', changeEventArgs);
+            newOptions.push(newOption);
+            if (select) optionsToSelect.push(item.id);
         }
-        if (existingValues.length) element.val(existingValues).trigger('change', changeEventArgs);
     });
+
+    element.append(newOptions);
+    if (optionsToSelect.length) element.val(optionsToSelect).trigger('change', changeEventArgs);
 }
 
 /**
@@ -1826,13 +1943,13 @@ export function select2ChoiceClickSubscribe(control, action, { buttonStyle = fal
  * @returns {string} The html representation of the highlighted regex
  */
 export function highlightRegex(regexStr) {
-    // Function to escape HTML special characters for safety
-    const escapeHtml = (str) => str.replace(/[&<>"']/g, match => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;',
+    // Function to escape special characters for safety or readability
+    const escape = (str) => str.replace(/[&<>"'\x01]/g, match => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;', '\x01': '\\x01',
     })[match]);
 
-    // Replace special characters with their HTML-escaped forms
-    regexStr = escapeHtml(regexStr);
+    // Replace special characters with their escaped forms
+    regexStr = escape(regexStr);
 
     // Patterns that we want to highlight only if they are not escaped
     function getPatterns() {
@@ -1928,4 +2045,250 @@ export function getFreeName(name, list, numberFormatter = (n) => ` #${n}`) {
         counter++;
     }
     return `${name}${numberFormatter(counter)}`;
+}
+
+
+/**
+ * Toggles the visibility of a drawer by changing the display style of its content.
+ * This function skips the usual drawer animation.
+ *
+ * @param {HTMLElement} drawer - The drawer element to toggle
+ * @param {boolean} [expand=true] - Whether to expand or collapse the drawer
+ */
+export function toggleDrawer(drawer, expand = true) {
+    /** @type {HTMLElement} */
+    const icon = drawer.querySelector('.inline-drawer-icon');
+    /** @type {HTMLElement} */
+    const content = drawer.querySelector('.inline-drawer-content');
+
+    if (expand) {
+        icon.classList.remove('up', 'fa-circle-chevron-up');
+        icon.classList.add('down', 'fa-circle-chevron-down');
+        content.style.display = 'block';
+    } else {
+        icon.classList.remove('down', 'fa-circle-chevron-down');
+        icon.classList.add('up', 'fa-circle-chevron-up');
+        content.style.display = 'none';
+    }
+
+    // Set the height of "autoSetHeight" textareas within the inline-drawer to their scroll height
+    if (!CSS.supports('field-sizing', 'content')) {
+        content.querySelectorAll('textarea.autoSetHeight').forEach(resetScrollHeight);
+    }
+}
+
+/**
+ * Sets or removes a dataset property on an HTMLElement
+ *
+ * Utility function to make it easier to reset dataset properties on null, without them being "null" as value.
+ *
+ * @param {HTMLElement} element - The element to modify
+ * @param {string} name - The name of the dataset property
+ * @param {string|null} value - The value to set - If null, the dataset property will be removed
+ */
+export function setDatasetProperty(element, name, value) {
+    if (value === null) {
+        delete element.dataset[name];
+    } else {
+        element.dataset[name] = value;
+    }
+}
+
+export async function fetchFaFile(name) {
+    const style = document.createElement('style');
+    style.innerHTML = await (await fetch(`/css/${name}`)).text();
+    document.head.append(style);
+    const sheet = style.sheet;
+    style.remove();
+    return [...sheet.cssRules]
+        .filter(rule => rule.style?.content)
+        .map(rule => rule.selectorText.split(/,\s*/).map(selector => selector.split('::').shift().slice(1)))
+    ;
+}
+export async function fetchFa() {
+    return [...new Set((await Promise.all([
+        fetchFaFile('fontawesome.min.css'),
+    ])).flat())];
+}
+/**
+ * Opens a popup with all the available Font Awesome icons and returns the selected icon's name.
+ * @prop {string[]} customList A custom list of Font Awesome icons to use instead of all available icons.
+ * @returns {Promise<string>} The icon name (fa-pencil) or null if cancelled.
+ */
+export async function showFontAwesomePicker(customList = null) {
+    const faList = customList ?? await fetchFa();
+    const fas = {};
+    const dom = document.createElement('div'); {
+        dom.classList.add('faPicker-container');
+        const search = document.createElement('div'); {
+            search.classList.add('faQuery-container');
+            const qry = document.createElement('input'); {
+                qry.classList.add('text_pole');
+                qry.classList.add('faQuery');
+                qry.type = 'search';
+                qry.placeholder = 'Filter icons';
+                qry.autofocus = true;
+                const qryDebounced = debounce(() => {
+                    const result = faList.filter(fa => fa.find(className => className.includes(qry.value.toLowerCase())));
+                    for (const fa of faList) {
+                        if (!result.includes(fa)) {
+                            fas[fa].classList.add('hidden');
+                        } else {
+                            fas[fa].classList.remove('hidden');
+                        }
+                    }
+                });
+                qry.addEventListener('input', () => qryDebounced());
+                search.append(qry);
+            }
+            dom.append(search);
+        }
+        const grid = document.createElement('div'); {
+            grid.classList.add('faPicker');
+            for (const fa of faList) {
+                const opt = document.createElement('div'); {
+                    fas[fa] = opt;
+                    opt.classList.add('menu_button');
+                    opt.classList.add('fa-solid');
+                    opt.classList.add(fa[0]);
+                    opt.title = fa.map(it => it.slice(3)).join(', ');
+                    opt.dataset.result = POPUP_RESULT.AFFIRMATIVE.toString();
+                    opt.addEventListener('click', () => value = fa[0]);
+                    grid.append(opt);
+                }
+            }
+            dom.append(grid);
+        }
+    }
+    let value = '';
+    const picker = new Popup(dom, POPUP_TYPE.TEXT, null, { allowVerticalScrolling: true, okButton: 'No Icon', cancelButton: 'Cancel' });
+    await picker.show();
+    if (picker.result == POPUP_RESULT.AFFIRMATIVE) {
+        return value;
+    }
+    return null;
+}
+
+/**
+ * Finds a character by name, with optional filtering and precedence for avatars
+ * @param {object} [options={}] - The options for the search
+ * @param {string?} [options.name=null] - The name to search for
+ * @param {boolean} [options.allowAvatar=true] - Whether to allow searching by avatar
+ * @param {boolean} [options.insensitive=true] - Whether the search should be case insensitive
+ * @param {string[]?} [options.filteredByTags=null] - Tags to filter characters by
+ * @param {boolean} [options.preferCurrentChar=true] - Whether to prefer the current character(s)
+ * @param {boolean} [options.quiet=false] - Whether to suppress warnings
+ * @returns {import('./char-data.js').v1CharData?} - The found character or null if not found
+ */
+export function findChar({ name = null, allowAvatar = true, insensitive = true, filteredByTags = null, preferCurrentChar = true, quiet = false } = {}) {
+    const matches = (char) => !name || (allowAvatar && char.avatar === name) || (insensitive ? equalsIgnoreCaseAndAccents(char.name, name) : char.name === name);
+
+    // Filter characters by tags if provided
+    let filteredCharacters = characters;
+    if (filteredByTags) {
+        filteredCharacters = characters.filter(char => {
+            const charTags = getTagsList(char.avatar, false);
+            return filteredByTags.every(tagName => charTags.some(x => x.name == tagName));
+        });
+    }
+
+    // Get the current character(s)
+    /** @type {any[]} */
+    const currentChars = selected_group ? groups.find(group => group.id === selected_group)?.members.map(member => filteredCharacters.find(char => char.avatar === member))
+        : filteredCharacters.filter(char => characters[this_chid]?.avatar === char.avatar);
+
+    // If we have a current char and prefer it, return that if it matches
+    if (preferCurrentChar) {
+        const preferredCharSearch = currentChars.filter(matches);
+        if (preferredCharSearch.length > 1) {
+            if (!quiet) toastr.warning('Multiple characters found for given conditions.');
+            else console.warn('Multiple characters found for given conditions. Returning the first match.');
+        }
+        if (preferredCharSearch.length) {
+            return preferredCharSearch[0];
+        }
+    }
+
+    // If allowAvatar is true, search by avatar first
+    if (allowAvatar && name) {
+        const characterByAvatar = filteredCharacters.find(char => char.avatar === name);
+        if (characterByAvatar) {
+            return characterByAvatar;
+        }
+    }
+
+    // Search for matching characters by name
+    const matchingCharacters = name ? filteredCharacters.filter(matches) : filteredCharacters;
+    if (matchingCharacters.length > 1) {
+        if (!quiet) toastr.warning('Multiple characters found for given conditions.');
+        else console.warn('Multiple characters found for given conditions. Returning the first match.');
+    }
+
+    return matchingCharacters[0] || null;
+}
+
+/**
+ * Gets the index of a character based on the character object
+ * @param {object} char - The character object to find the index for
+ * @throws {Error} If the character is not found
+ * @returns {number} The index of the character in the characters array
+ */
+export function getCharIndex(char) {
+    if (!char) throw new Error('Character is undefined');
+    const index = characters.findIndex(c => c.avatar === char.avatar);
+    if (index === -1) throw new Error(`Character not found: ${char.avatar}`);
+    return index;
+}
+
+/**
+ * Compares two arrays for equality
+ * @param {any[]} a - The first array
+ * @param {any[]} b - The second array
+ * @returns {boolean} True if the arrays are equal, false otherwise
+ */
+export function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
+}
+
+/**
+ * Updates the content and style of an information block
+ * @param {string | HTMLElement} target - The CSS selector or the HTML element of the information block
+ * @param {string | HTMLElement?} content - The message to display inside the information block (supports HTML) or an HTML element
+ * @param {'hint' | 'info' | 'warning' | 'error'} [type='info'] - The type of message, which determines the styling of the information block
+ */
+export function setInfoBlock(target, content, type = 'info') {
+    if (!content) {
+        clearInfoBlock(target);
+        return;
+    }
+
+    const infoBlock = typeof target === 'string' ? document.querySelector(target) : target;
+    if (infoBlock) {
+        infoBlock.className = `info-block ${type}`;
+        if (typeof content === 'string') {
+            infoBlock.innerHTML = content;
+        } else {
+            infoBlock.innerHTML = '';
+            infoBlock.appendChild(content);
+        }
+    }
+}
+
+/**
+ * Clears the content and style of an information block.
+ * @param {string | HTMLElement} target - The CSS selector or the HTML element of the information block
+ */
+export function clearInfoBlock(target) {
+    const infoBlock = typeof target === 'string' ? document.querySelector(target) : target;
+    if (infoBlock && infoBlock.classList.contains('info-block')) {
+        infoBlock.className = '';
+        infoBlock.innerHTML = '';
+    }
 }

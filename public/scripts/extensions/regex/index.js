@@ -8,7 +8,9 @@ import { enumIcons } from '../../slash-commands/SlashCommandCommonEnumsProvider.
 import { SlashCommandEnumValue, enumTypes } from '../../slash-commands/SlashCommandEnumValue.js';
 import { SlashCommandParser } from '../../slash-commands/SlashCommandParser.js';
 import { download, getFileText, getSortableDelay, uuidv4 } from '../../utils.js';
-import { regex_placement, runRegexScript } from './engine.js';
+import { regex_placement, runRegexScript, substitute_find_regex } from './engine.js';
+import { t } from '../../i18n.js';
+import { accountStorage } from '../../util/AccountStorage.js';
 
 /**
  * @typedef {object} RegexScript
@@ -17,7 +19,7 @@ import { regex_placement, runRegexScript } from './engine.js';
  * @property {string} replaceString - The replace string
  * @property {string[]} trimStrings - The trim strings
  * @property {string?} findRegex - The find regex
- * @property {string?} substituteRegex - The substitute regex
+ * @property {number?} substituteRegex - The substitute regex
  */
 
 /**
@@ -226,7 +228,7 @@ async function onRegexEditorOpenClick(existingId, isScoped) {
             editorHtml.find('input[name="only_format_display"]').prop('checked', existingScript.markdownOnly ?? false);
             editorHtml.find('input[name="only_format_prompt"]').prop('checked', existingScript.promptOnly ?? false);
             editorHtml.find('input[name="run_on_edit"]').prop('checked', existingScript.runOnEdit ?? false);
-            editorHtml.find('input[name="substitute_regex"]').prop('checked', existingScript.substituteRegex ?? false);
+            editorHtml.find('select[name="substitute_regex"]').val(existingScript.substituteRegex ?? substitute_find_regex.NONE);
             editorHtml.find('input[name="min_depth"]').val(existingScript.minDepth ?? '');
             editorHtml.find('input[name="max_depth"]').val(existingScript.maxDepth ?? '');
 
@@ -266,7 +268,7 @@ async function onRegexEditorOpenClick(existingId, isScoped) {
             findRegex: editorHtml.find('.find_regex').val(),
             replaceString: editorHtml.find('.regex_replace_string').val(),
             trimStrings: String(editorHtml.find('.regex_trim_strings').val()).split('\n').filter((e) => e.length !== 0) || [],
-            substituteRegex: editorHtml.find('input[name="substitute_regex"]').prop('checked'),
+            substituteRegex: Number(editorHtml.find('select[name="substitute_regex"]').val()),
         };
         const rawTestString = String(editorHtml.find('#regex_test_input').val());
         const result = runRegexScript(testScript, rawTestString);
@@ -275,7 +277,7 @@ async function onRegexEditorOpenClick(existingId, isScoped) {
 
     editorHtml.find('input, textarea, select').on('input', updateTestResult);
 
-    const popupResult = await callPopup(editorHtml, 'confirm', undefined, { okButton: 'Save' });
+    const popupResult = await callPopup(editorHtml, 'confirm', undefined, { okButton: t`Save` });
     if (popupResult) {
         const newRegexScript = {
             id: existingId ? String(existingId) : uuidv4(),
@@ -294,7 +296,7 @@ async function onRegexEditorOpenClick(existingId, isScoped) {
             markdownOnly: editorHtml.find('input[name="only_format_display"]').prop('checked'),
             promptOnly: editorHtml.find('input[name="only_format_prompt"]').prop('checked'),
             runOnEdit: editorHtml.find('input[name="run_on_edit"]').prop('checked'),
-            substituteRegex: editorHtml.find('input[name="substitute_regex"]').prop('checked'),
+            substituteRegex: Number(editorHtml.find('select[name="substitute_regex"]').val()),
             minDepth: parseInt(String(editorHtml.find('input[name="min_depth"]').val())),
             maxDepth: parseInt(String(editorHtml.find('input[name="max_depth"]').val())),
         };
@@ -439,8 +441,8 @@ async function checkEmbeddedRegexScripts() {
             if (avatar && !extension_settings.character_allowed_regex.includes(avatar)) {
                 const checkKey = `AlertRegex_${characters[chid].avatar}`;
 
-                if (!localStorage.getItem(checkKey)) {
-                    localStorage.setItem(checkKey, 'true');
+                if (!accountStorage.getItem(checkKey)) {
+                    accountStorage.setItem(checkKey, 'true');
                     const template = await renderExtensionTemplateAsync('regex', 'embeddedScripts', {});
                     const result = await callGenericPopup(template, POPUP_TYPE.CONFIRM, '', { okButton: 'Yes' });
 

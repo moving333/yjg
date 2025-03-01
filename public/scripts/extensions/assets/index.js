@@ -3,11 +3,14 @@ TODO:
 */
 //const DEBUG_TONY_SAMA_FORK_MODE = true
 
+import { DOMPurify } from '../../../lib.js';
 import { getRequestHeaders, processDroppedFiles, eventSource, event_types } from '../../../script.js';
 import { deleteExtension, extensionNames, getContext, installExtension, renderExtensionTemplateAsync } from '../../extensions.js';
 import { POPUP_TYPE, Popup, callGenericPopup } from '../../popup.js';
 import { executeSlashCommands } from '../../slash-commands.js';
+import { accountStorage } from '../../util/AccountStorage.js';
 import { flashHighlight, getStringHash, isValidUrl } from '../../utils.js';
+import { t } from '../../i18n.js';
 export { MODULE_NAME };
 
 const MODULE_NAME = 'assets';
@@ -57,11 +60,11 @@ const KNOWN_TYPES = {
     'blip': 'Blip sounds',
 };
 
-function downloadAssetsList(url) {
-    updateCurrentAssets().then(function () {
+async function downloadAssetsList(url) {
+    updateCurrentAssets().then(async function () {
         fetch(url, { cache: 'no-cache' })
             .then(response => response.json())
-            .then(json => {
+            .then(async function(json) {
 
                 availableAssets = {};
                 $('#assets_menu').empty();
@@ -82,10 +85,10 @@ function downloadAssetsList(url) {
 
                 $('#assets_type_select').empty();
                 $('#assets_search').val('');
-                $('#assets_type_select').append($('<option />', { value: '', text: 'All' }));
+                $('#assets_type_select').append($('<option />', { value: '', text: t`All` }));
 
                 for (const type of assetTypes) {
-                    const option = $('<option />', { value: type, text: KNOWN_TYPES[type] || type });
+                    const option = $('<option />', { value: type, text: t([KNOWN_TYPES[type] || type]) });
                     $('#assets_type_select').append(option);
                 }
 
@@ -102,11 +105,7 @@ function downloadAssetsList(url) {
                     assetTypeMenu.append(`<h3>${KNOWN_TYPES[assetType] || assetType}</h3>`).hide();
 
                     if (assetType == 'extension') {
-                        assetTypeMenu.append(`
-                        <div class="assets-list-git">
-                            To download extensions from this page, you need to have <a href="https://git-scm.com/downloads" target="_blank">Git</a> installed.<br>
-                            Click the <i class="fa-solid fa-sm fa-arrow-up-right-from-square"></i> icon to visit the Extension's repo for tips on how to use it.
-                        </div>`);
+                        assetTypeMenu.append(await renderExtensionTemplateAsync('assets', 'installation'));
                     }
 
                     for (const i in availableAssets[assetType].sort((a, b) => a?.name && b?.name && a['name'].localeCompare(b['name']))) {
@@ -182,8 +181,9 @@ function downloadAssetsList(url) {
                         const displayName = DOMPurify.sanitize(asset['name'] || asset['id']);
                         const description = DOMPurify.sanitize(asset['description'] || '');
                         const url = isValidUrl(asset['url']) ? asset['url'] : '';
-                        const title = assetType === 'extension' ? `Extension repo/guide: ${url}` : 'Preview in browser';
+                        const title = assetType === 'extension' ? t`Extension repo/guide:` + ` ${url}` : t`Preview in browser`;
                         const previewIcon = (assetType === 'extension' || assetType === 'character') ? 'fa-arrow-up-right-from-square' : 'fa-headphones-simple';
+                        const toolTag = assetType === 'extension' && asset['tool'];
 
                         const assetBlock = $('<i></i>')
                             .append(element)
@@ -192,12 +192,21 @@ function downloadAssetsList(url) {
                                             <b>${displayName}</b>
                                             <a class="asset_preview" href="${url}" target="_blank" title="${title}">
                                                 <i class="fa-solid fa-sm ${previewIcon}"></i>
-                                            </a>
-                                        </span>
+                                            </a>` +
+                                            (toolTag ? '<span class="tag" title="' + t`Adds a function tool` + '"><i class="fa-solid fa-sm fa-wrench"></i> ' +
+                                            t`Tool` + '</span>' : '') +
+                                        `</span>
                                         <small class="asset-description">
                                             ${description}
                                         </small>
                                      </div>`);
+
+                        assetBlock.find('.tag').on('click', function (e) {
+                            const a = document.createElement('a');
+                            a.href = 'https://docs.sillytavern.app/for-contributors/function-calling/';
+                            a.target = '_blank';
+                            a.click();
+                        });
 
                         if (assetType === 'character') {
                             if (asset.highlight) {
@@ -354,7 +363,7 @@ async function openCharacterBrowser(forceDefault) {
     for (const character of characters.sort((a, b) => a.name.localeCompare(b.name))) {
         const listElement = template.find(character.highlight ? '.contestWinnersList' : '.featuredCharactersList');
         const characterElement = $(await renderExtensionTemplateAsync(MODULE_NAME, 'character', character));
-        const downloadButton  = characterElement.find('.characterAssetDownloadButton');
+        const downloadButton = characterElement.find('.characterAssetDownloadButton');
         const checkMark = characterElement.find('.characterAssetCheckMark');
         const isInstalled = isAssetInstalled('character', character.id);
 
@@ -422,14 +431,14 @@ jQuery(async () => {
     connectButton.on('click', async function () {
         const url = DOMPurify.sanitize(String(assetsJsonUrl.val()));
         const rememberKey = `Assets_SkipConfirm_${getStringHash(url)}`;
-        const skipConfirm = localStorage.getItem(rememberKey) === 'true';
+        const skipConfirm = accountStorage.getItem(rememberKey) === 'true';
 
-        const confirmation = skipConfirm || await Popup.show.confirm('Loading Asset List', `<span>Are you sure you want to connect to the following url?</span><var>${url}</var>`, {
+        const confirmation = skipConfirm || await Popup.show.confirm(t`Loading Asset List`, '<span>' + t`Are you sure you want to connect to the following url?` + `</span><var>${url}</var>`, {
             customInputs: [{ id: 'assets-remember', label: 'Don\'t ask again for this URL' }],
             onClose: popup => {
                 if (popup.result) {
                     const rememberValue = popup.inputResults.get('assets-remember');
-                    localStorage.setItem(rememberKey, String(rememberValue));
+                    accountStorage.setItem(rememberKey, String(rememberValue));
                 }
             },
         });

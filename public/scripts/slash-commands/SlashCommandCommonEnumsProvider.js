@@ -1,11 +1,14 @@
-import { chat_metadata, characters, substituteParams, chat, extension_prompt_roles, extension_prompt_types } from '../../script.js';
+import { chat_metadata, characters, substituteParams, chat, extension_prompt_roles, extension_prompt_types, name2, neutralCharacterName } from '../../script.js';
 import { extension_settings } from '../extensions.js';
 import { getGroupMembers, groups } from '../group-chats.js';
 import { power_user } from '../power-user.js';
-import { searchCharByName, getTagsList, tags } from '../tags.js';
+import { searchCharByName, getTagsList, tags, tag_map } from '../tags.js';
 import { world_names } from '../world-info.js';
 import { SlashCommandClosure } from './SlashCommandClosure.js';
 import { SlashCommandEnumValue, enumTypes } from './SlashCommandEnumValue.js';
+
+/** @typedef {import('./SlashCommandExecutor.js').SlashCommandExecutor} SlashCommandExecutor */
+/** @typedef {import('./SlashCommandScope.js').SlashCommandScope} SlashCommandScope */
 
 /**
  * A collection of regularly used enum icons
@@ -31,10 +34,16 @@ export const enumIcons = {
     preset: '⚙️',
     file: '📄',
     message: '💬',
+    reasoning: '💡',
     voice: '🎤',
+    server: '🖥️',
+    popup: '🗔',
+    image: '🖼️',
 
     true: '✔️',
     false: '❌',
+    null: '🚫',
+    undefined: '❓',
 
     // Value types
     boolean: '🔲',
@@ -134,17 +143,46 @@ export const commonEnumProviders = {
      * Can be filtered by `type` to only show global or local variables
      *
      * @param {...('global'|'local'|'scope'|'all')} type - The type of variables to include in the array. Can be 'all', 'global', or 'local'.
-     * @returns {() => SlashCommandEnumValue[]}
+     * @returns {(executor:SlashCommandExecutor, scope:SlashCommandScope) => SlashCommandEnumValue[]}
      */
-    variables: (...type) => () => {
+    variables: (...type) => (_, scope) => {
         const types = type.flat();
         const isAll = types.includes('all');
         return [
-            ...isAll || types.includes('global') ? Object.keys(extension_settings.variables.global ?? []).map(name => new SlashCommandEnumValue(name, null, enumTypes.macro, enumIcons.globalVariable)) : [],
+            ...isAll || types.includes('scope') ? scope.allVariableNames.map(name => new SlashCommandEnumValue(name, null, enumTypes.variable, enumIcons.scopeVariable)) : [],
             ...isAll || types.includes('local') ? Object.keys(chat_metadata.variables ?? []).map(name => new SlashCommandEnumValue(name, null, enumTypes.name, enumIcons.localVariable)) : [],
-            ...isAll || types.includes('scope') ? [].map(name => new SlashCommandEnumValue(name, null, enumTypes.variable, enumIcons.scopeVariable)) : [], // TODO: Add scoped variables here, Lenny
-        ];
+            ...isAll || types.includes('global') ? Object.keys(extension_settings.variables.global ?? []).map(name => new SlashCommandEnumValue(name, null, enumTypes.macro, enumIcons.globalVariable)) : [],
+        ].filter((item, idx, list)=>idx == list.findIndex(it=>it.value == item.value));
     },
+
+    /**
+     * Enum values for numbers and variable names
+     *
+     * Includes all variable names and the ability to specify any number
+     *
+     * @param {SlashCommandExecutor} executor - The executor of the slash command
+     * @param {SlashCommandScope} scope - The scope of the slash command
+     * @returns {SlashCommandEnumValue[]} The enum values
+     */
+    numbersAndVariables: (executor, scope) => [
+        ...commonEnumProviders.variables('all')(executor, scope),
+        new SlashCommandEnumValue(
+            'any variable name',
+            null,
+            enumTypes.variable,
+            enumIcons.variable,
+            (input) => /^\w*$/.test(input),
+            (input) => input,
+        ),
+        new SlashCommandEnumValue(
+            'any number',
+            null,
+            enumTypes.number,
+            enumIcons.number,
+            (input) => input == '' || !Number.isNaN(Number(input)),
+            (input) => input,
+        ),
+    ],
 
     /**
      * All possible char entities, like characters and groups. Can be filtered down to just one type.
@@ -156,6 +194,7 @@ export const commonEnumProviders = {
         return [
             ...['all', 'character'].includes(mode) ? characters.map(char => new SlashCommandEnumValue(char.name, null, enumTypes.name, enumIcons.character)) : [],
             ...['all', 'group'].includes(mode) ? groups.map(group => new SlashCommandEnumValue(group.name, null, enumTypes.qr, enumIcons.group)) : [],
+            ...(name2 === neutralCharacterName) ? [new SlashCommandEnumValue(neutralCharacterName, null, enumTypes.name, '🥸')] : [],
         ];
     },
 
@@ -175,18 +214,30 @@ export const commonEnumProviders = {
     personas: () => Object.values(power_user.personas).map(persona => new SlashCommandEnumValue(persona, null, enumTypes.name, enumIcons.persona)),
 
     /**
+     * All possible tags, or only those that have been assigned
+     *
+     * @param {('all' | 'assigned')} [mode='all'] - Which types of tags to show
+     * @returns {() => SlashCommandEnumValue[]}
+     */
+    tags: (mode = 'all') => () => {
+        let assignedTags = mode === 'assigned' ? new Set(Object.values(tag_map).flat()) : new Set();
+        return tags.filter(tag => mode === 'all' || (mode === 'assigned' && assignedTags.has(tag.id)))
+            .map(tag => new SlashCommandEnumValue(tag.name, null, enumTypes.command, enumIcons.tag));
+    },
+
+    /**
      * All possible tags for a given char/group entity
      *
      * @param {('all' | 'existing' | 'not-existing')?} [mode='all'] - Which types of tags to show
      * @returns {() => SlashCommandEnumValue[]}
      */
-    tagsForChar: (mode = 'all') => (/** @type {import('./SlashCommandExecutor.js').SlashCommandExecutor} */ executor) => {
+    tagsForChar: (mode = 'all') => (/** @type {SlashCommandExecutor} */ executor) => {
         // Try to see if we can find the char during execution to filter down the tags list some more. Otherwise take all tags.
         const charName = executor.namedArgumentList.find(it => it.name == 'name')?.value;
         if (charName instanceof SlashCommandClosure) throw new Error('Argument \'name\' does not support closures');
         const key = searchCharByName(substituteParams(charName), { suppressLogging: true });
         const assigned = key ? getTagsList(key) : [];
-        return tags.filter(it => !key || mode === 'all' || mode === 'existing' && assigned.includes(it) || mode === 'not-existing' && !assigned.includes(it))
+        return tags.filter(it => mode === 'all' || mode === 'existing' && assigned.includes(it) || mode === 'not-existing' && !assigned.includes(it))
             .map(tag => new SlashCommandEnumValue(tag.name, null, enumTypes.command, enumIcons.tag));
     },
 
@@ -198,13 +249,13 @@ export const commonEnumProviders = {
      * @param {object} [options={}] - Optional arguments
      * @param {boolean} [options.allowIdAfter=false] - Whether to add an enum option for the new message id after the last message
      * @param {boolean} [options.allowVars=false] - Whether to add enum option for variable names
-     * @returns {() => SlashCommandEnumValue[]}
+     * @returns {(executor:SlashCommandExecutor, scope:SlashCommandScope) => SlashCommandEnumValue[]}
      */
-    messages: ({ allowIdAfter = false, allowVars = false } = {}) => () => {
+    messages: ({ allowIdAfter = false, allowVars = false } = {}) => (_, scope) => {
         return [
             ...chat.map((message, index) => new SlashCommandEnumValue(String(index), `${message.name}: ${message.mes}`, enumTypes.number, message.is_user ? enumIcons.user : message.is_system ? enumIcons.system : enumIcons.assistant)),
             ...allowIdAfter ? [new SlashCommandEnumValue(String(chat.length), '>> After Last Message >>', enumTypes.enum, '➕')] : [],
-            ...allowVars ? commonEnumProviders.variables('all')() : [],
+            ...allowVars ? commonEnumProviders.variables('all')(_, scope) : [],
         ];
     },
 
@@ -229,4 +280,19 @@ export const commonEnumProviders = {
                     enumTypes.enum, '💉');
             });
     },
+
+    /**
+     * Gets somewhat recognizable STscript types.
+     *
+     * @returns {SlashCommandEnumValue[]}
+     */
+    types: () => [
+        new SlashCommandEnumValue('string', null, enumTypes.type, enumIcons.string),
+        new SlashCommandEnumValue('number', null, enumTypes.type, enumIcons.number),
+        new SlashCommandEnumValue('boolean', null, enumTypes.type, enumIcons.boolean),
+        new SlashCommandEnumValue('array', null, enumTypes.type, enumIcons.array),
+        new SlashCommandEnumValue('object', null, enumTypes.type, enumIcons.dictionary),
+        new SlashCommandEnumValue('null', null, enumTypes.type, enumIcons.null),
+        new SlashCommandEnumValue('undefined', null, enumTypes.type, enumIcons.undefined),
+    ],
 };

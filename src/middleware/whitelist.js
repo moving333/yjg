@@ -1,14 +1,15 @@
-const path = require('path');
-const fs = require('fs');
-const ipMatching = require('ip-matching');
+import path from 'node:path';
+import fs from 'node:fs';
+import process from 'node:process';
+import Handlebars from 'handlebars';
+import ipMatching from 'ip-matching';
 
-const { getIpFromRequest } = require('../express-common');
-const { color, getConfigValue } = require('../util');
+import { getIpFromRequest } from '../express-common.js';
+import { color, getConfigValue, safeReadFileSync } from '../util.js';
 
 const whitelistPath = path.join(process.cwd(), './whitelist.txt');
-const enableForwardedWhitelist = getConfigValue('enableForwardedWhitelist', false);
+const enableForwardedWhitelist = getConfigValue('enableForwardedWhitelist', false, 'boolean');
 let whitelist = getConfigValue('whitelist', []);
-let knownIPs = new Set();
 
 if (fs.existsSync(whitelistPath)) {
     try {
@@ -46,41 +47,41 @@ function getForwardedIp(req) {
 
 /**
  * Returns a middleware function that checks if the client IP is in the whitelist.
- * @param {boolean} whitelistMode If whitelist mode is enabled via config or command line
- * @param {boolean} listen If listen mode is enabled via config or command line
  * @returns {import('express').RequestHandler} The middleware function
  */
-function whitelistMiddleware(whitelistMode, listen) {
+export default function whitelistMiddleware() {
+    const forbiddenWebpage = Handlebars.compile(
+        safeReadFileSync('./public/error/forbidden-by-whitelist.html') ?? '',
+    );
+
+    const noLogPaths = [
+        '/favicon.ico',
+    ];
+
     return function (req, res, next) {
         const clientIp = getIpFromRequest(req);
         const forwardedIp = getForwardedIp(req);
-
-        if (listen && !knownIPs.has(clientIp)) {
-            const userAgent = req.headers['user-agent'];
-            console.log(color.yellow(`New connection from ${clientIp}; User Agent: ${userAgent}\n`));
-            knownIPs.add(clientIp);
-
-            // Write access log
-            const timestamp = new Date().toISOString();
-            const log = `${timestamp} ${clientIp} ${userAgent}\n`;
-            fs.appendFile('access.log', log, (err) => {
-                if (err) {
-                    console.error('Failed to write access log:', err);
-                }
-            });
-        }
+        const userAgent = req.headers['user-agent'];
 
         //clientIp = req.connection.remoteAddress.split(':').pop();
-        if (whitelistMode === true && !whitelist.some(x => ipMatching.matches(clientIp, ipMatching.getMatch(x)))
-            || forwardedIp && whitelistMode === true && !whitelist.some(x => ipMatching.matches(forwardedIp, ipMatching.getMatch(x)))
+        if (!whitelist.some(x => ipMatching.matches(clientIp, ipMatching.getMatch(x)))
+            || forwardedIp && !whitelist.some(x => ipMatching.matches(forwardedIp, ipMatching.getMatch(x)))
         ) {
             // Log the connection attempt with real IP address
-            const ipDetails = forwardedIp ? `${clientIp} (forwarded from ${forwardedIp})` : clientIp;
-            console.log(color.red('Forbidden: Connection attempt from ' + ipDetails + '. If you are attempting to connect, please add your IP address in whitelist or disable whitelist mode in config.yaml in root of SillyTavern folder.\n'));
-            return res.status(403).send('<b>Forbidden</b>: Connection attempt from <b>' + ipDetails + '</b>. If you are attempting to connect, please add your IP address in whitelist or disable whitelist mode in config.yaml in root of SillyTavern folder.');
+            const ipDetails = forwardedIp
+                ? `${clientIp} (forwarded from ${forwardedIp})`
+                : clientIp;
+
+            if (!noLogPaths.includes(req.path)) {
+                console.warn(
+                    color.red(
+                        `Blocked connection from ${ipDetails}; User Agent: ${userAgent}\n\tTo allow this connection, add its IP address to the whitelist or disable whitelist mode by editing config.yaml in the root directory of your SillyTavern installation.\n`,
+                    ),
+                );
+            }
+
+            return res.status(403).send(forbiddenWebpage({ ipDetails }));
         }
         next();
     };
 }
-
-module.exports = whitelistMiddleware;
