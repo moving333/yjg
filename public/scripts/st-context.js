@@ -59,6 +59,9 @@ import { groups, openGroupChat, selected_group } from './group-chats.js';
 import { addLocaleData, getCurrentLocale, t, translate } from './i18n.js';
 import { hideLoader, showLoader } from './loader.js';
 import { MacrosParser } from './macros.js';
+import { MacroEngine } from './macros/MacroEngine.js';
+import { MacroLexer } from './macros/MacroLexer.js';
+import { MacroParser } from './macros/MacroParser.js';
 import { getChatCompletionModel, oai_settings } from './openai.js';
 import { callGenericPopup, Popup, POPUP_RESULT, POPUP_TYPE } from './popup.js';
 import { power_user, registerDebugFunction } from './power-user.js';
@@ -207,6 +210,11 @@ export function getContext() {
         getChatCompletionModel,
         printMessages,
         clearChat,
+        macros: {
+            MacroLexer,
+            MacroParser,
+            MacroEngine,
+        },
     };
 }
 
