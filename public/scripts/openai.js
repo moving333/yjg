@@ -100,7 +100,7 @@ const default_wi_format = '{0}';
 const default_new_chat_prompt = '[Start a new Chat]';
 const default_new_group_chat_prompt = '[Start a new group chat. Group members: {{group}}]';
 const default_new_example_chat_prompt = '[Example Chat]';
-const default_continue_nudge_prompt = '[Continue the following message. Do not include ANY parts of the original message. Use capitalization and punctuation as if your reply is a part of the original message: {{lastChatMessage}}]';
+const default_continue_nudge_prompt = '[Continue your last message without repeating its original content.]';
 const default_bias = 'Default (none)';
 const default_personality_format = '{{personality}}';
 const default_scenario_format = '{{scenario}}';
@@ -807,7 +807,7 @@ async function populateChatHistory(messages, prompts, chatCompletion, type = nul
     // Insert and free continue nudge
     if (type === 'continue' && continueMessage) {
         chatCompletion.freeBudget(continueMessage);
-        chatCompletion.insertAtEnd(continueMessage, 'chatHistory');
+        chatCompletion.add(new MessageCollection('continueNudge', continueMessage), -1);
     }
 }
 
@@ -2882,7 +2882,7 @@ export class ChatCompletion {
     /**
      * Checks if the token budget can afford the tokens of the specified message.
      *
-     * @param {Message} message - The message to check for affordability.
+     * @param {Message|MessageCollection} message - The message to check for affordability.
      * @returns {boolean} True if the budget can afford the message, false otherwise.
      */
     canAfford(message) {
@@ -2970,7 +2970,7 @@ export class ChatCompletion {
      * Validates if the given argument is an instance of MessageCollection.
      * Throws an error if the validation fails.
      *
-     * @param {MessageCollection} collection - The collection to validate.
+     * @param {MessageCollection|Message} collection - The collection to validate.
      */
     validateMessageCollection(collection) {
         if (!(collection instanceof MessageCollection)) {
@@ -2996,7 +2996,7 @@ export class ChatCompletion {
      * Checks if the token budget can afford the tokens of the given message.
      * Throws an error if the budget can't afford the message.
      *
-     * @param {Message} message - The message to check.
+     * @param {Message|MessageCollection} message - The message to check.
      * @param {string} identifier - The identifier of the message.
      */
     checkTokenBudget(message, identifier) {
