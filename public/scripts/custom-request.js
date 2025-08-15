@@ -1,5 +1,5 @@
 import { getPresetManager } from './preset-manager.js';
-import { extractMessageFromData, getGenerateUrl, getRequestHeaders } from '../script.js';
+import { extractJsonFromData, extractMessageFromData, getGenerateUrl, getRequestHeaders } from '../script.js';
 import { getTextGenServer } from './textgen-settings.js';
 import { extractReasoningFromData } from './reasoning.js';
 import { formatInstructModeChat, formatInstructModePrompt, getInstructStoppingSequences, names_behavior_types } from './instruct-mode.js';
@@ -242,33 +242,58 @@ export class TextCompletionService {
 
                 // Format messages using instruct formatting
                 const formattedMessages = [];
+                const prefillActive = prompt.length > 0 ? prompt[prompt.length - 1].role === 'assistant' : false;
                 for (const message of prompt) {
                     let messageContent = message.content;
                     if (!message.ignoreInstruct) {
-                        messageContent = formatInstructModeChat(
-                            message.role,
-                            message.content,
-                            message.role === 'user',
-                            false,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            instructPreset,
-                        );
+                        const isLastMessage = message === prompt[prompt.length - 1];
 
-                        // Add prompt formatting for the last message
-                        if (message === prompt[prompt.length - 1]) {
-                            messageContent += formatInstructModePrompt(
-                                undefined,
+                        // This complicated logic means:
+                        // 1. If prefill is not active, format all messages
+                        // 2. If prefill is active, format all messages except the last one
+                        if (!isLastMessage || !prefillActive) {
+                            messageContent = formatInstructModeChat(
+                                message.role,
+                                message.content,
+                                message.role === 'user',
                                 false,
                                 undefined,
                                 undefined,
                                 undefined,
-                                false,
-                                false,
+                                undefined,
                                 instructPreset,
                             );
+                        }
+
+                        // Add prompt formatting for the last message.
+                        if (isLastMessage) {
+                            if (!prefillActive) { // e.g. "<|im_start|>user:"
+                                messageContent += formatInstructModePrompt(
+                                    undefined,
+                                    false,
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    false,
+                                    false,
+                                    instructPreset,
+                                );
+                            } else { // e.g. "<|im_start|>assistant: Hello, my name is"
+                                const overriddenInstructPreset = structuredClone(instructPreset);
+                                overriddenInstructPreset.output_suffix = '';
+                                overriddenInstructPreset.wrap = false;
+                                messageContent = formatInstructModeChat(
+                                    message.role,
+                                    message.content,
+                                    false, // since it is assistant
+                                    false,
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    overriddenInstructPreset,
+                                );
+                            }
                         }
                     }
                     formattedMessages.push(messageContent);
@@ -442,7 +467,7 @@ export class ChatCompletionService {
                 return json;
             }
 
-            return {
+            const result = {
                 content: extractMessageFromData(json, this.TYPE),
                 reasoning: extractReasoningFromData(json, {
                     mainApi: this.TYPE,
@@ -450,6 +475,11 @@ export class ChatCompletionService {
                     ignoreShowThoughts: true,
                 }),
             };
+            // Try parse JSON
+            if (data.json_schema) {
+                result.content = JSON.parse(extractJsonFromData(json, { mainApi: this.TYPE, chatCompletionSource: data.chat_completion_source }));
+            }
+            return result;
         }
 
         if (!response.ok) {

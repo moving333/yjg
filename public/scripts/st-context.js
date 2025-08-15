@@ -50,6 +50,9 @@ import {
     unshallowCharacter,
     deleteLastMessage,
     getCharacterCardFields,
+    swipe_right,
+    swipe_left,
+    generateRaw,
 } from '../script.js';
 import {
     extension_settings,
@@ -168,6 +171,7 @@ export function getContext() {
         ModuleWorkerWrapper,
         getTokenizerModel,
         generateQuietPrompt,
+        generateRaw,
         writeExtensionField,
         getThumbnailUrl,
         selectCharacterById,
@@ -196,6 +200,7 @@ export function getContext() {
         humanizedDateTime,
         updateMessageBlock,
         appendMediaToMessage,
+        swipe: { left: swipe_left, right: swipe_right },
         variables: {
             local: {
                 get: getLocalVariable,
