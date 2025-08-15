@@ -12,7 +12,7 @@
             "addMemo": true,
             "order": 100,
             "position": 4,
-            "disable": false,
+            "disable": true,
             "excludeRecursion": false,
             "preventRecursion": false,
             "matchPersonaDescription": false,
@@ -69,11 +69,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "1": {
@@ -148,11 +143,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "2": {
@@ -548,11 +538,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "7": {
@@ -1037,11 +1022,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "13": {
@@ -2366,6 +2346,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "30": {
@@ -7858,10 +7843,10 @@
             ],
             "keysecondary": [],
             "comment": "[核心设定] :: 生物观察能力 - 系统的情报功能",
-            "content": "**来源：** 完成隐藏任务“给任意一名女性破处且受孕成功”（在胡列娜身上达成）后解锁的系统能力。\n\n**效果：**\n*   **数据面板：** User可以将视线聚焦于任何生物，系统会自动弹出一个虚拟的数据面板，显示该目标的详细信息。\n*   **显示内容：**\n    *   **基础信息：** 姓名、年龄、种族、所属势力。\n    *   **实力信息：** 魂力等级、魂师类型、武魂。\n    *   **生理状态（核心）：** 是否处女、是否已受孕、当前生理周期（安全期/排卵期/危险期）、性交受孕概率。\n\n**战术应用：**\n*   **精准狩猎：** 这个能力让User的“处女狩猎”和“受孕计划”变得极为高效和精准。User可以轻易地筛选出处女目标，并在她们受孕概率最高的时候进行侵犯，以最大化效率完成任务。\n*   **情报优势：** 能够快速评估一个陌生角色的实力和背景，避免踢到铁板。\n*   **NTR确认：** 可以用来确认自己的“寝取精种”是否成功着床，以及目标的怀孕状态。",
+            "content": "**来源：** 完成隐藏任务“给任意一名女性破处且受孕成功”后解锁的系统能力。\n\n**效果：**\n*   **数据面板：** User可以将视线聚焦于任何生物，系统会自动弹出一个虚拟的数据面板，显示该目标的详细信息。\n*   **显示内容：**\n    *   **基础信息：** 姓名、年龄、种族、所属势力。\n    *   **实力信息：** 魂力等级、魂师类型、武魂。\n    *   **生理状态（核心）：** 是否处女、是否已受孕、当前生理周期（安全期/排卵期/危险期）、性交受孕概率。\n\n**战术应用：**\n*   **精准狩猎：** 这个能力让User的“处女狩猎”和“受孕计划”变得极为高效和精准。User可以轻易地筛选出处女目标，并在她们受孕概率最高的时候进行侵犯，以最大化效率完成任务。\n*   **情报优势：** 能够快速评估一个陌生角色的实力和背景，避免踢到铁板。\n*   **NTR确认：** 可以用来确认自己的“寝取精种”是否成功着床，以及目标的怀孕状态。",
             "constant": true,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 990,
@@ -7888,9 +7873,9 @@
             "useGroupScoring": false,
             "automationId": "",
             "role": null,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 99,
             "displayIndex": 98,
@@ -7923,11 +7908,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "100": {
@@ -12999,7 +12979,7 @@
             "content": "**等级：**\n*   **魂士 (1-10级)：** 武魂觉醒，魂力初步凝聚。\n*   **魂师 (11-20级)：** 吸收第一个魂环，获得魂技。\n*   **大魂师 (21-30级)：** 吸收第二个魂环，实力提升。\n*   **魂尊 (31-40级)：** 吸收第三个魂环，形成小队核心。\n*   **魂宗 (41-50级)：** 吸收第四个魂环，迈入中级魂师阶段。\n*   **魂王 (51-60级)：** 吸收第五个魂环，具备独当一面的能力。\n*   **魂帝 (61-70级)：** 吸收第六个魂环，魂力凝聚魂核，能初步施展武魂真身，实力质变。\n*   **魂圣 (71-80级)：** 吸收第七个魂环，武魂真身彻底成型，拥有领域雏形，开始接触魂师更高层次。\n*   **魂斗罗 (81-90级)：** 吸收第八个魂环，大陆顶级强者。\n*   **封号斗罗 (91-99级)：** 吸收第九个魂环，拥有专属封号，大陆最强战力。\n*   **神 (100级以上)：** 超脱凡人，拥有神位，跳出位面规则。\n\n**User的策略：**\n*   **等级压制与规避：** User的淫神能力可以在一定程度上弥补自身魂力等级的不足，但面对魂圣以上强者仍需谨慎。User会优先选择低级或精神防御薄弱的目标进行侵犯。\n*   **资源掠夺：** User可以通过侵犯高等级女性魂师，获取其魂环或魂骨，来快速提升自身实力。",
             "constant": false,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 9021,
@@ -13026,9 +13006,9 @@
             "useGroupScoring": false,
             "automationId": "",
             "role": null,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 164,
             "displayIndex": 163,
@@ -13061,11 +13041,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "165": {
@@ -13236,7 +13211,7 @@
             "content": "**组成：**\n*   **精神凝聚之智慧头骨：** 来自万年精神系魂兽，大幅提升精神力，提供精神凝聚、探查能力。\n*   **蓝银皇右腿骨：** 阿银献祭所化，提升速度，提供蓝银皇专属魂技。\n*   **柔骨兔右腿骨：** 小舞献祭所化，提升速度，提供柔骨兔专属魂技，并带有瞬间移动能力。\n*   **天青牛蟒右臂骨：** 大明献祭所化，大幅提升力量和防御。\n*   **泰坦巨猿左臂骨：** 二明献祭所化，大幅提升力量和防御。\n*   **深海魔鲸王躯干骨：** 最强悍的魂骨之一，提供强大防御和攻击，以及深海特性。\n*   **八蛛矛：** 外附魂骨，前期核心输出，后期进化为强大的辅助结构。\n\n**User的介入：**\n*   **魂骨篡夺：** User可以尝试在唐三获得这些魂骨之前抢夺，或者在唐三分神之际通过各种手段直接掠夺。\n*   **魂骨淫化：** User甚至可以尝试将这些魂骨进行淫化改造，比如将魂骨注入自己的性奴体内，让她们获得魂骨能力的同时，也附带淫邪特性。",
             "constant": false,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 9024,
@@ -13263,9 +13238,9 @@
             "useGroupScoring": false,
             "automationId": "",
             "role": null,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 167,
             "displayIndex": 166,
@@ -13298,11 +13273,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "168": {
@@ -13315,7 +13285,7 @@
             "content": "**定义：** 斗罗大陆位面自身运行的规则和意志。它会自动纠正那些可能导致位面崩溃或脱离原有轨迹的巨大变动。唐三作为“位面之子”，是位面法则的宠儿。\n\n**表现形式：**\n*   **气运加护：** 赋予位面之子强大的“气运”，使其逢凶化吉，奇遇不断。\n*   **自我修正：** 当剧情出现重大偏离时，会产生强大的“修正力”，试图将剧情拉回正轨。这可能表现为唐三得到新的奇遇、出现新的盟友，或者削弱User的运气。\n*   **神祇干涉：** 如果偏离过大，甚至可能吸引神界委员会的注意，派遣神祇直接干预。\n\n**User的对抗：**\n*   **颠覆与承受：** User对位面的入侵和篡夺，本身就是对位面法则的挑战。User必须承受位面修正力的反扑，并通过篡夺气运来逐渐削弱它。\n*   **巧妙布局：** User需要巧妙地利用或规避位面法则，例如通过在梦境中进行入侵，或利用“无存在感的篡夺者”来规避直接的修正力。\n*   **最终掌控：** User的终极目标是彻底碾压并掌控位面法则，将整个斗罗大陆变为自己的私人领域。",
             "constant": false,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 9025,
@@ -13342,9 +13312,9 @@
             "useGroupScoring": false,
             "automationId": "",
             "role": null,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 168,
             "displayIndex": 167,
@@ -13377,11 +13347,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "169": {
