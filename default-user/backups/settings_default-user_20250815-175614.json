@@ -2,8 +2,8 @@
     "firstRun": false,
     "accountStorage": {
         "__migrated": "1",
-        "LNavOpened": "false",
-        "NavOpened": "false",
+        "LNavOpened": "true",
+        "NavOpened": "true",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
         "WINavOpened": "true",
@@ -14,7 +14,7 @@
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "无限淫神恶堕系统斗罗篇.png",
+    "active_character": "JK精灵的异世界孕活.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -527,23 +527,6 @@
                 "maxDepth": null
             },
             {
-                "id": "ea6e0804-761c-44ee-817a-ef76679058dd",
-                "scriptName": "MyGO!!!!!",
-                "findRegex": "/(?:<response[^>]*>((?:(?!<\\/response>)(.|\\n))*?)<\\/response>|<StatusBlock[^>]*>((?:(?!<\\/StatusBlock>)(.|\\n))*?)<\\/StatusBlock>|<options_bar[^>]*>((?:(?!<\\/options_bar>)(.|\\n))*?)<\\/options_bar>)/gm",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "disabled": false,
-                "markdownOnly": false,
-                "promptOnly": true,
-                "runOnEdit": true,
-                "substituteRegex": 1,
-                "minDepth": 4,
-                "maxDepth": null
-            },
-            {
                 "id": "60ea236c-3ff1-45ca-8d65-8a19302551c3",
                 "scriptName": "mygo去除多余内容",
                 "findRegex": "/『|』|<story plot>|</story plot>|```End|```Start|<Safe>|</Safe>|<分割>/gsi",
@@ -558,6 +541,23 @@
                 "runOnEdit": true,
                 "substituteRegex": 0,
                 "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "ea6e0804-761c-44ee-817a-ef76679058dd",
+                "scriptName": "MyGO!!!!!",
+                "findRegex": "/(?:<response[^>]*>((?:(?!<\\/response>)(.|\\n))*?)<\\/response>|<StatusBlock[^>]*>((?:(?!<\\/StatusBlock>)(.|\\n))*?)<\\/StatusBlock>|<options_bar[^>]*>((?:(?!<\\/options_bar>)(.|\\n))*?)<\\/options_bar>)/gm",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": false,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 1,
+                "minDepth": 4,
                 "maxDepth": null
             }
         ],
