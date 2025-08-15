@@ -1,15 +1,14 @@
 {
     "firstRun": false,
     "accountStorage": {
-        "__migrated": "1",
-        "LNavOpened": "true"
+        "__migrated": "1"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
     "user_avatar": "user-default.png",
     "amount_gen": 350,
     "max_context": 8192,
-    "main_api": "openai",
+    "main_api": "koboldhorde",
     "world_info_settings": {
         "world_info": {
             "globalSelect": []
@@ -138,7 +137,7 @@
         "ignore_eos_token": false,
         "spaces_between_special_tokens": true,
         "speculative_ngram": false,
-        "type": "generic",
+        "type": "ooba",
         "mancer_model": "mytholite",
         "togetherai_model": "Gryphe/MythoMax-L2-13b",
         "infermaticai_model": "",
@@ -386,11 +385,7 @@
         "pin_styles": true,
         "click_to_edit": false,
         "ui_mode": 1,
-        "auto_sort_tags": false,
-        "selectSamplers": {
-            "forceHidden": [],
-            "forceShown": []
-        }
+        "auto_sort_tags": false
     },
     "extension_settings": {
         "apiUrl": "http://localhost:5100",
@@ -474,23 +469,8 @@
             "custom": []
         },
         "connectionManager": {
-            "selectedProfile": "10b64366-f782-4227-bb0b-4aba51c7c438",
-            "profiles": [
-                {
-                    "id": "10b64366-f782-4227-bb0b-4aba51c7c438",
-                    "mode": "cc",
-                    "exclude": [],
-                    "api": "openai",
-                    "preset": "Default",
-                    "model": "gpt-4-turbo",
-                    "proxy": "None",
-                    "stop-strings": "",
-                    "start-reply-with": "",
-                    "reasoning-template": "DeepSeek",
-                    "prompt-post-processing": "none",
-                    "name": "2"
-                }
-            ]
+            "selectedProfile": "",
+            "profiles": []
         },
         "dice": {},
         "regex": [],
@@ -722,8 +702,7 @@
     "tag_map": {
         "default_Seraphina.png": [
             "1345561466591"
-        ],
-        "null": []
+        ]
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -1022,7 +1001,7 @@
         "group_nudge_prompt": "[Write the next reply only as {{char}}.]",
         "scenario_format": "{{scenario}}",
         "personality_format": "{{personality}}",
-        "openai_model": "gpt-3.5-turbo-0125",
+        "openai_model": "gpt-4-turbo",
         "claude_model": "claude-3-5-sonnet-20240620",
         "google_model": "gemini-1.5-pro",
         "vertexai_model": "gemini-2.0-flash-001",
@@ -1038,7 +1017,7 @@
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
         "custom_model": "",
-        "custom_url": "https://aureon.duckdns.org",
+        "custom_url": "",
         "custom_include_body": "",
         "custom_exclude_body": "",
         "custom_include_headers": "",
@@ -1050,7 +1029,7 @@
         "openrouter_allow_fallbacks": true,
         "openrouter_middleout": "on",
         "reverse_proxy": "",
-        "chat_completion_source": "custom",
+        "chat_completion_source": "openai",
         "max_context_unlocked": false,
         "show_external_models": false,
         "proxy_password": "",
@@ -1070,7 +1049,7 @@
         "function_calling": false,
         "names_behavior": 0,
         "continue_postfix": " ",
-        "custom_prompt_post_processing": "strict",
+        "custom_prompt_post_processing": "",
         "show_thoughts": true,
         "reasoning_effort": "auto",
         "enable_web_search": false,
