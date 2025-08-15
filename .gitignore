@@ -1,0 +1,8 @@
+# Ensure data directory contents are tracked, overriding parent ignores.
+!*
+
+# Ignore specific subdirectories within data
+_uploads/
+_cache/
+_storage/
+_webpack/
