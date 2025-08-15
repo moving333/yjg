@@ -6,13 +6,11 @@
         "NavOpened": "true",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
-        "WINavOpened": "true",
-        "SelectedNavTab": "rm_button_characters",
-        "AlertWI_无限淫神恶堕系统斗罗篇.png": "true"
+        "WINavOpened": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "无限淫神恶堕系统斗罗篇.png",
+    "active_character": "归来的路明非.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -782,138 +780,6 @@
             "id": "1345561466591",
             "name": "ST Default",
             "color": "rgba(108, 32, 32, 1)"
-        },
-        {
-            "id": "f2591f35-1607-41a7-ae59-5509fe07faae",
-            "name": "二次元",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667234
-        },
-        {
-            "id": "cf731685-d19a-4e34-b2f9-24e4fddd2b17",
-            "name": "NTR",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "37cf1cc2-2e3f-4a2d-81f5-3976379f8136",
-            "name": "斗罗大陆",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "b39c6c72-a5d2-40b8-9650-f65267a9b638",
-            "name": "多女主",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "f6a1cb4b-4d49-49de-9d6d-af6aa930af12",
-            "name": "R18",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "45672eb3-1d81-4710-88c3-22ea99b75e56",
-            "name": "H文",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "fe932260-cd0b-4369-9fea-0951767f7d2a",
-            "name": "高H",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "d88f2c7e-9771-4a70-a2fa-0b0030fa7989",
-            "name": "System",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "90dce4da-6ce0-410d-9435-f3c73c2f6c55",
-            "name": "DarkFantasy",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "0db7028b-e8a1-4b03-900b-e67c234ffd8e",
-            "name": "穿越",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "0f206e9a-ca1b-4755-aa64-ad0ac1e4aeef",
-            "name": "同人",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
-        },
-        {
-            "id": "9e403b8a-54f9-4acc-a1da-418d0d12cef3",
-            "name": "肉文",
-            "folder_type": "NONE",
-            "filter_state": "UNDEFINED",
-            "sort_order": null,
-            "is_hidden_on_character_card": false,
-            "color": "",
-            "color2": "",
-            "create_date": 1755277667235
         }
     ],
     "tag_map": {
@@ -921,21 +787,7 @@
             "1345561466591"
         ],
         "null": [],
-        "归来的路明非.png": [],
-        "无限淫神恶堕系统斗罗篇.png": [
-            "f2591f35-1607-41a7-ae59-5509fe07faae",
-            "cf731685-d19a-4e34-b2f9-24e4fddd2b17",
-            "37cf1cc2-2e3f-4a2d-81f5-3976379f8136",
-            "b39c6c72-a5d2-40b8-9650-f65267a9b638",
-            "f6a1cb4b-4d49-49de-9d6d-af6aa930af12",
-            "45672eb3-1d81-4710-88c3-22ea99b75e56",
-            "fe932260-cd0b-4369-9fea-0951767f7d2a",
-            "d88f2c7e-9771-4a70-a2fa-0b0030fa7989",
-            "90dce4da-6ce0-410d-9435-f3c73c2f6c55",
-            "0db7028b-e8a1-4b03-900b-e67c234ffd8e",
-            "0f206e9a-ca1b-4755-aa64-ad0ac1e4aeef",
-            "9e403b8a-54f9-4acc-a1da-418d0d12cef3"
-        ]
+        "归来的路明非.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
