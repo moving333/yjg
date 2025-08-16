@@ -3085,7 +3085,7 @@
         "aimlapi_model": "gpt-4o-mini-2024-07-18",
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
-        "custom_model": "",
+        "custom_model": "gemini-2.5-pro",
         "custom_url": "https://gemini.beijixingxing.com/v1",
         "custom_include_body": "",
         "custom_exclude_body": "",
