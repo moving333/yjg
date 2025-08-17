@@ -10,11 +10,12 @@
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_无限淫神恶堕系统斗罗篇.png": "true",
         "AlertWI_JK精灵的异世界孕活.png": "true",
-        "AlertRegex_JK精灵的异世界孕活.png": "true"
+        "AlertRegex_JK精灵的异世界孕活.png": "true",
+        "AlertWI_雌竟的世界.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "无限淫神恶堕系统斗罗篇.png",
+    "active_character": "雌竟的世界.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -390,7 +391,7 @@
         "show_swipe_num_all_messages": false,
         "auto_connect": false,
         "auto_load_chat": false,
-        "forbid_external_media": true,
+        "forbid_external_media": false,
         "external_media_allowed_overrides": [],
         "external_media_forbidden_overrides": [],
         "pin_styles": true,
@@ -779,6 +780,45 @@
                     }
                 ]
             }
+        },
+        "TavernHelper": {
+            "enabled_extension": true,
+            "render": {
+                "render_enabled": true,
+                "render_depth": 0,
+                "render_optimize": false,
+                "render_hide_style": false
+            },
+            "script": {
+                "global_script_enabled": true,
+                "scriptsRepository": [],
+                "characters_with_scripts": []
+            },
+            "audio": {
+                "audio_enabled": true,
+                "bgm_enabled": true,
+                "ambient_enabled": true,
+                "bgm_mode": "repeat",
+                "bgm_muted": false,
+                "bgm_volume": 50,
+                "bgm_selected": null,
+                "bgm_current_time": 0,
+                "ambient_mode": "stop",
+                "ambient_muted": false,
+                "ambient_volume": 50,
+                "ambient_selected": null,
+                "ambient_current_time": 0,
+                "audio_cooldown": 0
+            },
+            "debug": {
+                "enabled": false
+            },
+            "listener": {
+                "enabled": false,
+                "enable_echo": true,
+                "url": "http://localhost:6621",
+                "duration": 1000
+            }
         }
     },
     "tags": [
@@ -940,7 +980,8 @@
             "0f206e9a-ca1b-4755-aa64-ad0ac1e4aeef",
             "9e403b8a-54f9-4acc-a1da-418d0d12cef3"
         ],
-        "JK精灵的异世界孕活.png": []
+        "JK精灵的异世界孕活.png": [],
+        "雌竟的世界.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -3085,8 +3126,8 @@
         "aimlapi_model": "gpt-4o-mini-2024-07-18",
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
-        "custom_model": "",
-        "custom_url": "https://gemini.beijixingxing.com/v1",
+        "custom_model": "gemini-2.5-pro",
+        "custom_url": "https://gemini.52099966.xyz/v1",
         "custom_include_body": "",
         "custom_exclude_body": "",
         "custom_include_headers": "",
