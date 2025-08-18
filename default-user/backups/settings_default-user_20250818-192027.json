@@ -390,7 +390,7 @@
         "show_swipe_num_all_messages": false,
         "auto_connect": false,
         "auto_load_chat": false,
-        "forbid_external_media": false,
+        "forbid_external_media": true,
         "external_media_allowed_overrides": [],
         "external_media_forbidden_overrides": [],
         "pin_styles": true,
@@ -777,48 +777,6 @@
                         "isVisible": true
                     }
                 ]
-            }
-        },
-        "TavernHelper": {
-            "enabled_extension": true,
-            "render": {
-                "render_enabled": true,
-                "render_depth": 0,
-                "render_optimize": false,
-                "render_hide_style": false
-            },
-            "script": {
-                "global_script_enabled": true,
-                "scriptsRepository": [],
-                "characters_with_scripts": []
-            },
-            "audio": {
-                "audio_enabled": true,
-                "bgm_enabled": true,
-                "ambient_enabled": true,
-                "bgm_mode": "repeat",
-                "bgm_muted": false,
-                "bgm_volume": 50,
-                "bgm_selected": null,
-                "bgm_current_time": 0,
-                "ambient_mode": "stop",
-                "ambient_muted": false,
-                "ambient_volume": 50,
-                "ambient_selected": null,
-                "ambient_current_time": 0,
-                "audio_cooldown": 0
-            },
-            "macro": {
-                "replace": true
-            },
-            "debug": {
-                "enabled": false
-            },
-            "listener": {
-                "enabled": false,
-                "enable_echo": true,
-                "duration": 1000,
-                "url": "http://localhost:6621"
             }
         }
     },
