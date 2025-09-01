@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "true",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -2726,7 +2726,7 @@
                     },
                     {
                         "identifier": "03e9c451-c02d-4ffc-982c-7c85579edfdd",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "4be5768f-b441-4a57-9db0-5ede5aa51a85",
@@ -2734,7 +2734,7 @@
                     },
                     {
                         "identifier": "2155ec73-aead-4d4e-9669-9155c4597ca5",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "54841ad6-1d17-42ca-a729-def8b7ceb8f2",
@@ -2774,7 +2774,7 @@
                     },
                     {
                         "identifier": "a39b52e1-91d5-44c3-a113-7ef0d62f3366",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "25480225-8584-42b0-b79d-3fa2208c5f19",
@@ -2866,7 +2866,7 @@
                     },
                     {
                         "identifier": "2500054d-8042-4757-8fa2-e81d92029bc5",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "adb19c12-5774-47ef-88f4-23020764dd23",
@@ -3126,8 +3126,8 @@
         "aimlapi_model": "gpt-4o-mini-2024-07-18",
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
-        "custom_model": "gemini-2.5-pro",
-        "custom_url": "https://nianniancn.top/v1",
+        "custom_model": "",
+        "custom_url": "",
         "custom_include_body": "",
         "custom_exclude_body": "",
         "custom_include_headers": "",
@@ -3159,7 +3159,7 @@
         "function_calling": false,
         "names_behavior": -1,
         "continue_postfix": " ",
-        "custom_prompt_post_processing": "strict",
+        "custom_prompt_post_processing": "",
         "show_thoughts": false,
         "reasoning_effort": "medium",
         "enable_web_search": false,
