@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "true",
+        "LNavOpened": "false",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -2852,7 +2852,7 @@
                     },
                     {
                         "identifier": "6ccddc95-5e06-4c5c-893a-f332ae9d37e4",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "eac54c9b-eec1-438d-bb7b-24d367b5eb71",
@@ -3129,7 +3129,7 @@
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
         "custom_model": "gemini-2.5-pro",
-        "custom_url": "http://www.guqinghan.icu/v1",
+        "custom_url": "https://nianniancn.top/v1",
         "custom_include_body": "",
         "custom_exclude_body": "",
         "custom_include_headers": "",

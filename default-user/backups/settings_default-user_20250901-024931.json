@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "true",
+        "LNavOpened": "false",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -13,8 +13,8 @@
         "AlertWI_无限淫神恶堕系统斗罗篇.png": "true"
     },
     "currentVersion": "1.13.2",
-    "username": "白厉",
-    "active_character": "陈沫沫.png",
+    "username": "User",
+    "active_character": "周芷若.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -338,16 +338,16 @@
             "max_additions": 1
         },
         "personas": {
-            "user-default.png": "白厉"
+            "user-default.png": "User"
         },
         "default_persona": null,
         "persona_descriptions": {
             "user-default.png": {
-                "description": "男性,25岁.身材消瘦、容貌冷峻。",
+                "description": "",
                 "position": 0
             }
         },
-        "persona_description": "男性,25岁.身材消瘦、容貌冷峻。",
+        "persona_description": "",
         "persona_description_position": 0,
         "persona_description_role": 0,
         "persona_description_depth": 2,
@@ -982,8 +982,7 @@
             "79335060-6982-4647-b756-537cc9f038f4",
             "d06da531-7c40-460a-8349-5a178869e84e"
         ],
-        "周芷若.png": [],
-        "陈沫沫.png": []
+        "周芷若.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -3129,7 +3128,7 @@
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
         "custom_model": "gemini-2.5-pro",
-        "custom_url": "http://www.guqinghan.icu/v1",
+        "custom_url": "https://nianniancn.top/v1",
         "custom_include_body": "",
         "custom_exclude_body": "",
         "custom_include_headers": "",
