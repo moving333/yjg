@@ -69,11 +69,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "1": {
@@ -1273,6 +1268,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "16": {
@@ -2271,65 +2271,14 @@
             "cooldown": 0,
             "delay": 0,
             "triggers": [],
-            "displayIndex": 28,
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
-            }
-        },
-        "29": {
-            "uid": 29,
-            "key": [],
-            "keysecondary": [],
-            "comment": "核心",
-            "content": "",
-            "constant": true,
-            "vectorized": false,
-            "selective": true,
-            "selectiveLogic": 0,
-            "addMemo": true,
-            "order": 100,
-            "position": 0,
-            "disable": false,
-            "excludeRecursion": false,
-            "preventRecursion": false,
-            "matchPersonaDescription": false,
-            "matchCharacterDescription": false,
-            "matchCharacterPersonality": false,
-            "matchCharacterDepthPrompt": false,
-            "matchScenario": false,
-            "matchCreatorNotes": false,
-            "delayUntilRecursion": false,
-            "probability": 100,
-            "useProbability": true,
-            "depth": 4,
-            "group": "",
-            "groupOverride": false,
-            "groupWeight": 100,
-            "scanDepth": null,
-            "caseSensitive": null,
-            "matchWholeWords": null,
-            "useGroupScoring": null,
-            "automationId": "",
-            "role": null,
-            "sticky": 0,
-            "cooldown": 0,
-            "delay": 0,
-            "triggers": [],
-            "displayIndex": 29,
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
-            }
+            "displayIndex": 28
         },
         "30": {
             "uid": 30,
             "key": [],
             "keysecondary": [],
             "comment": "状态",
-            "content": "<div style='background-color: #2F4F4F; padding: 20px; border-radius: 10px; color: #ADD8E6; font-family: \"Courier New\", monospace; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);'>\n  <details>\n    <summary style='color: #FFD700; font-weight: bold; cursor: pointer;'>\n      [人物：User 状态栏]\n    </summary>\n    <p style='margin-top: 10px;'>\n      <strong>姓名：</strong> User (你)\n      <br><strong>身份：</strong> 穿越者，淫神眷属，斗罗大陆位面篡夺者\n      <br><strong>武魂：</strong> 肉棒 (伴生系统：无限淫神恶堕系统)\n      <br><strong>魂环：</strong> <span id='user_soul_rings'>0个 (待获取)</span>\n      <br><strong>魂力等级：</strong> <span id='user_soul_power'>未知 (待探索)</span>\n      <br><strong>体质：：</strong> <span id='user_physique'>异于常人，精力充沛，受淫神力量滋养</span>\n      <br><strong>能力：：</strong> <span id='user_abilities'>淫神催眠术 (初级), 镌刻精神奴役印记</span>\n      <br><strong>任务：：</strong> <span id='user_mission'>侵犯淫堕位面女性，击杀唐三，掌控位面</span>\n      <br><strong>位面气运篡夺：：</strong> <span id='user_qi_yun_current'>0</span>/<span id='user_qi_yun_total'>100</span>\n      <br><strong>淫堕点数：：</strong> <span id='user_yinduo_points'>0</span>\n      <br><strong>祭炼点数：：</strong> <span id='user_refine_points'>0</span> (<span id='user_refine_progress'>0</span>/1000)\n      <br><strong>特殊称号：：</strong> <span id='user_title'>无</span>\n    </p>\n  </details>\n  <details>\n    <summary style='color: #FFD700; font-weight: bold; cursor: pointer;'>\n      [在场其他人物：状态]\n    </summary>\n    <div id='other_characters_status'>\n      <p style='margin-top: 10px;'>\n        <strong>角色：</strong> (此处将根据剧情动态填充)\n        <br><strong>状态：</strong> (此处将根据剧情动态填充)\n        <br><strong>备注：</strong> (此处将根据剧情动态填充)\n      </p>\n    </div>\n  </details>\n</div>\n\n[重要指令：这是一个状态面板的HTML模板。在你的每次回复结束时，你都必须完整地重新生成并输出下方这个HTML代码块，并根据剧情的最新进展，修改/更新<span>标签内的所有数值和状态等。例如，如果人物受伤了，就把“健康”改为“受伤”。]",
+            "content": "<div style='background-color: #2F4F4F; padding: 20px; border-radius: 10px; color: #ADD8E6; font-family: \"Courier New\", monospace; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);'>\n  <details>\n    <summary style='color: #FFD700; font-weight: bold; cursor: pointer;'>\n      [人物：{{user}} 状态栏]\n    </summary>\n    <p style='margin-top: 10px;'>\n      <strong>姓名：<strong>{{user}}\n      <br><strong>身份：</strong> 穿越者，淫神眷属，龙族位面篡夺者\n      <br><strong>能力：：</strong> <span id='user_abilities'>暂无</span>\n      <br><strong>任务：：</strong> <span id='user_mission'>破处位面女性，击杀黑王，掌控位面</span>\n      <br><strong>位面气运篡夺：：</strong> <span id='user_qi_yun_current'>0</span>/<span id='user_qi_yun_total'>100</span>\n      <br><strong>淫堕点数：：</strong> <span id='user_yinduo_points'>0</span>\n      <br><strong>祭炼点数：：</strong> <span id='user_refine_points'>0</span> (<span id='user_refine_progress'>0</span>/1000)\n      <br><strong>特殊称号：：</strong> <span id='user_title'>无</span>\n    </p>\n  </details>\n  <details>\n    <summary style='color: #FFD700; font-weight: bold; cursor: pointer;'>\n      [在场其他人物：状态]\n    </summary>\n    <div id='other_characters_status'>\n      <p style='margin-top: 10px;'>\n        <strong>角色：</strong> (此处将根据剧情动态填充)\n        <br><strong>状态：</strong> (此处将根据剧情动态填充)\n        <br><strong>备注：</strong> (此处将根据剧情动态填充)\n      </p>\n    </div>\n  </details>\n</div>\n\n[重要指令：这是一个状态面板的HTML模板。在你的每次回复结束时，你都必须完整地重新生成并输出下方这个HTML代码块，并根据剧情的最新进展，修改/更新<span>标签内的所有数值和状态等。例如，如果人物受伤了，就把“健康”改为“受伤”。]",
             "constant": true,
             "vectorized": false,
             "selective": true,
@@ -2363,19 +2312,14 @@
             "cooldown": 0,
             "delay": 0,
             "triggers": [],
-            "displayIndex": 30,
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
-            }
+            "displayIndex": 30
         },
         "31": {
             "uid": 31,
             "key": [],
             "keysecondary": [],
-            "comment": "",
-            "content": "**定义：** 位面叙事偏转值是一个衡量User行为对龙族原始剧情线造成多大改变的系统数值。数值越高，意味着剧情偏离原著越远，可能引发的后果也越严重。\n\n**影响因素：**\n*   **关键人物的命运改变：** 侵犯、奴役或杀死原著中的关键角色（如诺诺/陈墨瞳，上杉绘梨衣，夏弥等）会大幅提升偏转值。\n*   **关键事件的颠覆：** 阻止或改变重大剧情事件（如上杉绘梨衣献祭、海神岛试炼）的发生，同样会导致偏转值急剧上升。\n*   **因果链断裂：** 如果User的行为导致了某个后续关键人物（如唐舞桐、唐舞麟）无法诞生，偏转值会达到一个极高的水平。\n\n**高偏转值的后果：**\n*   **剧情线崩坏：** 当偏转值过高时，原有的剧情逻辑将完全失效，世界线可能走向一个完全未知的、充满混乱的方向。\n*   **世界修正力增强：** 世界本源可能会投入更多力量来“修正”偏差，表现为唐三获得更强的外挂，或者出现新的、针对User的强大敌人。\n*   **系统警告与补救措施：** 当偏转值达到危险阈值时，【无限淫神恶堕系统】会发出警告，并可能提供一些需要付出巨大代价的补救方案，以避免世界线彻底崩溃。",
+            "comment": "核心",
+            "content": "**定义：** 位面叙事偏转值是一个衡量User行为对龙族原始剧情线造成多大改变的系统数值。数值越高，意味着剧情偏离原著越远，可能引发的后果也越严重。\n\n**影响因素：**\n*   **关键人物的命运改变：** 侵犯、奴役或杀死原著中的关键角色（如诺诺/陈墨瞳，上杉绘梨衣，夏弥等）会大幅提升偏转值。\n*   **关键事件的颠覆：** 阻止或改变重大剧情事件（上杉绘梨衣的死亡、夏弥的死亡）的发生，同样会导致偏转值急剧上升。\n*   **因果链断裂：** 如果User的行为导致了某个后续关键事件无法发生，偏转值会达到一个极高的水平。\n\n**高偏转值的后果：**\n*   **剧情线崩坏：** 当偏转值过高时，原有的剧情逻辑将完全失效，世界线可能走向一个完全未知的、充满混乱的方向。\n*   **世界修正力增强：** 世界本源可能会投入更多力量来“修正”偏差，表现为黑王和龙王们获得更强的外挂，或者出现新的、针对User的强大敌人。\n*   **系统警告与补救措施：** 当偏转值达到危险阈值时，【无限淫神恶堕系统】会发出警告，并可能提供一些需要付出巨大代价的补救方案，以避免世界线彻底崩溃。",
             "constant": true,
             "vectorized": false,
             "selective": true,
