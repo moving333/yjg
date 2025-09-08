@@ -69,6 +69,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "1": {
@@ -143,6 +148,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "2": {
@@ -218,6 +228,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "3": {
@@ -293,6 +308,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "4": {
@@ -368,6 +388,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "5": {
@@ -443,6 +468,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "6": {
@@ -518,6 +548,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "7": {
@@ -1002,6 +1037,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "13": {
@@ -2326,6 +2366,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "30": {
@@ -7804,6 +7849,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "99": {
@@ -7878,6 +7928,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "100": {
