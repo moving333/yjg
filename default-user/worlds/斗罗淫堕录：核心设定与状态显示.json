@@ -69,6 +69,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "1": {
@@ -143,6 +148,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "2": {
@@ -182,7 +192,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -218,6 +228,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "3": {
@@ -257,7 +272,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -293,6 +308,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "4": {
@@ -332,7 +352,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -368,6 +388,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "5": {
@@ -407,7 +432,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -443,6 +468,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "6": {
@@ -482,7 +512,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -518,6 +548,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "7": {
@@ -606,6 +641,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "8": {
@@ -681,6 +721,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "9": {
@@ -755,6 +800,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "10": {
@@ -828,6 +878,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "11": {
@@ -904,6 +959,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "12": {
@@ -941,7 +1001,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -977,6 +1037,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "13": {
@@ -1050,6 +1115,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "14": {
@@ -1123,6 +1193,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "15": {
@@ -1196,6 +1271,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "16": {
@@ -1269,6 +1349,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "17": {
@@ -1342,6 +1427,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "18": {
@@ -1416,6 +1506,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "19": {
@@ -1489,6 +1584,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "20": {
@@ -1562,6 +1662,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "21": {
@@ -1635,6 +1740,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "22": {
@@ -1708,6 +1818,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "23": {
@@ -1781,6 +1896,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "24": {
@@ -1854,6 +1974,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "25": {
@@ -1927,6 +2052,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "26": {
@@ -2000,6 +2130,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "27": {
@@ -2073,6 +2208,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "28": {
@@ -2085,12 +2225,12 @@
             "content": "**姓名：** 阿宣 (User的前世之名)\n\n**过往：** 在一个普通的小世界里，阿宣曾是一个勤恳努力的青年。他有一份稳定的工作，和一个青梅竹马的心爱女孩。然而，一个如同“主角”般的男人出现在他的生活中，这个男人拥有无与伦比的强运，轻易地夺走了他心爱女孩的芳心，并获得了世俗意义上的一切成功。\n\n阿宣被迫压抑自己的情感，默默祝福女孩，退回到孤独的生活中。他麻木地看着自己所爱的人成为他人的妻子，看着那个“主角”风光无限。\n\n**世界的崩塌：** 某一天，阿宣所在的世界因“上层叙事世界的波动”而毫无征兆地崩塌了。他目睹了心爱的女孩、那个“主角”，以及所有熟悉的一切都在绝望的哭喊中化为虚无。在那一刻，阿宣的内心充满了暴怒和憎恨。\n\n**与淫神的契约：** 在虚无中，一个名为“淫神”的神秘概念找到了他。淫神欣赏他灵魂中由爱转恨的炽热能量，告诉他，他的世界正是被那些高高在上的“主角”们不经意间毁灭的。淫神给予了他一个选择：成为祂的眷属，进入那些宏大的世界，向那些“主角”复仇，让他们也尝尝珍贵之物被亵渎、被剥夺的窒息滋味。\n\n**动机：** 阿宣答应了契约，化身为User。他如今的行为，源于对自己被毁灭世界的复仇欲，以及一种扭曲的、想要将自己曾经承受的痛苦加倍奉还给所有“主角”的欲望。他以亵渎和占有主角珍视的女性为乐，这既是系统的任务，也是他内心最深沉的渴望。",
             "constant": true,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": -80,
             "position": 0,
-            "disable": false,
+            "disable": true,
             "excludeRecursion": false,
             "preventRecursion": false,
             "matchPersonaDescription": false,
@@ -2111,10 +2251,10 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "role": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 28,
             "displayIndex": 27,
@@ -2159,7 +2299,7 @@
             "content": "**来源：** 完成可选任务一“在重要的剧情转折时为小舞破处”后解锁的系统模块。\n\n**核心机制：**\n*   **淫神献祭：** 淫神偏爱少女在初次被侵犯时流下的“处女之血”，并将其视为一种献祭。User通过这种“祭炼”行为，能够从女性的“破处”中汲取一种名为“祭炼值”的玄虚力量。\n*   **目标要求：** 只有对在位面叙事中占有一席之地的、有一定气运的“处女”进行侵犯，才能获得祭炼值。普通路人或非处女（即使是再生处女膜）无法产生祭炼值。\n\n**祭炼值用途：**\n*   每当祭炼值积攒满1000点，User可以选择以下一项奖励：\n    1.  **觉醒淫神能力：** 随机从三个选项中觉醒一项由淫神赋予的特殊被动或主动能力。\n    2.  **诸天淫堕大转盘：** 进行一次抽奖，有机会获得来自其他位面的强大道具、技能或知识。\n    3.  **兑换点数：** 将1000点祭炼值直接兑换为5000点淫堕点数。\n\n**交互逻辑：**\n*   这是驱动User不断寻找并侵犯位面中重要处女角色的核心动力之一。它鼓励User将目标从已成熟的女性转向那些尚未经历人 事，他们需要一个合理的、符合角色设定的转变过程。\n*   **奖励驱动：** 该系统直接将“侵犯处女”与强大的能力提升挂钩，符合User作为“淫神眷属”追求堕落力量的核心动机。",
             "constant": true,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 993,
@@ -2185,10 +2325,10 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "role": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 29,
             "displayIndex": 28,
@@ -2295,6 +2435,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "31": {
@@ -2368,6 +2513,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "32": {
@@ -2444,6 +2594,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "33": {
@@ -2520,6 +2675,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "34": {
@@ -2595,6 +2755,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "35": {
@@ -2671,6 +2836,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "36": {
@@ -2747,6 +2917,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "37": {
@@ -2822,6 +2997,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "38": {
@@ -2897,6 +3077,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "39": {
@@ -2973,6 +3158,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "40": {
@@ -3048,6 +3238,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "41": {
@@ -3123,6 +3318,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "42": {
@@ -3198,6 +3398,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "43": {
@@ -3273,6 +3478,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "44": {
@@ -3348,6 +3558,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "45": {
@@ -3424,6 +3639,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "46": {
@@ -3499,6 +3719,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "47": {
@@ -3574,6 +3799,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "48": {
@@ -3648,6 +3878,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "49": {
@@ -3723,6 +3958,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "50": {
@@ -3797,6 +4037,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "51": {
@@ -3871,6 +4116,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "52": {
@@ -3945,6 +4195,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "53": {
@@ -4019,6 +4274,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "54": {
@@ -4093,6 +4353,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "55": {
@@ -4167,6 +4432,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "56": {
@@ -4240,6 +4510,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "57": {
@@ -4315,6 +4590,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "58": {
@@ -4396,6 +4676,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "59": {
@@ -4471,6 +4756,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "60": {
@@ -4547,6 +4837,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "61": {
@@ -4623,6 +4918,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "62": {
@@ -4698,6 +4998,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "63": {
@@ -4773,6 +5078,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "64": {
@@ -4848,6 +5158,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "65": {
@@ -4922,6 +5237,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "66": {
@@ -4996,6 +5316,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "67": {
@@ -5070,6 +5395,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "68": {
@@ -5144,6 +5474,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "69": {
@@ -5219,6 +5554,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "70": {
@@ -5293,6 +5633,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "71": {
@@ -5366,6 +5711,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "72": {
@@ -5439,6 +5789,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "73": {
@@ -5513,6 +5868,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "74": {
@@ -5588,6 +5948,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "75": {
@@ -5662,6 +6027,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "76": {
@@ -5736,6 +6106,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "77": {
@@ -5810,6 +6185,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "78": {
@@ -5884,6 +6264,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "79": {
@@ -5957,6 +6342,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "80": {
@@ -6031,6 +6421,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "81": {
@@ -6104,6 +6499,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "82": {
@@ -6178,6 +6578,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "83": {
@@ -6251,6 +6656,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "84": {
@@ -6324,6 +6734,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "85": {
@@ -6398,6 +6813,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "86": {
@@ -6472,6 +6892,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "87": {
@@ -6546,6 +6971,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "88": {
@@ -6620,6 +7050,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "89": {
@@ -6693,6 +7128,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "90": {
@@ -6767,6 +7207,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "91": {
@@ -6841,6 +7286,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "92": {
@@ -6915,6 +7365,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "93": {
@@ -6989,6 +7444,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "94": {
@@ -7063,6 +7523,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "95": {
@@ -7137,6 +7602,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "96": {
@@ -7211,6 +7681,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "97": {
@@ -7223,12 +7698,12 @@
             "content": "**来源：** 完成隐藏任务“与三位封号斗罗级别的女性性交，并使她们自愿受孕”后开放的系统权限。\n\n**效果：**\n*   **灵魂复制与珍藏：** 这是一个特殊的系统空间。User可以将任何被自己彻底征服（通常需要达成誓约或深度淫堕）的女性的灵魂进行“复制”，并将这个复制品“陈列”在馆内。\n*   **永恒的极乐地狱：** 被陈列的灵魂复制品会永远保持在被User征服的那个“巅峰”时刻，她们的意识会永远沉浸在与User交合的无尽极乐之中，不断地体验高潮和被内射的快感。这个空间对她们而言，既是天堂，也是永不翻身的淫堕地狱。\n*   **随时“参观”：** User可以随时进入陈列馆，与这些灵魂复制品进行互动和性交。这些灵魂复制品会展现出她们最淫荡、最顺从的一面，是User随时可以享用的、完美的性奴藏品。\n\n**交互逻辑：**\n*   **终极收藏癖：** “陈列馆”满足了User作为“淫神眷属”的终极收藏欲望，将征服过的极品女性永远地、以最完美的状态保存下来。\n*   **无风险享用：** 与现实中的性奴不同，陈列馆中的灵魂复制品不存在背叛、衰老或死亡的风险，是绝对安全和忠诚的玩物。\n*   **驱动力：** 解锁并填满“陈列馆”，将成为User在中后期不断攻略高难度女性角色的强大动力。",
             "constant": true,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 992,
             "position": 1,
-            "disable": false,
+            "disable": true,
             "excludeRecursion": false,
             "preventRecursion": false,
             "matchPersonaDescription": false,
@@ -7249,10 +7724,10 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "role": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 97,
             "displayIndex": 96,
@@ -7323,7 +7798,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -7359,6 +7834,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "99": {
@@ -7368,10 +7848,10 @@
             ],
             "keysecondary": [],
             "comment": "[核心设定] :: 生物观察能力 - 系统的情报功能",
-            "content": "**来源：** 完成隐藏任务“给任意一名女性破处且受孕成功”（在胡列娜身上达成）后解锁的系统能力。\n\n**效果：**\n*   **数据面板：** User可以将视线聚焦于任何生物，系统会自动弹出一个虚拟的数据面板，显示该目标的详细信息。\n*   **显示内容：**\n    *   **基础信息：** 姓名、年龄、种族、所属势力。\n    *   **实力信息：** 魂力等级、魂师类型、武魂。\n    *   **生理状态（核心）：** 是否处女、是否已受孕、当前生理周期（安全期/排卵期/危险期）、性交受孕概率。\n\n**战术应用：**\n*   **精准狩猎：** 这个能力让User的“处女狩猎”和“受孕计划”变得极为高效和精准。User可以轻易地筛选出处女目标，并在她们受孕概率最高的时候进行侵犯，以最大化效率完成任务。\n*   **情报优势：** 能够快速评估一个陌生角色的实力和背景，避免踢到铁板。\n*   **NTR确认：** 可以用来确认自己的“寝取精种”是否成功着床，以及目标的怀孕状态。",
+            "content": "**来源：** 完成隐藏任务“给任意一名女性破处且受孕成功”后解锁的系统能力。\n\n**效果：**\n*   **数据面板：** User可以将视线聚焦于任何生物，系统会自动弹出一个虚拟的数据面板，显示该目标的详细信息。\n*   **显示内容：**\n    *   **基础信息：** 姓名、年龄、种族、所属势力。\n    *   **实力信息：** 魂力等级、魂师类型、武魂。\n    *   **生理状态（核心）：** 是否处女、是否已受孕、当前生理周期（安全期/排卵期/危险期）、性交受孕概率。\n\n**战术应用：**\n*   **精准狩猎：** 这个能力让User的“处女狩猎”和“受孕计划”变得极为高效和精准。User可以轻易地筛选出处女目标，并在她们受孕概率最高的时候进行侵犯，以最大化效率完成任务。\n*   **情报优势：** 能够快速评估一个陌生角色的实力和背景，避免踢到铁板。\n*   **NTR确认：** 可以用来确认自己的“寝取精种”是否成功着床，以及目标的怀孕状态。",
             "constant": true,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 990,
@@ -7397,10 +7877,10 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "role": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 99,
             "displayIndex": 98,
@@ -7506,6 +7986,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "101": {
@@ -7579,6 +8064,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "102": {
@@ -7652,6 +8142,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "103": {
@@ -7726,6 +8221,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "104": {
@@ -7801,6 +8301,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "105": {
@@ -7875,6 +8380,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "106": {
@@ -7949,6 +8459,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "107": {
@@ -8023,6 +8538,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "108": {
@@ -8098,6 +8618,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "109": {
@@ -8172,6 +8697,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "110": {
@@ -8246,6 +8776,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "111": {
@@ -8322,6 +8857,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "112": {
@@ -8398,6 +8938,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "113": {
@@ -8472,6 +9017,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "114": {
@@ -8546,6 +9096,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "115": {
@@ -8620,6 +9175,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "116": {
@@ -8694,6 +9254,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "117": {
@@ -8767,6 +9332,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "118": {
@@ -8840,6 +9410,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "119": {
@@ -8914,6 +9489,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "120": {
@@ -8988,6 +9568,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "121": {
@@ -9061,6 +9646,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "122": {
@@ -9137,6 +9727,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "123": {
@@ -9213,6 +9808,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "124": {
@@ -9289,6 +9889,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "125": {
@@ -9365,6 +9970,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "126": {
@@ -9439,6 +10049,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "127": {
@@ -9513,6 +10128,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "128": {
@@ -9586,6 +10206,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "129": {
@@ -9660,6 +10285,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "130": {
@@ -9734,6 +10364,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "131": {
@@ -9809,6 +10444,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "132": {
@@ -9883,6 +10523,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "133": {
@@ -9956,6 +10601,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "134": {
@@ -10029,6 +10679,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "135": {
@@ -10103,6 +10758,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "136": {
@@ -10176,6 +10836,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "137": {
@@ -10249,6 +10914,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "138": {
@@ -10324,6 +10994,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "139": {
@@ -10398,6 +11073,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "140": {
@@ -10472,6 +11152,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "141": {
@@ -10546,6 +11231,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "142": {
@@ -10621,6 +11311,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "143": {
@@ -10695,6 +11390,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "144": {
@@ -10769,6 +11469,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "145": {
@@ -10844,6 +11549,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "146": {
@@ -10918,6 +11628,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "147": {
@@ -10992,6 +11707,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "148": {
@@ -11066,6 +11786,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "149": {
@@ -11140,6 +11865,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "150": {
@@ -11214,6 +11944,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "151": {
@@ -11289,6 +12024,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "152": {
@@ -11363,6 +12103,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "153": {
@@ -11436,6 +12181,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "154": {
@@ -11509,6 +12259,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "155": {
@@ -11582,6 +12337,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "156": {
@@ -11655,6 +12415,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "157": {
@@ -11728,6 +12493,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "158": {
@@ -11765,7 +12535,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -11801,6 +12571,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "159": {
@@ -11840,7 +12615,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -11876,6 +12651,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "160": {
@@ -11913,7 +12693,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -11949,6 +12729,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "161": {
@@ -11988,7 +12773,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12024,6 +12809,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "162": {
@@ -12062,7 +12852,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12098,6 +12888,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "163": {
@@ -12136,7 +12931,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12172,6 +12967,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "164": {
@@ -12210,7 +13010,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12246,6 +13046,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "165": {
@@ -12284,7 +13089,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12320,6 +13125,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "166": {
@@ -12358,7 +13168,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12394,6 +13204,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "167": {
@@ -12432,7 +13247,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12468,6 +13283,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "168": {
@@ -12506,7 +13326,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12542,6 +13362,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "169": {
@@ -12579,7 +13404,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12615,6 +13440,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "170": {
@@ -12689,6 +13519,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "171": {
@@ -12762,6 +13597,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "172": {
@@ -12835,6 +13675,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "173": {
@@ -12908,6 +13753,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "174": {
@@ -12982,6 +13832,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "175": {
@@ -13055,6 +13910,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "176": {
@@ -13129,6 +13989,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "177": {
@@ -13202,6 +14067,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "178": {
@@ -13275,6 +14145,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "179": {
@@ -13348,6 +14223,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "180": {
@@ -13421,6 +14301,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "181": {
@@ -13494,6 +14379,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "182": {
@@ -13567,6 +14457,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "183": {
@@ -13640,6 +14535,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "184": {
@@ -13713,6 +14613,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "185": {
@@ -13786,6 +14691,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "186": {
@@ -13859,6 +14769,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "187": {
@@ -13932,6 +14847,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "188": {
@@ -14005,6 +14925,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "189": {
@@ -14078,6 +15003,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "190": {
@@ -14151,6 +15081,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "191": {
@@ -14225,6 +15160,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "192": {
@@ -14299,6 +15239,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "193": {
@@ -14373,6 +15318,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "194": {
@@ -14448,6 +15398,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "195": {
@@ -14522,6 +15477,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "196": {
@@ -14596,6 +15556,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "197": {
@@ -14670,6 +15635,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "198": {
@@ -14743,6 +15713,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "199": {
@@ -14816,6 +15791,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "200": {
@@ -14890,6 +15870,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "201": {
@@ -14964,6 +15949,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "202": {
@@ -15038,6 +16028,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "203": {
@@ -15112,6 +16107,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "204": {
@@ -15187,6 +16187,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         }
     },

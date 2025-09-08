@@ -3,22 +3,18 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
         "AlertWI_JK精灵的异世界孕活.png": "true",
         "AlertRegex_JK精灵的异世界孕活.png": "true",
         "WINavOpened": "true",
-        "AlertWI_无限淫神恶堕系统斗罗篇.png": "true",
-        "AlertWI_世界调制模式·重制版.png": "true",
-        "AlertRegex_世界调制模式·重制版.png": "true",
-        "AlertWI_雌竟的世界.png": "true",
-        "Personas_GridView": "false"
+        "AlertWI_无限淫神恶堕系统斗罗篇.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "白厉",
-    "active_character": "无限淫神恶堕系统斗罗篇.png",
+    "active_character": "陈沫沫.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -347,12 +343,11 @@
         "default_persona": null,
         "persona_descriptions": {
             "user-default.png": {
-                "description": "男性,14岁.身材消瘦、容貌俊秀。\n天赋：更容易偶遇各种美女，并通过各种偶然事件与其发生性关系，建立亲密关系。",
-                "position": 0,
-                "title": "14"
+                "description": "男性,25岁.身材消瘦、容貌冷峻。",
+                "position": 0
             }
         },
-        "persona_description": "男性,14岁.身材消瘦、容貌俊秀。\n天赋：更容易偶遇各种美女，并通过各种偶然事件与其发生性关系，建立亲密关系。",
+        "persona_description": "男性,25岁.身材消瘦、容貌冷峻。",
         "persona_description_position": 0,
         "persona_description_role": 0,
         "persona_description_depth": 2,
@@ -566,8 +561,7 @@
             }
         ],
         "character_allowed_regex": [
-            "JK精灵的异世界孕活.png",
-            "世界调制模式·重制版.png"
+            "JK精灵的异世界孕活.png"
         ],
         "tts": {
             "voiceMap": "",
@@ -989,9 +983,7 @@
             "d06da531-7c40-460a-8349-5a178869e84e"
         ],
         "周芷若.png": [],
-        "陈沫沫.png": [],
-        "世界调制模式·重制版.png": [],
-        "雌竟的世界.png": []
+        "陈沫沫.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -1067,7 +1059,7 @@
         "min_p_openai": 0,
         "top_a_openai": 1,
         "repetition_penalty_openai": 1,
-        "stream_openai": false,
+        "stream_openai": true,
         "openai_max_context": 248000,
         "openai_max_tokens": 65535,
         "wrap_in_quotes": false,
@@ -2736,7 +2728,7 @@
                     },
                     {
                         "identifier": "03e9c451-c02d-4ffc-982c-7c85579edfdd",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "4be5768f-b441-4a57-9db0-5ede5aa51a85",
@@ -2744,7 +2736,7 @@
                     },
                     {
                         "identifier": "2155ec73-aead-4d4e-9669-9155c4597ca5",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "54841ad6-1d17-42ca-a729-def8b7ceb8f2",
@@ -2760,7 +2752,7 @@
                     },
                     {
                         "identifier": "075319f1-a423-4d86-b655-435d3d4cc727",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "dbb10cac-0fe2-49ef-9164-c4c6be2b6680",
@@ -3020,11 +3012,11 @@
                     },
                     {
                         "identifier": "0170f6c7-8223-464f-8c4b-adda084c92da",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "aabb3e86-d85b-4c89-8fbb-be1f834a22ae",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "ef2eafd0-68c8-4f21-88d2-0c3e6315a148",
@@ -3036,7 +3028,7 @@
                     },
                     {
                         "identifier": "5478ee74-cf48-4905-b2b1-7267683819a0",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "c28fc27e-eb10-41b8-891d-084300e7a520",
@@ -3137,7 +3129,7 @@
         "xai_model": "grok-3-beta",
         "pollinations_model": "openai",
         "custom_model": "gemini-2.5-pro",
-        "custom_url": "https://nianniancn.top/v1",
+        "custom_url": "http://www.guqinghan.icu/v1",
         "custom_include_body": "",
         "custom_exclude_body": "",
         "custom_include_headers": "",
