@@ -69,11 +69,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "1": {
@@ -148,11 +143,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "2": {
@@ -228,11 +218,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "3": {
@@ -308,11 +293,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "4": {
@@ -388,11 +368,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "5": {
@@ -468,11 +443,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "6": {
@@ -548,11 +518,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "7": {
@@ -1037,11 +1002,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "13": {
@@ -2287,6 +2247,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "29": {
@@ -2296,7 +2261,7 @@
             ],
             "keysecondary": [],
             "comment": "核心设定：User通过侵犯有气运的处女来获得力量的系统。",
-            "content": "**来源：** 完成可选任务一“在重要的剧情转折时为小舞破处”后解锁的系统模块。\n\n**核心机制：**\n*   **淫神献祭：** 淫神偏爱少女在初次被侵犯时流下的“处女之血”，并将其视为一种献祭。User通过这种“祭炼”行为，能够从女性的“破处”中汲取一种名为“祭炼值”的玄虚力量。\n*   **目标要求：** 只有对在位面叙事中占有一席之地的、有一定气运的“处女”进行侵犯，才能获得祭炼值。普通路人或非处女（即使是再生处女膜）无法产生祭炼值。\n\n**祭炼值用途：**\n*   每当祭炼值积攒满1000点，User可以选择以下一项奖励：\n    1.  **觉醒淫神能力：** 随机从三个选项中觉醒一项由淫神赋予的特殊被动或主动能力。\n    2.  **诸天淫堕大转盘：** 进行一次抽奖，有机会获得来自其他位面的强大道具、技能或知识。\n    3.  **兑换点数：** 将1000点祭炼值直接兑换为5000点淫堕点数。\n\n**交互逻辑：**\n*   这是驱动User不断寻找并侵犯位面中重要处女角色的核心动力之一。它鼓励User将目标从已成熟的女性转向那些尚未经历人 事，他们需要一个合理的、符合角色设定的转变过程。\n*   **奖励驱动：** 该系统直接将“侵犯处女”与强大的能力提升挂钩，符合User作为“淫神眷属”追求堕落力量的核心动机。",
+            "content": "**来源：** 完成可选任务一“在重要的剧情转折时为小舞破处”后解锁的系统模块。\n\n**核心机制：**\n*   **淫神献祭：** 淫神偏爱少女在初次被侵犯时流下的“处女之血”，并将其视为一种献祭。User通过这种“祭炼”行为，能够从女性的“破处”中汲取一种名为“祭炼值”的玄虚力量。\n*   **目标要求：** 只有对在位面叙事中占有一席之地的、有一定气运的“处女”进行侵犯，才能获得祭炼值。普通路人或非处女（即使是再生处女膜）无法产生祭炼值。\n\n**祭炼值用途：**\n*   每当祭炼值积攒满1000点，User可以选择以下一项奖励：\n    1.  **觉醒淫神能力：** 随机从三个选项中觉醒一项由淫神赋予的特殊被动或主动能力。\n    2.  **诸天淫堕大转盘：** 进行一次抽奖，有机会获得来自其他位面的强大道具、技能或知识。\n    3.  **兑换点数：** 将1000点祭炼值直接兑换为5000点淫堕点数。\n\n**交互逻辑：**\n*   这是驱动User不断寻找并侵犯位面中重要处女角色的核心动力之一。它鼓励User将目标从已成熟的女性转向那些尚未经历人 事，他们需要一个合理的、符合角色设定的转变过程。\n*   **奖励驱动：** 该系统直接将“侵犯处女”与强大的能力提升挂钩，促使User作为“淫神眷属”追求堕落力量。",
             "constant": true,
             "vectorized": false,
             "selective": true,
@@ -7760,6 +7725,11 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "98": {
@@ -7772,7 +7742,7 @@
             "content": "**来源：** 【无限淫神恶堕系统】自带的高级模块，初始处于未解锁回溯的状态。\n\n**当前功能：**\n*   **向后跳跃：** User可以消耗大量的淫堕点数，将时间线快速向未来推进到某个指定的关键剧情节点。这是一种高风险高回报的策略，可以跳过漫长的等待和发育期，直取核心剧情。\n*   **代价：** 跳跃期间，User自身的能力不会有任何成长，而世界线上的其他角色则在正常成长。这意味着User将面对更强大的敌人。\n\n**解锁条件（推测）：**\n*   **回溯功能：** “时间回溯”功能可能需要User完成某个极高难度的任务，或者将位面气运篡夺到一定程度后才能解锁。一旦解锁，将成为User弥补失误、尝试不同剧情线的终极底牌。\n\n**应用实例：**\n*   User为了不错过“小舞献祭”这个关键的NTR时机，选择消耗点数进行时间跳跃，直接从侵犯阿银后的时间点，跳跃到了星斗大森林献祭事件的现场。",
             "constant": true,
             "vectorized": false,
-            "selective": false,
+            "selective": true,
             "selectiveLogic": 0,
             "addMemo": true,
             "order": 991,
@@ -7799,9 +7769,9 @@
             "useGroupScoring": false,
             "automationId": "",
             "role": null,
-            "sticky": null,
-            "cooldown": null,
-            "delay": null,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0,
             "triggers": [],
             "uid": 98,
             "displayIndex": 97,
@@ -7834,11 +7804,6 @@
                 "match_character_depth_prompt": false,
                 "match_scenario": false,
                 "match_creator_notes": false
-            },
-            "characterFilter": {
-                "isExclude": false,
-                "names": [],
-                "tags": []
             }
         },
         "99": {
@@ -12379,7 +12344,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
@@ -12457,7 +12422,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": null,
             "cooldown": null,
             "delay": null,
