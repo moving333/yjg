@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -14,17 +14,11 @@
         "AlertWI_世界调制模式·重制版.png": "true",
         "AlertRegex_世界调制模式·重制版.png": "true",
         "AlertWI_雌竟的世界.png": "true",
-        "Personas_GridView": "false",
-        "AlertWI_性癖大世界-1.3-无状态栏.png": "true",
-        "AlertRegex_性癖大世界-1.3-无状态栏.png": "true",
-        "AlertWI_章鱼哔的原罪.png": "true",
-        "AlertWI_雏菊巡防官.png": "true",
-        "AlertRegex_雏菊巡防官.png": "true",
-        "WI_PerPage": "100"
+        "Personas_GridView": "false"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "性癖大世界-1.3-无状态栏.png",
+    "active_character": "归来的路明非.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -572,9 +566,7 @@
         ],
         "character_allowed_regex": [
             "JK精灵的异世界孕活.png",
-            "世界调制模式·重制版.png",
-            "性癖大世界-1.3-无状态栏.png",
-            "雏菊巡防官.png"
+            "世界调制模式·重制版.png"
         ],
         "tts": {
             "voiceMap": "",
@@ -998,11 +990,7 @@
         "周芷若.png": [],
         "陈沫沫.png": [],
         "世界调制模式·重制版.png": [],
-        "雌竟的世界.png": [],
-        "性癖大世界-1.3-无状态栏.png": [],
-        "章鱼哔的原罪.png": [],
-        "世界调制模式·重制版1.png": [],
-        "雏菊巡防官.png": []
+        "雌竟的世界.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -3060,11 +3048,11 @@
                     },
                     {
                         "identifier": "0196cf05-d08a-48f8-b18e-e811c6903df4",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "efba5169-9e17-4175-9c58-ea79724d67be",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "050258e2-9585-40b4-b1f4-929ba7ebfc1c",

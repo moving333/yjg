@@ -2,7 +2,7 @@
     "firstRun": false,
     "accountStorage": {
         "__migrated": "1",
-        "NavOpened": "false",
+        "NavOpened": "true",
         "LNavOpened": "false",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
@@ -16,11 +16,7 @@
         "AlertWI_雌竟的世界.png": "true",
         "Personas_GridView": "false",
         "AlertWI_性癖大世界-1.3-无状态栏.png": "true",
-        "AlertRegex_性癖大世界-1.3-无状态栏.png": "true",
-        "AlertWI_章鱼哔的原罪.png": "true",
-        "AlertWI_雏菊巡防官.png": "true",
-        "AlertRegex_雏菊巡防官.png": "true",
-        "WI_PerPage": "100"
+        "AlertRegex_性癖大世界-1.3-无状态栏.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
@@ -573,8 +569,7 @@
         "character_allowed_regex": [
             "JK精灵的异世界孕活.png",
             "世界调制模式·重制版.png",
-            "性癖大世界-1.3-无状态栏.png",
-            "雏菊巡防官.png"
+            "性癖大世界-1.3-无状态栏.png"
         ],
         "tts": {
             "voiceMap": "",
@@ -999,10 +994,7 @@
         "陈沫沫.png": [],
         "世界调制模式·重制版.png": [],
         "雌竟的世界.png": [],
-        "性癖大世界-1.3-无状态栏.png": [],
-        "章鱼哔的原罪.png": [],
-        "世界调制模式·重制版1.png": [],
-        "雏菊巡防官.png": []
+        "性癖大世界-1.3-无状态栏.png": []
     },
     "nai_settings": {
         "temperature": 1.5,

@@ -20,7 +20,7 @@
         "AlertWI_章鱼哔的原罪.png": "true",
         "AlertWI_雏菊巡防官.png": "true",
         "AlertRegex_雏菊巡防官.png": "true",
-        "WI_PerPage": "100"
+        "WI_PerPage": "50"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
