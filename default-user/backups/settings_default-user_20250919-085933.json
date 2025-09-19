@@ -14,7 +14,7 @@
         "AlertWI_世界调制模式·重制版.png": "true",
         "AlertRegex_世界调制模式·重制版.png": "true",
         "AlertWI_雌竟的世界.png": "true",
-        "Personas_GridView": "true",
+        "Personas_GridView": "false",
         "AlertWI_性癖大世界-1.3-无状态栏.png": "true",
         "AlertRegex_性癖大世界-1.3-无状态栏.png": "true",
         "AlertWI_章鱼哔的原罪.png": "true",
@@ -348,25 +348,16 @@
             "max_additions": 1
         },
         "personas": {
-            "user-default.png": "古月",
-            "1758272902602-.png": "古月"
+            "user-default.png": "古月"
         },
         "default_persona": "user-default.png",
         "persona_descriptions": {
             "user-default.png": {
-                "description": "男性,14岁,身材消瘦、容貌俊秀。\n",
+                "description": "男性,14岁,身材消瘦、容貌俊秀。\n肉棒会给女性剧烈的生理快感。女性一旦体验便会食髓知味，会不自觉地将几乎所有生活场景与性产生联想，性欲逐渐旺盛却无法自行缓解，只能主动或被动地寻求与{{user}}性接触。",
                 "position": 0
-            },
-            "1758272902602-.png": {
-                "description": "肉棒会给女性剧烈的生理快感。女性一旦体验便会食髓知味，会不自觉地将几乎所有生活场景与性产生联想，性欲逐渐旺盛却无法自行缓解，只能主动或被动地寻求与{{user}}性接触。",
-                "position": 0,
-                "depth": 2,
-                "role": 0,
-                "lorebook": "",
-                "title": ""
             }
         },
-        "persona_description": "男性,14岁,身材消瘦、容貌俊秀。\n",
+        "persona_description": "男性,14岁,身材消瘦、容貌俊秀。\n肉棒会给女性剧烈的生理快感。女性一旦体验便会食髓知味，会不自觉地将几乎所有生活场景与性产生联想，性欲逐渐旺盛却无法自行缓解，只能主动或被动地寻求与{{user}}性接触。",
         "persona_description_position": 0,
         "persona_description_role": 0,
         "persona_description_depth": 2,

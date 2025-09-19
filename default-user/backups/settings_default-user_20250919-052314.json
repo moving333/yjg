@@ -14,7 +14,7 @@
         "AlertWI_世界调制模式·重制版.png": "true",
         "AlertRegex_世界调制模式·重制版.png": "true",
         "AlertWI_雌竟的世界.png": "true",
-        "Personas_GridView": "true",
+        "Personas_GridView": "false",
         "AlertWI_性癖大世界-1.3-无状态栏.png": "true",
         "AlertRegex_性癖大世界-1.3-无状态栏.png": "true",
         "AlertWI_章鱼哔的原罪.png": "true",
@@ -24,7 +24,7 @@
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "无限淫神恶堕系统斗罗篇.png",
+    "active_character": "性癖大世界-1.3-无状态栏.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -348,25 +348,16 @@
             "max_additions": 1
         },
         "personas": {
-            "user-default.png": "古月",
-            "1758272902602-.png": "古月"
+            "user-default.png": "古月"
         },
-        "default_persona": "user-default.png",
+        "default_persona": null,
         "persona_descriptions": {
             "user-default.png": {
-                "description": "男性,14岁,身材消瘦、容貌俊秀。\n",
+                "description": "男性,14岁.身材消瘦、容貌俊秀。",
                 "position": 0
-            },
-            "1758272902602-.png": {
-                "description": "肉棒会给女性剧烈的生理快感。女性一旦体验便会食髓知味，会不自觉地将几乎所有生活场景与性产生联想，性欲逐渐旺盛却无法自行缓解，只能主动或被动地寻求与{{user}}性接触。",
-                "position": 0,
-                "depth": 2,
-                "role": 0,
-                "lorebook": "",
-                "title": ""
             }
         },
-        "persona_description": "男性,14岁,身材消瘦、容貌俊秀。\n",
+        "persona_description": "男性,14岁.身材消瘦、容貌俊秀。",
         "persona_description_position": 0,
         "persona_description_role": 0,
         "persona_description_depth": 2,
@@ -420,7 +411,7 @@
             "forceHidden": [],
             "forceShown": []
         },
-        "wi_key_input_plaintext": false
+        "wi_key_input_plaintext": true
     },
     "extension_settings": {
         "apiUrl": "http://localhost:5100",
@@ -992,6 +983,7 @@
         "JK精灵的异世界孕活.png": [],
         "无限淫神恶堕系统斗罗篇.png": [
             "6c0e0006-7e19-4d2b-a7d5-85e2bd440389",
+            "946f80ba-433f-4d1c-8264-0eb5c808a1aa",
             "20b6fe42-b6e1-4d31-bbd3-3bae92bed9b4",
             "ddfe672f-197a-4cd2-957d-cc2f13ce88ff",
             "71d20774-b7a3-4c99-ac77-c23dece29479",
@@ -2756,7 +2748,7 @@
                     },
                     {
                         "identifier": "03e9c451-c02d-4ffc-982c-7c85579edfdd",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "4be5768f-b441-4a57-9db0-5ede5aa51a85",
