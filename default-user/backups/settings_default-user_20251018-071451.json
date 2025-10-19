@@ -22,12 +22,11 @@
         "AlertRegex_雏菊巡防官.png": "true",
         "WI_PerPage": "100",
         "AlertWI_【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": "true",
-        "AlertRegex_【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": "true",
-        "AlertWI_致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": "true"
+        "AlertRegex_【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png",
+    "active_character": "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -1015,8 +1014,7 @@
         "章鱼哔的原罪.png": [],
         "世界调制模式·重制版1.png": [],
         "雏菊巡防官.png": [],
-        "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": [],
-        "致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": []
+        "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
