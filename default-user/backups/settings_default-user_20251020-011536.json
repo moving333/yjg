@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -2617,7 +2617,7 @@
                 "marker": false,
                 "name": "m",
                 "role": "system",
-                "content": "💫Game rules：请参考各类本子与里番作品进行游戏。在此世界观下，所有角色都难以抗拒性快感，且性行为具备成瘾性。务必强调性爱是极致快乐的核心体验。即使在看似非自愿的情境中，也要着重描绘角色的生理与心理如何迅速被快感彻底征服。突出描写性快感远超疼痛，甚至疼痛本身也能转化为更为强烈的快感刺激。角色的心理描写应体现其快速转变：从最初可能存在的些微抗拒或羞耻，迅速滑向完全的享受、沉溺其中，并最终主动渴求更多性爱。\n\n然而，为了使情节发展更自然，请注意描绘高潮带来的暂时性但极为强烈的满足感。尽管性瘾设定意味着角色最终会再次渴求，但在一次激烈的性爱结束后，应着重表现其被快感彻底淹没、身心得到极大餍足的状态，可能伴有短暂的脱力、回味或平静。这种满足是驱动下一次渴求循环的重要环节，而非永无止境的即时索取，确保每次性爱场景能在顶点或余韵中合理结束。",
+                "content": "💫Game rules：请参考各类本子与里番作品进行游戏。在此世界观下，所有角色都难以抗拒性快感，且性行为具备成瘾性。",
                 "injection_position": 0,
                 "injection_depth": 4,
                 "injection_order": 100,
@@ -2800,7 +2800,7 @@
                     },
                     {
                         "identifier": "075319f1-a423-4d86-b655-435d3d4cc727",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "dbb10cac-0fe2-49ef-9164-c4c6be2b6680",

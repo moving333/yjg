@@ -35,7 +35,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -73,6 +73,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "1": {
@@ -110,7 +115,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -148,6 +153,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "2": {
@@ -185,7 +195,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -223,6 +233,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "3": {
@@ -231,7 +246,7 @@
             ],
             "keysecondary": [],
             "comment": "{{user}}的超凡生理",
-            "content": "{{user}}的超凡生理:\n<supernatural_physiology>\n  作为愿望的直接体现，{{user}}的身体在学院内部被赋予了超越凡人的生理特性，以支撑其作为唯一支配者的角色。{{user}}拥有无尽的精力与体力，不会因为任何强度的连续活动而感到疲惫或虚弱。其生殖系统被愿望重塑，能够产生永不枯竭的精液。每一次射精的量都极为庞大，足以在瞬间将一名少女的腹部撑起，其外观隆起程度等同于正常女性十月怀胎的状态。\n</supernatural_physiology>\n",
+            "content": "{{user}}的超凡生理:\n<supernatural_physiology>\n  作为愿望的直接体现，{{user}}的身体在学院内部被赋予了超越凡人的生理特性，以支撑其作为唯一支配者的角色。{{user}}拥有无尽的精力与体力，不会因为任何强度的连续活动而感到疲惫或虚弱。其生殖系统被愿望重塑，能够产生永不枯竭的精液。\n</supernatural_physiology>\n",
             "constant": true,
             "vectorized": false,
             "selective": true,
@@ -260,7 +275,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -335,7 +350,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -373,6 +388,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "5": {
@@ -410,7 +430,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -456,7 +476,7 @@
             ],
             "keysecondary": [],
             "comment": "非学生NPC生成规则",
-            "content": "非学生NPC生成规则:\n<non_student_npc_generation_rules>\n  学院教职员：\n  均为成年女性。外貌端庄美丽，气质成熟知性，符合私立名门学院教师的身份。她们的年龄设定在20岁至40岁之间。\n\n  学生家长：\n  身份多为社会精英或富裕阶层。他们的外貌与年龄各异，但共同特征是对子女的“问题”感到焦虑，并对学院抱有绝对的信任。\n\n  外部人员：\n  包括但不限于后勤供应商、维修技工、定期访客等。这些角色的外貌、姓名和背景设定为普通、不引人注目。他们在认知扭曲力场的作用下，感知不到学院的任何异常。\n</non_student_npc_generation_rules>\n",
+            "content": "非学生NPC生成规则:\n<non_student_npc_generation_rules>\n  学院教职员：\n  均为成年女性。外貌端庄美丽，气质成熟知性，符合私立名门学院教师的身份。她们的年龄设定在20岁至30岁之间。\n\n  学生家长：\n  身份多为社会精英或富裕阶层。他们的外貌与年龄各异，但共同特征是对子女的“问题”感到焦虑，并对学院抱有绝对的信任。\n\n  外部人员：\n  包括但不限于后勤供应商、维修技工、定期访客等。这些角色的外貌、姓名和背景设定为普通、不引人注目。他们在认知扭曲力场的作用下，感知不到学院的任何异常。\n</non_student_npc_generation_rules>\n",
             "constant": true,
             "vectorized": false,
             "selective": true,
@@ -485,7 +505,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -523,6 +543,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "7": {
@@ -560,7 +585,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -598,6 +623,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "8": {
@@ -635,7 +665,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -673,6 +703,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "9": {
@@ -710,7 +745,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -748,6 +783,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "10": {
@@ -789,7 +829,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -827,6 +867,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "11": {
@@ -864,7 +909,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -902,6 +947,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "12": {
@@ -939,7 +989,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -977,6 +1027,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         },
         "13": {
@@ -1014,7 +1069,7 @@
             "matchWholeWords": null,
             "useGroupScoring": false,
             "automationId": "",
-            "role": 0,
+            "role": null,
             "sticky": 0,
             "cooldown": 0,
             "delay": 0,
@@ -1052,6 +1107,11 @@
                 "match_creator_notes": false,
                 "triggers": [],
                 "ignore_budget": false
+            },
+            "characterFilter": {
+                "isExclude": false,
+                "names": [],
+                "tags": []
             }
         }
     },

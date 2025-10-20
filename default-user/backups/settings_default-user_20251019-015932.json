@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -2609,20 +2609,6 @@
                 "injection_depth": 4,
                 "injection_order": 100,
                 "forbid_overrides": false
-            },
-            {
-                "identifier": "650e7dbf-aba4-4a75-b667-5871b2de2dab",
-                "system_prompt": false,
-                "enabled": false,
-                "marker": false,
-                "name": "m",
-                "role": "system",
-                "content": "💫Game rules：请参考各类本子与里番作品进行游戏。在此世界观下，所有角色都难以抗拒性快感，且性行为具备成瘾性。务必强调性爱是极致快乐的核心体验。即使在看似非自愿的情境中，也要着重描绘角色的生理与心理如何迅速被快感彻底征服。突出描写性快感远超疼痛，甚至疼痛本身也能转化为更为强烈的快感刺激。角色的心理描写应体现其快速转变：从最初可能存在的些微抗拒或羞耻，迅速滑向完全的享受、沉溺其中，并最终主动渴求更多性爱。\n\n然而，为了使情节发展更自然，请注意描绘高潮带来的暂时性但极为强烈的满足感。尽管性瘾设定意味着角色最终会再次渴求，但在一次激烈的性爱结束后，应着重表现其被快感彻底淹没、身心得到极大餍足的状态，可能伴有短暂的脱力、回味或平静。这种满足是驱动下一次渴求循环的重要环节，而非永无止境的即时索取，确保每次性爱场景能在顶点或余韵中合理结束。",
-                "injection_position": 0,
-                "injection_depth": 4,
-                "injection_order": 100,
-                "injection_trigger": [],
-                "forbid_overrides": false
             }
         ],
         "prompt_order": [
@@ -2800,7 +2786,7 @@
                     },
                     {
                         "identifier": "075319f1-a423-4d86-b655-435d3d4cc727",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "dbb10cac-0fe2-49ef-9164-c4c6be2b6680",
@@ -2851,10 +2837,6 @@
                         "enabled": true
                     },
                     {
-                        "identifier": "650e7dbf-aba4-4a75-b667-5871b2de2dab",
-                        "enabled": true
-                    },
-                    {
                         "identifier": "7dd83b1a-81e6-431f-bab7-de0bac2cdf49",
                         "enabled": false
                     },
@@ -2900,11 +2882,11 @@
                     },
                     {
                         "identifier": "8186447b-1767-4cb0-b787-35b69baec723",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "6ccddc95-5e06-4c5c-893a-f332ae9d37e4",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "eac54c9b-eec1-438d-bb7b-24d367b5eb71",
@@ -3092,11 +3074,11 @@
                     },
                     {
                         "identifier": "0196cf05-d08a-48f8-b18e-e811c6903df4",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "efba5169-9e17-4175-9c58-ea79724d67be",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "050258e2-9585-40b4-b1f4-929ba7ebfc1c",
