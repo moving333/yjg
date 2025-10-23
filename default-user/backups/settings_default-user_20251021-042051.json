@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -25,15 +25,11 @@
         "AlertRegex_【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": "true",
         "AlertWI_致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": "true",
         "AlertWI_某科学的超电磁炮.png": "true",
-        "AlertRegex_某科学的超电磁炮.png": "true",
-        "AlertWI_调教巫师赫敏.png": "true",
-        "AlertRegex_调教巫师赫敏.png": "true",
-        "AlertWI_大富翁之从买下街道到占有她们.png": "true",
-        "AlertRegex_大富翁之从买下街道到占有她们.png": "true"
+        "AlertRegex_某科学的超电磁炮.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "大富翁之从买下街道到占有她们.png",
+    "active_character": "某科学的超电磁炮.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -46,12 +42,12 @@
         "world_info_depth": 2,
         "world_info_min_activations": 0,
         "world_info_min_activations_depth_max": 0,
-        "world_info_budget": 100,
-        "world_info_include_names": false,
+        "world_info_budget": 25,
+        "world_info_include_names": true,
         "world_info_recursive": true,
         "world_info_overflow_alert": false,
         "world_info_case_sensitive": false,
-        "world_info_match_whole_words": false,
+        "world_info_match_whole_words": true,
         "world_info_character_strategy": 1,
         "world_info_budget_cap": 0,
         "world_info_use_group_scoring": false,
@@ -360,10 +356,9 @@
             "user-default.png": "古月",
             "1758272902602-.png": "古月"
         },
-        "default_persona": "user-default.png",
         "persona_descriptions": {
             "user-default.png": {
-                "description": "男性，身材消瘦，容貌俊秀，五官精致。\n\n",
+                "description": "男性，14岁，著名人气偶像，身材消瘦，容貌俊秀，眼角有一颗泪痣。\n任何女性，无论善恶、无论老人小孩，只要看他一眼，就会拜倒在他的魅力下，对他着迷的人往往会对她产生强烈的爱欲与占有欲。\n",
                 "position": 0
             },
             "1758272902602-.png": {
@@ -375,7 +370,7 @@
                 "title": ""
             }
         },
-        "persona_description": "男性，身材消瘦，容貌俊秀，五官精致。\n\n",
+        "persona_description": "男性，14岁，著名人气偶像，身材消瘦，容貌俊秀，眼角有一颗泪痣。\n任何女性，无论善恶、无论老人小孩，只要看他一眼，就会拜倒在他的魅力下，对他着迷的人往往会对她产生强烈的爱欲与占有欲。\n",
         "persona_description_position": 0,
         "persona_description_role": 0,
         "persona_description_depth": 2,
@@ -429,7 +424,8 @@
             "forceHidden": [],
             "forceShown": []
         },
-        "wi_key_input_plaintext": false
+        "wi_key_input_plaintext": false,
+        "default_persona": "user-default.png"
     },
     "extension_settings": {
         "apiUrl": "http://localhost:5100",
@@ -594,9 +590,7 @@
             "性癖大世界-1.3-无状态栏.png",
             "雏菊巡防官.png",
             "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png",
-            "某科学的超电磁炮.png",
-            "调教巫师赫敏.png",
-            "大富翁之从买下街道到占有她们.png"
+            "某科学的超电磁炮.png"
         ],
         "tts": {
             "voiceMap": "",
@@ -825,9 +819,7 @@
             "script": {
                 "global_script_enabled": true,
                 "scriptsRepository": [],
-                "characters_with_scripts": [
-                    "大富翁之从买下街道到占有她们.png"
-                ]
+                "characters_with_scripts": []
             },
             "audio": {
                 "audio_enabled": true,
@@ -1028,9 +1020,7 @@
         "雏菊巡防官.png": [],
         "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": [],
         "致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": [],
-        "某科学的超电磁炮.png": [],
-        "调教巫师赫敏.png": [],
-        "大富翁之从买下街道到占有她们.png": []
+        "某科学的超电磁炮.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -3058,7 +3048,7 @@
                     },
                     {
                         "identifier": "4494f564-2ad3-47d0-8220-f9df722f970f",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "5de04c24-9d11-4b4d-b79e-794ab754304d",
@@ -3106,7 +3096,7 @@
                     },
                     {
                         "identifier": "0196cf05-d08a-48f8-b18e-e811c6903df4",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "efba5169-9e17-4175-9c58-ea79724d67be",
@@ -3114,7 +3104,7 @@
                     },
                     {
                         "identifier": "050258e2-9585-40b4-b1f4-929ba7ebfc1c",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "d2c3ab9d-6e80-4cd7-b59a-db2d6a3f5b82",

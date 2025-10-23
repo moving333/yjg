@@ -27,13 +27,11 @@
         "AlertWI_某科学的超电磁炮.png": "true",
         "AlertRegex_某科学的超电磁炮.png": "true",
         "AlertWI_调教巫师赫敏.png": "true",
-        "AlertRegex_调教巫师赫敏.png": "true",
-        "AlertWI_大富翁之从买下街道到占有她们.png": "true",
-        "AlertRegex_大富翁之从买下街道到占有她们.png": "true"
+        "AlertRegex_调教巫师赫敏.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "大富翁之从买下街道到占有她们.png",
+    "active_character": "调教巫师赫敏.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -46,12 +44,12 @@
         "world_info_depth": 2,
         "world_info_min_activations": 0,
         "world_info_min_activations_depth_max": 0,
-        "world_info_budget": 100,
-        "world_info_include_names": false,
+        "world_info_budget": 25,
+        "world_info_include_names": true,
         "world_info_recursive": true,
         "world_info_overflow_alert": false,
         "world_info_case_sensitive": false,
-        "world_info_match_whole_words": false,
+        "world_info_match_whole_words": true,
         "world_info_character_strategy": 1,
         "world_info_budget_cap": 0,
         "world_info_use_group_scoring": false,
@@ -595,8 +593,7 @@
             "雏菊巡防官.png",
             "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png",
             "某科学的超电磁炮.png",
-            "调教巫师赫敏.png",
-            "大富翁之从买下街道到占有她们.png"
+            "调教巫师赫敏.png"
         ],
         "tts": {
             "voiceMap": "",
@@ -825,9 +822,7 @@
             "script": {
                 "global_script_enabled": true,
                 "scriptsRepository": [],
-                "characters_with_scripts": [
-                    "大富翁之从买下街道到占有她们.png"
-                ]
+                "characters_with_scripts": []
             },
             "audio": {
                 "audio_enabled": true,
@@ -1029,8 +1024,7 @@
         "【乡村】留守男孩和村里老娘们和小丫头开黄播的故事 1.3.png": [],
         "致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": [],
         "某科学的超电磁炮.png": [],
-        "调教巫师赫敏.png": [],
-        "大富翁之从买下街道到占有她们.png": []
+        "调教巫师赫敏.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
