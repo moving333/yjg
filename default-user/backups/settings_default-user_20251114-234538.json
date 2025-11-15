@@ -2,7 +2,7 @@
     "firstRun": false,
     "accountStorage": {
         "__migrated": "1",
-        "NavOpened": "false",
+        "NavOpened": "true",
         "LNavOpened": "false",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
@@ -34,7 +34,7 @@
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "周淑仪.png",
+    "active_character": "JK精灵的异世界孕活.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -1014,8 +1014,7 @@
         },
         "attachments": [],
         "character_attachments": {
-            "JK精灵的异世界孕活.png": [],
-            "周淑仪.png": []
+            "JK精灵的异世界孕活.png": []
         },
         "disabled_attachments": [],
         "gallery": {
@@ -1488,8 +1487,7 @@
         "致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": [],
         "某科学的超电磁炮.png": [],
         "调教巫师赫敏.png": [],
-        "大富翁之从买下街道到占有她们.png": [],
-        "周淑仪.png": []
+        "大富翁之从买下街道到占有她们.png": []
     },
     "nai_settings": {
         "temperature": 1.5,

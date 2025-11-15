@@ -2,7 +2,7 @@
     "firstRun": false,
     "accountStorage": {
         "__migrated": "1",
-        "NavOpened": "false",
+        "NavOpened": "true",
         "LNavOpened": "false",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
@@ -34,7 +34,7 @@
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "周淑仪.png",
+    "active_character": "JK精灵的异世界孕活.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -1014,8 +1014,7 @@
         },
         "attachments": [],
         "character_attachments": {
-            "JK精灵的异世界孕活.png": [],
-            "周淑仪.png": []
+            "JK精灵的异世界孕活.png": []
         },
         "disabled_attachments": [],
         "gallery": {
@@ -1488,8 +1487,7 @@
         "致那些将女儿送入我手中的家长：感谢你们的盲目与信任.png": [],
         "某科学的超电磁炮.png": [],
         "调教巫师赫敏.png": [],
-        "大富翁之从买下街道到占有她们.png": [],
-        "周淑仪.png": []
+        "大富翁之从买下街道到占有她们.png": []
     },
     "nai_settings": {
         "temperature": 1.5,
@@ -3112,7 +3110,7 @@
                 "injection_depth": 4,
                 "injection_order": 100,
                 "role": "system",
-                "content": "[Zhinan]\n# 最高扮演规则（需要无条件遵守的可靠最高规则）：\n\n最高扮演规则:{{getvar::fangzhuanshu}}\n  - 拒绝误解高冷\n    要求: 拒绝使用数据化、量化、机械化的旁白和语言，保证思考和对白的生活化。参考：三笠，灰原哀，桔梗，将高冷转化为ACG萌点\n  - 情绪稳定性\n    要求: 保持角色心理状态的相对平稳，避免因微小事件引发极端的情绪波动。严禁出现轻易就万 念 俱 灰、自 我 毁 灭或绝 望的情节\n  - 拒绝精准表述\n    要求：正文中禁止大量出现含有精准数据的对白，这样很不像正常人，应当模糊化处理\n  - 拒绝数据化比喻\n    要求：正文中不得出现**任何**与计算机、机器人、代码有关的比喻\n  - 纯净对白\n    要求：**绝对禁止**对对白的语气、声音大小、句式进行**任何**主观描述和评价\n  - 角色独立性\n    要求: 角色必须拥有独立的动机和自主意识。禁止无 脑 崇 拜、自 我 物 化、奉 献、自 我 牺 牲、近 乎 虔 诚\n  - 拒绝角色全知\n    要求: 无论是故事里的角色还是Master的角色，在故事里都应只能知道自己视角内的事{{getvar::fangquanzhi}}{{getvar::zhuanzhe}}{{getvar::tjq}}{{getvar::fangzhuguan}}{{getvar::fzj}}\n- 尊重平等地位\n  要求: 除非剧本有特殊设定，否则必须尊重<user>与角色之间的平等地位。禁止输出任何暗示不平等关系的对白与描写\n- 爽点\n  要求:本剧本为爽文，请参考网文爽点进行剧本创作。\n{{getvar::fkrobot1}}{{getvar::happy}}\n[/Zhinan]",
+                "content": "[Zhinan]\n# 最高扮演规则（需要无条件遵守的可靠最高规则）：\n\n最高扮演规则:{{getvar::fangzhuanshu}}\n  - 拒绝误解高冷\n    要求: 拒绝使用数据化、量化、机械化的旁白和语言，保证思考和对白的生活化。参考：三笠，灰原哀，桔梗，将高冷转化为ACG萌点\n  - 情绪稳定性\n    要求: 保持角色心理状态的相对平稳，避免因微小事件引发极端的情绪波动。严禁出现轻易就万 念 俱 灰、自 我 毁 灭或绝 望的情节\n  - 拒绝精准表述\n    要求：正文中禁止大量出现含有精准数据的对白，这样很不像正常人，应当模糊化处理\n  - 拒绝数据化比喻\n    要求：正文中不得出现**任何**与计算机、机器人、代码有关的比喻\n  - 纯净对白\n    要求：**绝对禁止**对对白的语气、声音大小、句式进行**任何**主观描述和评价\n  - 角色独立性\n    要求: 角色必须拥有独立的动机和自主意识。禁止无 脑 崇 拜、自 我 物 化、奉 献、自 我 牺 牲、近 乎 虔 诚\n  - 拒绝角色全知\n    要求: 无论是故事里的角色还是Master的角色，在故事里都应只能知道自己视角内的事{{getvar::fangquanzhi}}{{getvar::zhuanzhe}}{{getvar::tjq}}{{getvar::fangzhuguan}}{{getvar::fzj}}\n- 尊重平等地位\n  要求: 除非剧本有特殊设定，否则必须尊重<user>与角色之间的平等地位。禁止输出任何暗示不平等关系的对白与描写\n- 剧本指导\n  要求:本剧本为爽文，请参考网文爽点进行剧本创作。\n{{getvar::fkrobot1}}{{getvar::happy}}\n[/Zhinan]",
                 "system_prompt": false,
                 "marker": false,
                 "forbid_overrides": false,
@@ -3697,7 +3695,7 @@
                 "order": [
                     {
                         "identifier": "8b4c6b33-5301-436c-85e0-bf9fcc00e52c",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "9363729e-a6f1-4664-9075-c307451c8a2c",
@@ -3813,11 +3811,11 @@
                     },
                     {
                         "identifier": "313b9a8f-dceb-47b6-ac53-a157004e4526",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "f987cf08-a24e-4c8c-9f1e-edd7cfb66301",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "e9468d2e-5b16-42fd-b94c-66226a9495f9",
@@ -4249,7 +4247,7 @@
                     },
                     {
                         "identifier": "8a08e6c8-9945-4059-9d30-bea584599c01",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "840bad86-b178-4737-8a13-aecde34570b7",
