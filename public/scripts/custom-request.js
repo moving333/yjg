@@ -49,6 +49,7 @@ import EventSourceStream from './sse-stream.js';
  * @property {string} [custom_url] - Optional custom URL
  * @property {string} [reverse_proxy] - Optional reverse proxy URL
  * @property {string} [proxy_password] - Optional proxy password
+ * @property {string} [custom_prompt_post_processing] - Optional custom prompt post-processing
  */
 
 /** @typedef {Record<string, any> & ChatCompletionPayloadBase} ChatCompletionPayload */
@@ -256,7 +257,7 @@ export class TextCompletionService {
                                 message.role,
                                 message.content,
                                 message.role === 'user',
-                                false,
+                                message.role === 'system',
                                 undefined,
                                 undefined,
                                 undefined,
@@ -389,8 +390,8 @@ export class TextCompletionService {
 
         // Initialize base payload with common parameters
         let payload = {
-            'temperature': settings.temp ? Number(settings.temp) : undefined,
-            'min_p': settings.min_p ? Number(settings.min_p) : undefined,
+            'temperature': settings.temp >= 0 ? Number(settings.temp) : undefined,
+            'min_p': settings.min_p >= 0 ? Number(settings.min_p) : undefined,
         };
 
         // Remove undefined values to avoid API errors
@@ -414,7 +415,7 @@ export class ChatCompletionService {
      * @param {ChatCompletionPayload} custom
      * @returns {ChatCompletionPayload}
      */
-    static createRequestData({ stream = false, messages, model, chat_completion_source, max_tokens, temperature, custom_url, reverse_proxy, proxy_password, ...props }) {
+    static createRequestData({ stream = false, messages, model, chat_completion_source, max_tokens, temperature, custom_url, reverse_proxy, proxy_password, custom_prompt_post_processing, ...props }) {
         const payload = {
             stream,
             messages,
@@ -425,6 +426,7 @@ export class ChatCompletionService {
             custom_url,
             reverse_proxy,
             proxy_password,
+            custom_prompt_post_processing,
             use_makersuite_sysprompt: true,
             claude_use_sysprompt: true,
             ...props,
@@ -573,7 +575,7 @@ export class ChatCompletionService {
 
         // Initialize base payload with common parameters
         const payload = {
-            temperature: settings.temperature ? Number(settings.temperature) : undefined,
+            temperature: settings.temperature >= 0 ? Number(settings.temperature) : undefined,
         };
 
         // Remove undefined values to avoid API errors

@@ -2,7 +2,7 @@ import { DOMPurify, moment } from '../lib.js';
 import { event_types, eventSource, getRequestHeaders } from '../script.js';
 import { t } from './i18n.js';
 import { chat_completion_sources } from './openai.js';
-import { callGenericPopup, Popup, POPUP_TYPE } from './popup.js';
+import { callGenericPopup, Popup, POPUP_RESULT, POPUP_TYPE } from './popup.js';
 import { SlashCommand } from './slash-commands/SlashCommand.js';
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from './slash-commands/SlashCommandArgument.js';
 import { enumIcons } from './slash-commands/SlashCommandCommonEnumsProvider.js';
@@ -47,11 +47,12 @@ export const SECRET_KEYS = {
     PERPLEXITY: 'api_key_perplexity',
     GROQ: 'api_key_groq',
     AZURE_TTS: 'api_key_azure_tts',
+    AZURE_OPENAI: 'api_key_azure_openai',
     FEATHERLESS: 'api_key_featherless',
-    ZEROONEAI: 'api_key_01ai',
     HUGGINGFACE: 'api_key_huggingface',
     STABILITY: 'api_key_stability',
     CUSTOM_OPENAI_TTS: 'api_key_custom_openai_tts',
+    ELECTRONHUB: 'api_key_electronhub',
     NANOGPT: 'api_key_nanogpt',
     TAVILY: 'api_key_tavily',
     BFL: 'api_key_bfl',
@@ -61,7 +62,12 @@ export const SECRET_KEYS = {
     AIMLAPI: 'api_key_aimlapi',
     FALAI: 'api_key_falai',
     XAI: 'api_key_xai',
+    FIREWORKS: 'api_key_fireworks',
     VERTEXAI_SERVICE_ACCOUNT: 'vertexai_service_account_json',
+    MINIMAX: 'api_key_minimax',
+    MINIMAX_GROUP_ID: 'minimax_group_id',
+    MOONSHOT: 'api_key_moonshot',
+    COMETAPI: 'api_key_cometapi',
 };
 
 const FRIENDLY_NAMES = {
@@ -90,8 +96,8 @@ const FRIENDLY_NAMES = {
     [SECRET_KEYS.PERPLEXITY]: 'Perplexity',
     [SECRET_KEYS.GROQ]: 'Groq',
     [SECRET_KEYS.FEATHERLESS]: 'Featherless',
-    [SECRET_KEYS.ZEROONEAI]: '01.AI',
     [SECRET_KEYS.HUGGINGFACE]: 'HuggingFace',
+    [SECRET_KEYS.ELECTRONHUB]: 'Electron Hub',
     [SECRET_KEYS.NANOGPT]: 'NanoGPT',
     [SECRET_KEYS.GENERIC]: 'Generic (OpenAI-compatible)',
     [SECRET_KEYS.DEEPSEEK]: 'DeepSeek',
@@ -106,12 +112,18 @@ const FRIENDLY_NAMES = {
     [SECRET_KEYS.FALAI]: 'FAL.AI',
     [SECRET_KEYS.AZURE_TTS]: 'Azure TTS',
     [SECRET_KEYS.AIMLAPI]: 'AI/ML API',
+    [SECRET_KEYS.FIREWORKS]: 'Fireworks AI',
     [SECRET_KEYS.DEEPL]: 'DeepL',
     [SECRET_KEYS.LIBRE]: 'LibreTranslate',
     [SECRET_KEYS.LIBRE_URL]: 'LibreTranslate Endpoint (e.g. http://127.0.0.1:5000/translate)',
     [SECRET_KEYS.LINGVA_URL]: 'Lingva Endpoint (e.g. https://lingva.ml/api/v1)',
     [SECRET_KEYS.ONERING_URL]: 'OneRingTranslator Endpoint (e.g. http://127.0.0.1:4990/translate)',
     [SECRET_KEYS.DEEPLX_URL]: 'DeepLX Endpoint (e.g. http://127.0.0.1:1188/translate)',
+    [SECRET_KEYS.MINIMAX]: 'MiniMax TTS',
+    [SECRET_KEYS.MINIMAX_GROUP_ID]: 'MiniMax Group ID',
+    [SECRET_KEYS.MOONSHOT]: 'Moonshot AI',
+    [SECRET_KEYS.COMETAPI]: 'CometAPI',
+    [SECRET_KEYS.AZURE_OPENAI]: 'Azure OpenAI',
 };
 
 const INPUT_MAP = {
@@ -139,14 +151,18 @@ const INPUT_MAP = {
     [SECRET_KEYS.PERPLEXITY]: '#api_key_perplexity',
     [SECRET_KEYS.GROQ]: '#api_key_groq',
     [SECRET_KEYS.FEATHERLESS]: '#api_key_featherless',
-    [SECRET_KEYS.ZEROONEAI]: '#api_key_01ai',
     [SECRET_KEYS.HUGGINGFACE]: '#api_key_huggingface',
+    [SECRET_KEYS.ELECTRONHUB]: '#api_key_electronhub',
     [SECRET_KEYS.NANOGPT]: '#api_key_nanogpt',
     [SECRET_KEYS.GENERIC]: '#api_key_generic',
     [SECRET_KEYS.DEEPSEEK]: '#api_key_deepseek',
     [SECRET_KEYS.AIMLAPI]: '#api_key_aimlapi',
     [SECRET_KEYS.XAI]: '#api_key_xai',
     [SECRET_KEYS.VERTEXAI_SERVICE_ACCOUNT]: '#vertexai_service_account_json',
+    [SECRET_KEYS.MOONSHOT]: '#api_key_moonshot',
+    [SECRET_KEYS.FIREWORKS]: '#api_key_fireworks',
+    [SECRET_KEYS.COMETAPI]: '#api_key_cometapi',
+    [SECRET_KEYS.AZURE_OPENAI]: '#api_key_azure_openai',
 };
 
 const getLabel = () => moment().format('L LT');
@@ -277,11 +293,13 @@ export let secret_state = {};
  * @param {string} key Secret key
  * @param {string} value Secret value to write
  * @param {string} [label] (Optional) Label for the key. If not provided, generated automatically.
+ * @param {Object} [options] Additional options
+ * @param {boolean} [options.allowEmpty] Whether to allow writing empty values. If false and value is empty, the secret will be deleted.
  * @return {Promise<string?>} The ID of the newly created secret key, or null if no value is provided.
  */
-export async function writeSecret(key, value, label) {
+export async function writeSecret(key, value, label, { allowEmpty } = {}) {
     try {
-        if (!value) {
+        if (!value && !allowEmpty) {
             console.warn(`No value provided for ${key} in writeSecret, redirecting to deleteSecret`);
             await deleteSecret(key);
             return null;
@@ -542,7 +560,8 @@ async function openKeyManagerDialog(key) {
     const template = $(await renderTemplateAsync('secretKeyManager', { name, key }));
     template.find('button[data-action="add-secret"]').on('click', async function () {
         let label = '';
-        const value = await Popup.show.input(t`Add Secret`, t`Enter the secret value:`, '', {
+        let result = POPUP_RESULT.CANCELLED;
+        const value = await Popup.show.input(t`Add Secret`, t`Enter the secret value (can be empty):`, '', {
             customInputs: [{
                 id: 'newSecretLabel',
                 type: 'text',
@@ -551,13 +570,20 @@ async function openKeyManagerDialog(key) {
             onClose: popup => {
                 if (popup.result) {
                     label = popup.inputResults.get('newSecretLabel').toString().trim();
+                    result = popup.result;
                 }
             },
         });
         if (!value) {
-            return;
+            if (result !== POPUP_RESULT.AFFIRMATIVE) {
+                return;
+            }
+            const allowEmpty = await Popup.show.confirm(t`No value entered`, t`No value was entered for the secret. Do you want to add an empty secret?`);
+            if (!allowEmpty) {
+                return;
+            }
         }
-        await writeSecret(key, value, label);
+        await writeSecret(key, value, label, { allowEmpty: true });
         await renderSecretsList();
     });
 
@@ -805,6 +831,13 @@ function registerSecretSlashCommands() {
                 isRequired: false,
                 typeList: [ARGUMENT_TYPE.STRING],
             }),
+            SlashCommandNamedArgument.fromProps({
+                name: 'empty',
+                description: t`Whether to allow empty values.`,
+                isRequired: false,
+                typeList: [ARGUMENT_TYPE.BOOLEAN],
+                defaultValue: String(false),
+            }),
         ],
         unnamedArgumentList: [
             SlashCommandArgument.fromProps({
@@ -815,6 +848,7 @@ function registerSecretSlashCommands() {
         ],
         callback: async (args, value) => {
             const quiet = isTrueBoolean(args?.quiet?.toString());
+            const allowEmpty = isTrueBoolean(args?.empty?.toString());
             const key = args?.key?.toString()?.trim() || resolveSecretKey();
 
             if (!key) {
@@ -833,7 +867,7 @@ function registerSecretSlashCommands() {
             }
 
             const valueStr = value?.toString()?.trim();
-            if (!valueStr) {
+            if (!valueStr && !allowEmpty) {
                 if (!quiet) {
                     toastr.error(t`No value provided for the secret key: ${key}`);
                 }
@@ -841,7 +875,7 @@ function registerSecretSlashCommands() {
             }
 
             const label = args?.label?.toString()?.trim() || getLabel();
-            const id = await writeSecret(key, valueStr, label);
+            const id = await writeSecret(key, valueStr, label, { allowEmpty });
 
             if (!quiet) {
                 toastr.success(t`Secret has been written for the key: ${key}`);

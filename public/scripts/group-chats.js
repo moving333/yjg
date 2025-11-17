@@ -76,6 +76,7 @@ import {
     depth_prompt_role_default,
     shouldAutoContinue,
     unshallowCharacter,
+    chatElement,
 } from '../script.js';
 import { printTagList, createTagMapFromList, applyTagsOnCharacterSelect, tag_map, applyTagsOnGroupSelect } from './tags.js';
 import { FILTER_TYPES, FilterHelper } from './filters.js';
@@ -126,7 +127,7 @@ export const group_generation_mode = {
     APPEND_DISABLED: 2,
 };
 
-const DEFAULT_AUTO_MODE_DELAY = 5;
+export const DEFAULT_AUTO_MODE_DELAY = 5;
 
 export const groupCandidatesFilter = new FilterHelper(debounce(printGroupCandidates, debounce_timeout.quick));
 let autoModeWorker = null;
@@ -236,37 +237,37 @@ export async function getGroupChat(groupId, reload = false) {
     const chat_id = group.chat_id;
     const data = await loadGroupChat(chat_id);
     const metadata = group.chat_metadata ?? {};
-    let freshChat = false;
+    const freshChat = !metadata.tainted && (!Array.isArray(data) || !data.length);
 
     await loadItemizedPrompts(getCurrentChatId());
 
-    if (Array.isArray(data) && data.length) {
+    if (group && Array.isArray(group.members) && freshChat) {
+        chat.splice(0, chat.length);
+        chatElement.find('.mes').remove();
+        for (let member of group.members) {
+            const character = characters.find(x => x.avatar === member || x.name === member);
+            if (!character) {
+                continue;
+            }
+
+            const mes = await getFirstCharacterMessage(character);
+
+            // No first message
+            if (!(mes?.mes)) {
+                continue;
+            }
+
+            chat.push(mes);
+            await eventSource.emit(event_types.MESSAGE_RECEIVED, (chat.length - 1), 'first_message');
+            addOneMessage(mes);
+            await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, (chat.length - 1), 'first_message');
+        }
+        await saveGroupChat(groupId, false);
+    } else if (Array.isArray(data) && data.length) {
         data[0].is_group = true;
         chat.splice(0, chat.length, ...data);
+        chatElement.find('.mes').remove();
         await printMessages();
-    } else {
-        freshChat = !metadata.tainted;
-        if (group && Array.isArray(group.members) && freshChat) {
-            for (let member of group.members) {
-                const character = characters.find(x => x.avatar === member || x.name === member);
-                if (!character) {
-                    continue;
-                }
-
-                const mes = await getFirstCharacterMessage(character);
-
-                // No first message
-                if (!(mes?.mes)) {
-                    continue;
-                }
-
-                chat.push(mes);
-                await eventSource.emit(event_types.MESSAGE_RECEIVED, (chat.length - 1), 'first_message');
-                addOneMessage(mes);
-                await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, (chat.length - 1), 'first_message');
-            }
-            await saveGroupChat(groupId, false);
-        }
     }
 
     updateChatMetadata(metadata, true);
@@ -870,14 +871,14 @@ async function generateGroupWrapper(by_auto_mode, type = null, params = {}) {
         if (params && typeof params.force_chid == 'number') {
             activatedMembers = [params.force_chid];
         } else if (type === 'quiet') {
-            activatedMembers = activateSwipe(group.members);
+            activatedMembers = activateSwipe(group.members, { allowSystem: true }).slice(0, 1);
 
             if (activatedMembers.length === 0) {
                 activatedMembers = activateListOrder(group.members.slice(0, 1));
             }
         }
         else if (type === 'swipe' || type === 'continue') {
-            activatedMembers = activateSwipe(group.members);
+            activatedMembers = activateSwipe(group.members, { allowSystem: false });
 
             if (activatedMembers.length === 0) {
                 toastr.warning(t`Deleted group member swiped. To get a reply, add them back to the group.`);
@@ -984,15 +985,21 @@ function activateImpersonate(members) {
 /**
  * Activates a group member based on the last message.
  * @param {string[]} members Array of group member avatar ids
+ * @param {Object} [options] Options object
+ * @param {boolean} [options.allowSystem] Whether to allow system messages
  * @returns {number[]} Array of character ids
  */
-function activateSwipe(members) {
+function activateSwipe(members, { allowSystem = false } = {}) {
     let activatedNames = [];
     const lastMessage = chat[chat.length - 1];
 
-    if (lastMessage.is_user || lastMessage.is_system || lastMessage.extra?.type === system_message_types.NARRATOR) {
+    if (!lastMessage) {
+        return [];
+    }
+
+    if (lastMessage.is_user || (!allowSystem && lastMessage.is_system) || lastMessage.extra?.type === system_message_types.NARRATOR) {
         for (const message of chat.slice().reverse()) {
-            if (message.is_user || message.is_system || message.extra?.type === system_message_types.NARRATOR) {
+            if (message.is_user || (!allowSystem && message.is_system) || message.extra?.type === system_message_types.NARRATOR) {
                 continue;
             }
 
@@ -1194,7 +1201,8 @@ export async function editGroup(id, immediately, reload = true) {
     }
 
     if (id === selected_group) {
-        group['chat_metadata'] = structuredClone(chat_metadata);
+        // structuredClone may cause issues if metadata has non-cloneable references
+        group['chat_metadata'] = JSON.parse(JSON.stringify(chat_metadata));
     }
 
     if (immediately) {
@@ -2011,7 +2019,14 @@ export async function deleteGroupChatByName(groupId, chatName) {
     await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatName);
 }
 
-export async function deleteGroupChat(groupId, chatId) {
+/**
+ * Deletes a group chat by name.
+ * @param {string} groupId The ID of the group containing the chat to delete.
+ * @param {string} chatId The id/name of the chat to delete.
+ * @param {object} [options={}] Options for the deletion.
+ * @param {boolean} [options.jumpToNewChat=true] Whether to jump to a new chat after deletion (existing one, or create a new one if none exists)
+ */
+export async function deleteGroupChat(groupId, chatId, { jumpToNewChat = true } = {}) {
     const group = groups.find(x => x.id === groupId);
 
     if (!group || !group.chats.includes(chatId)) {
@@ -2019,10 +2034,13 @@ export async function deleteGroupChat(groupId, chatId) {
     }
 
     group.chats.splice(group.chats.indexOf(chatId), 1);
-    group.chat_metadata = {};
-    group.chat_id = '';
     delete group.past_metadata[chatId];
-    updateChatMetadata(group.chat_metadata, true);
+
+    if (group.chat_id === chatId) {
+        group.chat_id = '';
+        group.chat_metadata = {};
+        updateChatMetadata(group.chat_metadata, true);
+    }
 
     const response = await fetch('/api/chats/group/delete', {
         method: 'POST',
@@ -2031,10 +2049,12 @@ export async function deleteGroupChat(groupId, chatId) {
     });
 
     if (response.ok) {
-        if (group.chats.length) {
-            await openGroupChat(groupId, group.chats[group.chats.length - 1]);
-        } else {
-            await createNewGroupChat(groupId);
+        if (jumpToNewChat) {
+            if (group.chats.length) {
+                await openGroupChat(groupId, group.chats[group.chats.length - 1]);
+            } else {
+                await createNewGroupChat(groupId);
+            }
         }
 
         await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatId);
@@ -2044,9 +2064,11 @@ export async function deleteGroupChat(groupId, chatId) {
 /**
  * Imports a group chat from a file and adds it to the group.
  * @param {FormData} formData Form data to send to the server
- * @param {EventTarget} eventTarget Element that triggered the import
+ * @param {object} [options={}] Options for the import
+ * @param {boolean} [options.refresh] Whether to refresh the group chat list after import
+ * @returns {Promise<string[]>} List of imported file names
  */
-export async function importGroupChat(formData, eventTarget) {
+export async function importGroupChat(formData, { refresh = true } = {}) {
     const fetchResult = await fetch('/api/chats/group/import', {
         method: 'POST',
         headers: getRequestHeaders({ omitContentType: true }),
@@ -2063,14 +2085,16 @@ export async function importGroupChat(formData, eventTarget) {
             if (group) {
                 group.chats.push(chatId);
                 await editGroup(selected_group, true, true);
-                await displayPastChats();
+                if (refresh) {
+                    await displayPastChats();
+                }
             }
         }
+
+        return data?.fileNames || [];
     }
 
-    if (eventTarget instanceof HTMLInputElement) {
-        eventTarget.value = '';
-    }
+    return [];
 }
 
 export async function saveGroupBookmarkChat(groupId, name, metadata, mesId) {
@@ -2140,7 +2164,7 @@ function doCurMemberListPopout() {
         // Remove pagination from popout
         newElement.find('.group_pagination').empty();
 
-        $('body').append(newElement);
+        $('#movingDivs').append(newElement);
         loadMovingUIState();
         $('#groupMemberListPopout').fadeIn(animation_duration);
         dragElement(newElement);

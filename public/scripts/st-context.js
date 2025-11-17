@@ -57,8 +57,10 @@ import {
 import {
     extension_settings,
     ModuleWorkerWrapper,
+    openThirdPartyExtensionMenu,
     renderExtensionTemplate,
     renderExtensionTemplateAsync,
+    saveMetadataDebounced,
     writeExtensionField,
 } from './extensions.js';
 import { groups, openGroupChat, selected_group, unshallowGroupMembers } from './group-chats.js';
@@ -109,6 +111,7 @@ export function getContext() {
         onlineStatus: online_status,
         maxContext: Number(max_context),
         chatMetadata: chat_metadata,
+        saveMetadataDebounced,
         streamingProcessor,
         eventSource,
         eventTypes: event_types,
@@ -231,6 +234,7 @@ export function getContext() {
         parseReasoningFromString,
         unshallowCharacter,
         unshallowGroupMembers,
+        openThirdPartyExtensionMenu,
         symbols: {
             ignore: IGNORE_SYMBOL,
         },
