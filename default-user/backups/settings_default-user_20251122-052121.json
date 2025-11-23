@@ -1586,16 +1586,19 @@
             "tag_rules_version": 2,
             "memory": {
                 "source": "openai_compatible",
-                "summaryFormat": "总结应当遵循以下原则：\n- 按时间顺序或逻辑顺序组织信息\n- 保留关键事件和重要细节，省略冗余描述\n- 直接陈述事实，避免主观评价\n- 使用简洁清晰的语言，避免过度修饰\n- 突出事件发展脉络和关键转折点\n- 不使用任何xml标签包裹，使用纯文字进行叙述\n- {{length}}\n- 不回避任何敏感内容，保证记录完全还原前文\n\n总结必须使用以下格式：\n【关键事件标题】\n关键事件概述。\n发生地点:\n关键角色:\n• {分解事件1（小标题形式）}: {简要描述}\n• {分解事件2（小标题形式）}: {简要描述}\n• {分解事件3（小标题形式）}: {简要描述}\n...",
                 "detailLevel": "normal",
                 "maxTokens": 8192,
-                "autoCreateWorldBook": true,
+                "google": {
+                    "model": ""
+                },
                 "openai_compatible": {
                     "url": "http://www.guqinghan.icu/v1",
                     "model": "gemini-2.5-pro",
                     "apiKey": "sk-qriOrTNtIIr35Tt4Bd9d48Da85974769A0Cc3a8d45C0Ed7c",
                     "proxyMode": false
                 },
+                "summaryFormat": "总结应当遵循以下原则：\n- 按时间顺序或逻辑顺序组织信息\n- 保留关键事件和重要细节，省略冗余描述\n- 直接陈述事实，避免主观评价\n- 使用简洁清晰的语言，避免过度修饰\n- 突出事件发展脉络和关键转折点\n- 不使用任何xml标签包裹，使用纯文字进行叙述\n- {{length}}\n- 不回避任何敏感内容，保证记录完全还原前文\n\n总结必须使用以下格式：\n【关键事件标题】\n关键事件概述。\n发生地点:\n关键角色:\n• {分解事件1（小标题形式）}: {简要描述}\n• {分解事件2（小标题形式）}: {简要描述}\n• {分解事件3（小标题形式）}: {简要描述}\n...",
+                "autoCreateWorldBook": false,
                 "google_openai": {
                     "model": "gemini-2.5-pro",
                     "apiKey": "AIzaSyBgdBVyWr06Wmp5u5rSdV1podXKJZmk7G8"
@@ -1607,10 +1610,7 @@
                     "lastSummarizedFloor": 0
                 },
                 "hideFloorsAfterSummary": true,
-                "disableWorldInfoAfterVectorize": false,
-                "google": {
-                    "model": ""
-                }
+                "disableWorldInfoAfterVectorize": false
             }
         },
         "mvu_settings": {
@@ -4808,11 +4808,11 @@
         "openrouter_providers": [],
         "openrouter_allow_fallbacks": true,
         "openrouter_middleout": "on",
-        "reverse_proxy": "",
+        "reverse_proxy": "https://gcli.ggchan.dev/",
         "chat_completion_source": "makersuite",
         "max_context_unlocked": true,
         "show_external_models": false,
-        "proxy_password": "",
+        "proxy_password": "gg-gcli-y7hMjT1_e2uPERsJ5g8TCZybyQP9gLMTZUh06zsvGWw",
         "assistant_prefill": "",
         "assistant_impersonation": "",
         "claude_use_sysprompt": false,
