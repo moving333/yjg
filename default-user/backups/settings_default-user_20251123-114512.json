@@ -3,7 +3,7 @@
     "accountStorage": {
         "__migrated": "1",
         "NavOpened": "false",
-        "LNavOpened": "false",
+        "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
         "StoryStringValidationCache": "{\"hashCache\":{\"7241261575272609\":{\"fieldsWarned\":{}}}}",
@@ -38,8 +38,7 @@
         "AlertWI_柚木凛＆秋山蓝＆神原樱.png": "true",
         "AlertRegex_柚木凛＆秋山蓝＆神原樱.png": "true",
         "AlertWI_宿命织机.png": "true",
-        "AlertRegex_宿命织机.png": "true",
-        "AlertWI_世界调制模式·重制版1.png": "true"
+        "AlertRegex_宿命织机.png": "true"
     },
     "currentVersion": "1.13.2",
     "username": "古月",
@@ -1300,8 +1299,7 @@
             "神雕侠侣.png": [],
             "美人团外卖2.02.png": [],
             "柚木凛＆秋山蓝＆神原樱.png": [],
-            "宿命织机.png": [],
-            "世界调制模式·重制版1.png": []
+            "宿命织机.png": []
         },
         "disabled_attachments": [],
         "gallery": {
