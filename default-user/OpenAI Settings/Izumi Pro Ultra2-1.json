@@ -1,481 +1,31 @@
 {
-    "extensions": {
-        "SPreset": {
-            "ChatSquash": {
-                "enabled": false,
-                "separate_chat_history": false,
-                "parse_clewd": true,
-                "role": "assistant",
-                "stop_string": "User:",
-                "user_prefix": "\n\nUser:",
-                "user_suffix": "",
-                "char_prefix": "\n\nAssistant:",
-                "char_suffix": "",
-                "prefix_system": "",
-                "suffix_system": "",
-                "enable_squashed_separator": false,
-                "squashed_separator_regex": false,
-                "squashed_separator_string": "",
-                "squashed_post_script_enable": false,
-                "squashed_post_script": ""
-            },
-            "RegexBinding": {
-                "regexes": [
-                    {
-                        "id": "4e0eefdf-19fb-40a3-9476-e8f4dca19166",
-                        "scriptName": "1美化最近2层思维链",
-                        "disabled": true,
-                        "runOnEdit": true,
-                        "findRegex": "/<thinking>([\\s\\S]*?)<\\/thinking>/g",
-                        "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>带高级主题的可展开内容</title>\n    <style>\n        /* --- 页面基础 --- */\n        body { background-color: #111; margin: 0; padding: 1em; font-family: sans-serif; }\n\n        /* --- 自包含的、带背景的折叠组件 --- */\n        .accordion-container {\n            position: relative; border: 1px solid rgba(132, 122, 214, 0.5);\n            border-radius: 8px; overflow: hidden; max-width: 100%;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: #e0e0e0;\n            transition: background-color 0.8s ease;\n        }\n\n        /* --- 动态粒子效果的容器 --- */\n        .particles-wrapper {\n            position: absolute; top: 0; left: 0; width: 100%; height: 100%;\n            z-index: 1; overflow: hidden; pointer-events: none;\n        }\n\n        /* --- 动态背景主题 --- */\n        /* 1. 星空 (CSS) */\n        .theme-stars {\n            background-color: #0c0a1f;\n            background-image: \n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='1' fill='%23fff'/%3E%3C/svg%3E\"),\n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23fff'/%3E%3C/svg%3E\");\n            animation: stars-move 200s linear infinite;\n        }\n        @keyframes stars-move { from { background-position: 0 0, 0 0; } to { background-position: -10000px 5000px, -7500px 3750px; } }\n\n        /* 2. 下雪 (JS驱动) */\n        .theme-snow { background-color: #344055; }\n        .snowflake {\n            position: absolute; top: -20px; border-radius: 50%;\n            background-color: white; animation: fall linear infinite;\n        }\n        @keyframes fall {\n            0% { transform: translateY(0) translateX(0); opacity: 1; }\n            50% { transform: translateY(50vh) translateX(40px); }\n            100% { transform: translateY(105vh) translateX(-10px); opacity: 0; }\n        }\n\n        /* 3. 气泡 (JS驱动, 从两侧进入) */\n        .theme-bubbles { background-color: #0d1a2f; }\n        .bubble { position: absolute; border-radius: 50%; opacity: 0; }\n        .bubble.from-left { animation: drift-ltr linear infinite; }\n        .bubble.from-right { animation: drift-rtl linear infinite; }\n        \n        /* 从左到右漂浮 */\n        @keyframes drift-ltr {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(30vw) translateY(-15vh); opacity: 0.7; }\n            80% { transform: translateX(70vw) translateY(10vh); opacity: 0.5; }\n            100% { transform: translateX(100vw) translateY(-5vh); opacity: 0; }\n        }\n        /* 从右到左漂浮 */\n        @keyframes drift-rtl {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(-30vw) translateY(-10vh); opacity: 0.7; }\n            80% { transform: translateX(-70vw) translateY(15vh); opacity: 0.5; }\n            100% { transform: translateX(-100vw) translateY(5vh); opacity: 0; }\n        }\n\n        /* --- 标题和内容样式 --- */\n        .accordion-header, .accordion-content { position: relative; z-index: 2; }\n        .accordion-header {\n            background: rgba(44, 42, 74, 0.8); backdrop-filter: blur(2px);\n            padding: 15px 20px; cursor: pointer; user-select: none; font-weight: bold;\n            display: flex; justify-content: space-between; align-items: center;\n        }\n        .accordion-header::after { content: '▼'; font-size: 0.8em; color: #a0a0c0; transition: transform 0.3s ease-out; }\n        .accordion-container.expanded .accordion-header::after { transform: rotate(180deg); }\n        \n        /* 简化内容区域 - 去掉动画，直接显示/隐藏 */\n        .accordion-content { \n            display: none;\n            background-color: transparent; \n        }\n        \n        /* 展开时直接显示，设置固定高度 */\n        .accordion-container.expanded .accordion-content {\n            display: block;\n            height: 500px; /* PC端固定高度 */\n        }\n        \n        /* 手机端适配 */\n        @media (max-width: 768px) {\n            .accordion-container.expanded .accordion-content {\n                height: 400px;\n            }\n        }\n        \n        @media (max-width: 480px) {\n            .accordion-container.expanded .accordion-content {\n                height: 350px;\n            }\n        }\n        \n        /* 内容滚动容器 */\n        .content-scroll-wrapper {\n            height: 100%;\n            overflow-y: auto;\n            overflow-x: hidden;\n        }\n        \n        /* 美化滚动条 */\n        .content-scroll-wrapper::-webkit-scrollbar {\n            width: 8px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-track {\n            background: rgba(255, 255, 255, 0.1);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb {\n            background: rgba(132, 122, 214, 0.6);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb:hover {\n            background: rgba(132, 122, 214, 0.8);\n        }\n        \n        /* 火狐浏览器滚动条样式 */\n        .content-scroll-wrapper {\n            scrollbar-width: thin;\n            scrollbar-color: rgba(132, 122, 214, 0.6) rgba(255, 255, 255, 0.1);\n        }\n        \n        .content-inner { \n            padding: 20px; \n            padding-top: 10px; \n            white-space: pre-wrap; \n            word-wrap: break-word;\n        }\n        \n        /* --- 主题切换按钮样式 --- */\n        .theme-controls { \n            padding: 10px 20px; \n            border-bottom: 1px solid rgba(255, 255, 255, 0.1); \n            display: flex; \n            flex-wrap: wrap; \n            gap: 10px; \n            flex-shrink: 0;\n        }\n        .theme-controls button {\n            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);\n            color: #e0e0e0; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 14px;\n            transition: background-color 0.2s, border-color 0.2s;\n        }\n        .theme-controls button:hover { background: rgba(255, 255, 255, 0.2); }\n        .theme-controls button.active { background: #847ad6; border-color: #847ad6; color: #fff; font-weight: bold; }\n    </style>\n</head>\n<body>\n\n    <div class=\"accordion-container theme-stars\">\n        <div class=\"particles-wrapper\"></div>\n        <div class=\"accordion-header\">\n            <span>点击展开或收拢思维链</span>\n        </div>\n        <div class=\"accordion-content\">\n            <div class=\"content-scroll-wrapper\">\n                <div class=\"theme-controls\">\n                    <button data-theme=\"stars\" class=\"active\">星空</button>\n                    <button data-theme=\"snow\">下雪</button>\n                    <button data-theme=\"bubbles\">气泡</button>\n                </div>\n                <div class=\"content-inner\">\n$1\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <script>\n        const container = document.querySelector('.accordion-container');\n        const header = document.querySelector('.accordion-header');\n        const content = document.querySelector('.accordion-content');\n        const particlesWrapper = document.querySelector('.particles-wrapper');\n        \n        // --- 1. 简化折叠逻辑 - 去掉动画 ---\n        header.addEventListener('click', function() {\n            container.classList.toggle('expanded');\n        });\n        \n        // --- 2. 主题切换与粒子效果 ---\n        const themeButtons = document.querySelectorAll('.theme-controls button');\n        const themes = ['stars', 'snow', 'bubbles'];\n        let particleInterval = null;\n\n        function clearParticles() {\n            if (particleInterval) clearInterval(particleInterval);\n            particleInterval = null;\n            if(particlesWrapper) particlesWrapper.innerHTML = '';\n        }\n\n        function createSnowflakes() {\n            particleInterval = setInterval(() => {\n                const snowflake = document.createElement('div');\n                snowflake.className = 'snowflake';\n                const size = Math.random() * 4 + 2;\n                const duration = Math.random() * 5 + 7;\n                snowflake.style.width = `${size}px`;\n                snowflake.style.height = `${size}px`;\n                snowflake.style.left = `${Math.random() * 100}%`;\n                snowflake.style.animationDuration = `${duration}s`;\n                snowflake.style.animationDelay = `${Math.random() * 5}s`;\n                snowflake.style.opacity = Math.random() * 0.7 + 0.3;\n                particlesWrapper.appendChild(snowflake);\n                setTimeout(() => snowflake.remove(), (duration + 5) * 1000);\n            }, 150);\n        }\n\n        function createBubbles() {\n            particleInterval = setInterval(() => {\n                const bubble = document.createElement('div');\n                bubble.className = 'bubble';\n                const size = Math.random() * 80 + 20;\n                const duration = Math.random() * 10 + 8;\n                const hue = Math.random() * 360;\n\n                bubble.style.width = `${size}px`;\n                bubble.style.height = `${size}px`;\n                bubble.style.top = `${Math.random() * 90}%`;\n                bubble.style.animationDuration = `${duration}s`;\n                bubble.style.animationDelay = `${Math.random() * 4}s`;\n                bubble.style.background = `radial-gradient(circle at 30% 30%, hsla(${hue}, 100%, 75%, 0.8), hsla(${hue}, 100%, 50%, 0.2))`;\n\n                if (Math.random() > 0.5) {\n                    bubble.classList.add('from-left');\n                    bubble.style.left = `-${size + 20}px`;\n                } else {\n                    bubble.classList.add('from-right');\n                    bubble.style.right = `-${size + 20}px`;\n                }\n                \n                particlesWrapper.appendChild(bubble);\n                setTimeout(() => bubble.remove(), (duration + 5) * 1000);\n            }, 300);\n        }\n\n        themeButtons.forEach(button => {\n            button.addEventListener('click', function(event) {\n                const selectedTheme = event.target.dataset.theme;\n                clearParticles();\n                themes.forEach(theme => container.classList.remove('theme-' + theme));\n                container.classList.add('theme-' + selectedTheme);\n                if (selectedTheme === 'snow') createSnowflakes();\n                else if (selectedTheme === 'bubbles') createBubbles();\n                themeButtons.forEach(btn => btn.classList.remove('active'));\n                event.target.classList.add('active');\n            });\n        });\n    </script>\n\n</body>\n</html>\n```",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": 2,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "efc5ccb1-3d4c-4695-b322-2a26c6111077",
-                        "scriptName": "2Kemini通用去除多余内容",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/(<disclaimer>.*?</disclaimer>)|(<guifan>.*?</guifan>)|```start|<content>|</content>|```end|<done>|`<done>`|(<!--\\s*consider\\s*:\\s*(.*?)\\s*-->)|(.*?</think(ing)?>(\\n)?)|(<think(ing)?>[\\s\\S]*<\\/think(ing)?>(\\n)?)/gs",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": null,
-                        "markdownOnly": true,
-                        "promptOnly": true
-                    },
-                    {
-                        "id": "052f9a62-191f-47cf-90ef-c1480986b0c0",
-                        "scriptName": "3隐藏吐槽（关美化）",
-                        "disabled": true,
-                        "runOnEdit": true,
-                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": null,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "59ed262c-680a-4a50-a9cb-cadc69f1c718",
-                        "scriptName": "4省吐槽token",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/<tucao>[\\s\\S]*?<\\/tucao>/gsi",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": 6,
-                        "maxDepth": null,
-                        "markdownOnly": true,
-                        "promptOnly": true
-                    },
-                    {
-                        "id": "8fbb82aa-e763-4ef6-b5ac-7e87fea47122",
-                        "scriptName": "5摘要其一",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/<details>\\s*<summary>\\s*摘要\\s*<\\/summary>[\\s\\S]*?<\\/details>/gsi",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": 10,
-                        "markdownOnly": false,
-                        "promptOnly": true
-                    },
-                    {
-                        "id": "3febdecd-d789-4f2d-906a-de4199df13c2",
-                        "scriptName": "6摘要其二",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/([\\s\\S]*?<details>\\s*<summary>\\s*摘要\\s*<\\/summary>|<\\/details>[\\s\\S]*?$)/gs",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": 11,
-                        "maxDepth": null,
-                        "markdownOnly": false,
-                        "promptOnly": true
-                    },
-                    {
-                        "id": "86bc18dd-3bc9-4f68-8914-2b6e44b0e003",
-                        "scriptName": "7【可选美化】吐槽-美化一丢丢",
-                        "disabled": true,
-                        "runOnEdit": true,
-                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                        "replaceString": "<html><head><meta charset=\"UTF-8\"><title>吐槽卡片</title><style>body{background:#1e1e1e;color:#f0f0f0;font-family:\"Segoe UI\",Tahoma,Geneva,Verdana,sans-serif;line-height:1.5;}details{margin:12px 0;border-radius:10px;background:linear-gradient(145deg,#2c2c2c,#252525);padding:0;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.3);transition:all 0.3s ease;}summary{cursor:pointer;padding:10px 16px;display:block;font-weight:bold;color:#ffd966;user-select:none;position:relative;background:linear-gradient(to right,#3a3a3a,#2a2a2a);border-bottom:1px solid #444;}summary::after{content:\" ▼\";position:absolute;right:16px;transition:transform 0.3s ease;}details[open] summary::after{content:\" ▲\";}.tucao-content{max-height:0;overflow:hidden;background:linear-gradient(145deg,#3c3c3c,#2e2e2e);color:#e0e0e0;padding:0 16px;transition:max-height 0.4s ease,padding 0.4s ease;}details[open] .tucao-content{padding:10px 16px;max-height:1000px;}</style></head><body><details><summary>吐槽</summary><div class=\"tucao-content\">$1</div></details></body></html>\n",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": null,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "ebaf1f36-34d2-46a0-92a4-65644e60bfa3",
-                        "scriptName": "7【可选美化】想看吐槽-碎碎念性能版",
-                        "disabled": true,
-                        "runOnEdit": true,
-                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                        "replaceString": "<span class=\"custom-aurora-card-comp\"> <html> <head> <meta charset=\"UTF-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /> <title>一体化极光卡片</title> <style> body { background-color: #010409; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; box-sizing: border-box; line-height: 1.2; } .aurora-card-wrapper { margin: -0.2rem 0; transform: translateY(0.1rem); width: 100%; display: flex; justify-content: center; align-items: center; } .aurora-card { width: 100px; max-width: 900px; max-height: 18px; border-radius: 50px; position: relative; transition: width 0.7s cubic-bezier(0.35, 1, 0.65, 1), max-height 0.7s cubic-bezier(0.35, 1, 0.65, 1), border-radius 0.7s cubic-bezier(0.35, 1, 0.65, 1), transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease, backdrop-filter 0.3s ease; display: block; overflow: hidden; isolation: isolate; } .aurora-card[open] { width: 100%; max-height: 600px; border-radius: 18px; background-color: rgba(13, 17, 23, 0.8); background-image: radial-gradient( circle at 50% 0%, hsla(270, 95%, 75%, 0.053), transparent 80% ); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); } .aurora-card::before { content: \"\"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1s ease-in-out; } .aurora-card[open]::before { background-image: radial-gradient( ellipse 50% 70% at 15% 20%, hsla(180, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 60% 80% at 80% 85%, hsla(320, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 40% 60% at 50% 5%, hsla(270, 90%, 80%, 0.15), transparent 80% ); opacity: 1; } .aurora-card:hover { transform: translateY(-4px); } .aurora-card__summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; height: 18px; box-sizing: border-box; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 8px 8px; user-select: none; -webkit-user-select: none; } .aurora-card__summary::-webkit-details-marker { display: none; } .aurora-card__summary:focus-visible { outline: 2px solid hsl(190, 100%, 70%); outline-offset: 4px; } .aurora-card[open] > .aurora-card__summary { padding-top: 8px; padding-bottom: 8px; height: auto; background-color: transparent; } .aurora-card__summary::after { content: \"\"; position: absolute; bottom: 0; left: 50%; width: calc(100% - 48px); height: 1px; background: linear-gradient( to right, hsla(270, 95%, 75%, 0), hsla(270, 95%, 75%, 0.4), hsla(270, 95%, 75%, 0) ); opacity: 0; transform: translateX(-50%) scaleX(0); transform-origin: center; transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s; } .aurora-card[open] > .aurora-card__summary::after { opacity: 1; transform: translateX(-50%) scaleX(1); } .aurora-card__title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; background: linear-gradient( 90deg, hsl(190, 100%, 60%), hsl(270, 95%, 65%), hsl(320, 65%, 60%) ); background-clip: text; -webkit-background-clip: text; color: transparent; transition: font-size 0.4s ease; } .aurora-card[open] .aurora-card__title { font-size: 1rem; } .aurora-card__content { min-width: 0; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 0 12px; } .aurora-card[open] .aurora-card__content { padding: 0 12px 10px 12px; } .aurora-card__text { font-size: 0.9rem; font-weight: 400; text-align: left; white-space: pre-wrap; overflow-wrap: break-word; padding-right: 5px; max-height: 450px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.15) transparent; opacity: 0; transform: translateY(15px); transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s; will-change: opacity, transform; } .aurora-card[open] .aurora-card__text { opacity: 1; transform: translateY(0); } .aurora-card__text::-webkit-scrollbar { width: 8px; } .aurora-card__text::-webkit-scrollbar-track { background: transparent; } .aurora-card__text::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; transition: background-color 0.3s ease; } .aurora-card__text:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.35); } </style> </head> <body> <div class=\"aurora-card-wrapper\"> <details class=\"aurora-card\"> <summary class=\"aurora-card__summary\"> <span class=\"aurora-card__title\">💭碎碎念💭</span> </summary> <div class=\"aurora-card__content\"> <div class=\"aurora-card__text\">$1</div> </div> </details> </div> </body> </html> </span>",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": 10,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "f7243640-5241-4e88-8617-0e5d133d9a90",
-                        "scriptName": "7【可选美化】小气泡",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                        "replaceString": "<style>\n/* --- 容器和按钮样式 --- */\n.tucao-wrapper {\n    display: block; /* 【修改点1】改为块级元素，让它独占一行，展开时能撑开空间 */\n    margin: 10px 0; /* 上下留出间距 */\n}\n\n.tucao-details {\n    /* details标签默认就是块级，无需设置 */\n}\n\n.tucao-summary {\n    display: inline-flex; /* 让按钮内容居中 */\n    align-items: center;\n    justify-content: center;\n    list-style: none; /* 隐藏默认箭头 */\n    cursor: pointer;\n    width: 20px;\n    height: 20px;\n    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);\n    border-radius: 50%;\n    transition: all 0.3s ease;\n    border: 2px solid rgba(255, 255, 255, 0.3);\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);\n}\n.tucao-summary::-webkit-details-marker { display: none; }\n.tucao-summary:hover { transform: scale(1.1); }\n.tucao-summary-icon { font-size: 10px; opacity: 0.8; }\n.tucao-details[open] > .tucao-summary { background: linear-gradient(135deg, #4ecdc4, #44a08d); }\n\n/* --- 内容区域样式 (核心修改) --- */\n.tucao-content {\n    /* 【修改点2】移除所有 position: absolute 和相关的定位属性 */\n    margin-top: 10px; /* 内容和按钮之间的间距 */\n    background: linear-gradient(135deg, #1f1f34, #1b2845);\n    border: 1px solid #4a5568;\n    border-radius: 12px;\n    padding: 12px 16px;\n    box-shadow: 0 8px 16px rgba(0,0,0,0.3);\n    overflow: hidden; /* 保证动画效果 */\n}\n\n/* --- 动画 --- */\n/* 当details展开时，内容通过details原生的机制显示出来 */\n/* 我们可以加一个简单的淡入动画，但复杂的max-height动画在文档流中可能效果不佳 */\n.tucao-details[open] .tucao-content {\n    animation: fadeIn 0.5s ease;\n}\n\n@keyframes fadeIn {\n    from { opacity: 0; transform: translateY(-10px); }\n    to { opacity: 1; transform: translateY(0); }\n}\n\n\n/* --- 文本和滚动条样式 (不变) --- */\n.tucao-header { color: #ffd700; font-weight: bold; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #4a5568; padding-bottom: 6px; }\n.tucao-text { white-space: pre-wrap; word-wrap: break-word; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; font-size: 14px; color: #e2e8f0; line-height: 1.6; max-height: 400px; overflow-y: auto; padding-right: 5px; }\n.tucao-text::-webkit-scrollbar { width: 6px; }\n.tucao-text::-webkit-scrollbar-track { background: transparent; }\n.tucao-text::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 3px; }\n</style>\n\n<!-- HTML部分 (无JS) -->\n<div class=\"tucao-wrapper\">\n    <details class=\"tucao-details\">\n        <summary class=\"tucao-summary\">\n            <span class=\"tucao-summary-icon\">💭</span>\n        </summary>\n        <div class=\"tucao-content\">\n            <div class=\"tucao-header\">💡 创作思路</div>\n            <div class=\"tucao-text\">$1</div>\n        </div>\n    </details>\n</div>",
-                        "trimStrings": [],
-                        "placement": [
-                            1,
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": 10,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "67ab0414-ed92-4b94-b146-12381eaae771",
-                        "scriptName": "8省选项token",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/<xx>[\\s\\S]*?<\\/xx>/gsi",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            1,
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": null,
-                        "markdownOnly": false,
-                        "promptOnly": true
-                    },
-                    {
-                        "id": "5e62c654-8076-45f5-a7cc-3a62e5c66fc2",
-                        "scriptName": "9美化选项栏Beta",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "<xx>\\s*?>选项一：\\s*([^>]+?)\\s*?>选项二：\\s*([^>]+?)\\s*?>选项三：\\s*([^>]+?)\\s*?>选项四：\\s*([^>]+?)\\s*<\\/xx>",
-                        "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <style>\n      /* CSS样式 (无错误) */\n      .option-panel-container {\n        width: 100%;\n        max-width: 95%;\n        margin: 12px auto;\n        border-radius: 12px;\n        background: rgba(30, 30, 45, 0.85);\n        backdrop-filter: blur(10px);\n        -webkit-backdrop-filter: blur(10px);\n        border: 1px solid rgba(173, 216, 230, 0.2);\n        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);\n        font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        color: #e0e6f0;\n        overflow: hidden;\n      }\n      .option-panel-header {\n        padding: 12px 20px;\n        font-size: 1.1em;\n        font-weight: 600;\n        color: #98c379;\n        background: rgba(0, 0, 0, 0.2);\n        border-bottom: 1px solid rgba(173, 216, 230, 0.15);\n        text-align: center;\n        letter-spacing: 1px;\n      }\n      .option-list {\n        list-style: none;\n        padding: 15px 20px;\n        margin: 0;\n      }\n      .option-item {\n        background: rgba(255, 255, 255, 0.05);\n        border-radius: 8px;\n        margin-bottom: 10px;\n        transition: all 0.3s ease;\n        border-left: 4px solid transparent;\n      }\n      .option-item:last-child {\n        margin-bottom: 0;\n      }\n      .option-item:hover {\n        background: rgba(255, 255, 255, 0.1);\n        transform: translateX(5px);\n        border-left-color: #61afef;\n      }\n      .option-link {\n        display: block;\n        padding: 12px 15px;\n        text-decoration: none;\n        color: #dcdfe4;\n        font-size: 0.9em;\n        display: flex;\n        align-items: center;\n        cursor: pointer;\n      }\n      .option-icon {\n        margin-right: 12px;\n        font-size: 1.2em;\n        opacity: 0.8;\n        min-width: 20px;\n        text-align: center;\n      }\n      .option-item:nth-child(1) .option-icon {\n        color: #e5c07b;\n      }\n      .option-item:nth-child(2) .option-icon {\n        color: #e06c75;\n      }\n      .option-item:nth-child(3) .option-icon {\n        color: #56b6c2;\n      }\n      .option-item:nth-child(4) .option-icon {\n        color: #c678dd;\n      }\n    </style>\n  </head>\n  <body>\n    <!-- HTML结构 (保持不变) -->\n    <div class=\"option-panel-container\">\n      <div class=\"option-panel-header\">✨ Master, 请选择你的行动 ✨</div>\n      <ul class=\"option-list\" id=\"izumi-option-list\">\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$1\"\n          >\n            <span class=\"option-icon\">🧐</span>\n            <span>$1</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$2\"\n          >\n            <span class=\"option-icon\">🚀</span>\n            <span>$2</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$3\"\n          >\n            <span class=\"option-icon\">💬</span>\n            <span>$3</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$4\"\n          >\n            <span class=\"option-icon\">😈</span>\n            <span>$4</span>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <!-- JavaScript (仅修改一行) -->\n    <script>\n      /**\n       * 与SillyTavern环境通信，触发快速回复。\n       * @param {string} text - 要发送的文本。\n       */\n      const triggerQuickReply = (text) => {\n        // 检查文本是否有效，避免发送空内容\n        if (!text || text.trim() === \"\") {\n          console.warn(\"Attempted to send an empty message.\");\n          return;\n        }\n\n        // 检查SillyTavern环境并发送命令\n        if (typeof triggerSlash === \"function\") {\n          triggerSlash(`/send ${text}|/trigger`);\n        } else {\n          console.log(\"SillyTavern environment not detected. Mock send:\", text);\n        }\n      };\n\n      /**\n       * 处理选项列表的点击事件。\n       * @param {MouseEvent} event - 点击事件对象。\n       */\n      const handleOptionClick = (event) => {\n        // 使用 event.target.closest() 查找被点击的 .option-link 元素\n        const link = event.target.closest(\".option-link\");\n        if (!link) {\n          return; // 如果点击的不是 .option-link 或其子元素，则不执行任何操作\n        }\n\n        // 使用 .dataset 属性获取 data- 属性，这是更现代的写法\n        const fullText = link.dataset.optionText;\n\n        // 增加对 fullText 是否存在的检查，防止属性缺失导致错误\n        if (typeof fullText !== \"string\") {\n          console.error(\n            \"Clicked link is missing 'data-option-text' attribute.\",\n            link\n          );\n          return;\n        }\n\n        // 更稳健地移除首尾的方括号，仅当它们存在时才移除\n        const optionText =\n          fullText.startsWith(\"[\") && fullText.endsWith(\"]\")\n            ? fullText.slice(1, -1)\n            : fullText;\n\n        console.info(\"触发文本\", { fullText, optionText });\n\n        // 触发快速回复\n        triggerQuickReply(optionText);\n      };\n\n      /**\n       * 初始化事件监听器。\n       */\n      const initializeEventListeners = () => {\n        const optionList = document.getElementById(\"izumi-option-list\");\n\n        // 确认元素存在后再添加事件监听，避免页面上没有该元素时报错\n        if (optionList) {\n          optionList.addEventListener(\"click\", handleOptionClick);\n        } else {\n          console.warn(\n            \"Element with ID 'izumi-option-list' not found. No listener attached.\"\n          );\n        }\n      };\n\n      // 页面加载完成后执行初始化\n      document.addEventListener(\"DOMContentLoaded\", initializeEventListeners);\n    </script>\n  </body>\n</html>\n```",
-                        "trimStrings": [],
-                        "placement": [
-                            1,
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": 2,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "34665d76-0f23-4c97-acd8-9e73f1b12f3c",
-                        "scriptName": "10【Gal】1.5弹幕防截断美化（泉此方，只有5层）",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "/<!-- Technical.*?<danmu>([\\s\\S]*?)<\\/danmu>.*?-->/gsi",
-                        "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>B站风格-幸运星随机背景+随机颜色弹幕</title>\n    <style>\n        body { margin: 0; padding: 20px; box-sizing: border-box; }\n\n        /* --- 动画定义 --- */\n        @keyframes danmaku-scroll {\n            from { transform: translateX(100vw); }\n            to { transform: translateX(-100%); }\n        }\n\n        /* --- 容器样式（背景将由JS随机设置） --- */\n        .danmaku-super-container-rgb {\n            height: 350px;\n            border-radius: 10px;\n            position: relative;\n            overflow: hidden;\n            border: 1px solid rgba(0, 0, 0, 0.2);\n            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n            background-size: cover;\n            background-position: center;\n            background-repeat: no-repeat;\n        }\n\n        .danmaku-track-rgb {\n            position: absolute;\n            width: max-content;\n            left: 0;\n            animation-name: danmaku-scroll;\n            animation-timing-function: linear;\n            animation-iteration-count: infinite;\n        }\n\n        /* --- 弹幕文字（改为随机颜色，支持阴影，类似B站默认风格） --- */\n        .danmaku-content-multicolor-rgb {\n            white-space: pre;\n            padding: 0 30px;\n            font-weight: bold;\n            font-size: 22px;\n            color: #ffffff; /* 默认纯白，将被JS覆盖 */\n            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);\n        }\n    </style>\n</head>\n<body>\n\n    <div class=\"danmaku-super-container-rgb\" id=\"danmaku-container-final\"></div>\n    <div id=\"danmaku-data-source\" style=\"display: none;\">$1</div>\n\n    <script>\n        (function() {\n            const dataSourceElem = document.getElementById('danmaku-data-source');\n            const targetContainer = document.getElementById('danmaku-container-final');\n\n            if (!dataSourceElem || !targetContainer) return;\n\n            /* --- 随机背景图列表（替换为幸运星相关图片） --- */\n            const bgImages = [                \"https://static.zerochan.net/Izumi.Konata.full.887888.jpg\",                               \"https://www.hiclipart.com/free-transparent-background-png-clipart-xdntq\"\n\n            ];\n            const randomImg = bgImages[Math.floor(Math.random() * bgImages.length)];\n            targetContainer.style.backgroundImage = `url(${randomImg})`;\n\n            // B站常见弹幕颜色（十六进制格式）\n            const biliColors = [\n                \"#FFFFFF\", // 白色\n                \"#FF6B6B\", // 红色\n                \"#FFA500\", // 橙色\n                \"#FFFF00\", // 黄色\n                \"#77DD77\", // 绿色\n                \"#779ECB\", // 蓝色\n                \"#9B59B6\", // 紫色\n                \"#FF69B4\", // 粉色\n                \"#00CED1\", // 青色\n                \"#FFD700\"  // 金色\n            ];\n\n            const rawDanmus = (dataSourceElem.textContent || dataSourceElem.innerText).trim();\n            const danmuLines = rawDanmus.split(/\\r?\\n/).filter(line => line.trim() !== '');\n\n            const trackStyles = [\n                { top: '2%', duration: '20s', delay: '-1s' },\n                { top: '15%', duration: '28s', delay: '-11s' },\n                { top: '28%', duration: '24s', delay: '-4s' },\n                { top: '42%', duration: '33s', delay: '-2s' },\n                { top: '56%', duration: '18s', delay: '-16s' },\n                { top: '70%', duration: '30s', delay: '-7s' },\n                { top: '85%', duration: '22s', delay: '-13s' }\n            ];\n\n            function escapeHtml(text) {\n                const div = document.createElement('div');\n                div.appendChild(document.createTextNode(text));\n                return div.innerHTML;\n            }\n\n            let allTracksHtml = '';\n            danmuLines.forEach((line, index) => {\n                const style = trackStyles[index % trackStyles.length];\n                // 随机选择B站颜色\n                const randomColor = biliColors[Math.floor(Math.random() * biliColors.length)];\n                const safeLine = escapeHtml(line.trim());\n                \n                allTracksHtml += `\n    <div class=\"danmaku-track-rgb\" style=\"top: ${style.top}; animation-duration: ${style.duration}; animation-delay: ${style.delay};\">\n        <div class=\"danmaku-content-multicolor-rgb\" style=\"color: ${randomColor};\">${safeLine}</div>\n    </div>`;\n            });\n            targetContainer.innerHTML += allTracksHtml;\n        })();\n    </script>\n\n</body>\n</html> \n```",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": 5,
-                        "markdownOnly": true,
-                        "promptOnly": false
-                    },
-                    {
-                        "id": "5fe57954-d867-4e49-a59f-3acfd305f752",
-                        "scriptName": "11去除防空回",
-                        "disabled": false,
-                        "runOnEdit": true,
-                        "findRegex": "<Q>([\\s\\S]*?)<\\/WF>",
-                        "replaceString": "",
-                        "trimStrings": [],
-                        "placement": [
-                            2
-                        ],
-                        "substituteRegex": 0,
-                        "minDepth": null,
-                        "maxDepth": null,
-                        "markdownOnly": true,
-                        "promptOnly": true
-                    }
-                ]
-            },
-            "MacroNest": false
-        },
-        "regex_scripts": [
-            {
-                "id": "f2047c97-8fc7-44df-916a-c752f2e079ce",
-                "scriptName": "1美化最近2层思维链",
-                "disabled": true,
-                "runOnEdit": true,
-                "findRegex": "/<thinking>([\\s\\S]*?)<\\/thinking>/g",
-                "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>带高级主题的可展开内容</title>\n    <style>\n        /* --- 页面基础 --- */\n        body { background-color: #111; margin: 0; padding: 1em; font-family: sans-serif; }\n\n        /* --- 自包含的、带背景的折叠组件 --- */\n        .accordion-container {\n            position: relative; border: 1px solid rgba(132, 122, 214, 0.5);\n            border-radius: 8px; overflow: hidden; max-width: 100%;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: #e0e0e0;\n            transition: background-color 0.8s ease;\n        }\n\n        /* --- 动态粒子效果的容器 --- */\n        .particles-wrapper {\n            position: absolute; top: 0; left: 0; width: 100%; height: 100%;\n            z-index: 1; overflow: hidden; pointer-events: none;\n        }\n\n        /* --- 动态背景主题 --- */\n        /* 1. 星空 (CSS) */\n        .theme-stars {\n            background-color: #0c0a1f;\n            background-image: \n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='1' fill='%23fff'/%3E%3C/svg%3E\"),\n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23fff'/%3E%3C/svg%3E\");\n            animation: stars-move 200s linear infinite;\n        }\n        @keyframes stars-move { from { background-position: 0 0, 0 0; } to { background-position: -10000px 5000px, -7500px 3750px; } }\n\n        /* 2. 下雪 (JS驱动) */\n        .theme-snow { background-color: #344055; }\n        .snowflake {\n            position: absolute; top: -20px; border-radius: 50%;\n            background-color: white; animation: fall linear infinite;\n        }\n        @keyframes fall {\n            0% { transform: translateY(0) translateX(0); opacity: 1; }\n            50% { transform: translateY(50vh) translateX(40px); }\n            100% { transform: translateY(105vh) translateX(-10px); opacity: 0; }\n        }\n\n        /* 3. 气泡 (JS驱动, 从两侧进入) */\n        .theme-bubbles { background-color: #0d1a2f; }\n        .bubble { position: absolute; border-radius: 50%; opacity: 0; }\n        .bubble.from-left { animation: drift-ltr linear infinite; }\n        .bubble.from-right { animation: drift-rtl linear infinite; }\n        \n        /* 从左到右漂浮 */\n        @keyframes drift-ltr {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(30vw) translateY(-15vh); opacity: 0.7; }\n            80% { transform: translateX(70vw) translateY(10vh); opacity: 0.5; }\n            100% { transform: translateX(100vw) translateY(-5vh); opacity: 0; }\n        }\n        /* 从右到左漂浮 */\n        @keyframes drift-rtl {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(-30vw) translateY(-10vh); opacity: 0.7; }\n            80% { transform: translateX(-70vw) translateY(15vh); opacity: 0.5; }\n            100% { transform: translateX(-100vw) translateY(5vh); opacity: 0; }\n        }\n\n        /* --- 标题和内容样式 --- */\n        .accordion-header, .accordion-content { position: relative; z-index: 2; }\n        .accordion-header {\n            background: rgba(44, 42, 74, 0.8); backdrop-filter: blur(2px);\n            padding: 15px 20px; cursor: pointer; user-select: none; font-weight: bold;\n            display: flex; justify-content: space-between; align-items: center;\n        }\n        .accordion-header::after { content: '▼'; font-size: 0.8em; color: #a0a0c0; transition: transform 0.3s ease-out; }\n        .accordion-container.expanded .accordion-header::after { transform: rotate(180deg); }\n        \n        /* 简化内容区域 - 去掉动画，直接显示/隐藏 */\n        .accordion-content { \n            display: none;\n            background-color: transparent; \n        }\n        \n        /* 展开时直接显示，设置固定高度 */\n        .accordion-container.expanded .accordion-content {\n            display: block;\n            height: 500px; /* PC端固定高度 */\n        }\n        \n        /* 手机端适配 */\n        @media (max-width: 768px) {\n            .accordion-container.expanded .accordion-content {\n                height: 400px;\n            }\n        }\n        \n        @media (max-width: 480px) {\n            .accordion-container.expanded .accordion-content {\n                height: 350px;\n            }\n        }\n        \n        /* 内容滚动容器 */\n        .content-scroll-wrapper {\n            height: 100%;\n            overflow-y: auto;\n            overflow-x: hidden;\n        }\n        \n        /* 美化滚动条 */\n        .content-scroll-wrapper::-webkit-scrollbar {\n            width: 8px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-track {\n            background: rgba(255, 255, 255, 0.1);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb {\n            background: rgba(132, 122, 214, 0.6);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb:hover {\n            background: rgba(132, 122, 214, 0.8);\n        }\n        \n        /* 火狐浏览器滚动条样式 */\n        .content-scroll-wrapper {\n            scrollbar-width: thin;\n            scrollbar-color: rgba(132, 122, 214, 0.6) rgba(255, 255, 255, 0.1);\n        }\n        \n        .content-inner { \n            padding: 20px; \n            padding-top: 10px; \n            white-space: pre-wrap; \n            word-wrap: break-word;\n        }\n        \n        /* --- 主题切换按钮样式 --- */\n        .theme-controls { \n            padding: 10px 20px; \n            border-bottom: 1px solid rgba(255, 255, 255, 0.1); \n            display: flex; \n            flex-wrap: wrap; \n            gap: 10px; \n            flex-shrink: 0;\n        }\n        .theme-controls button {\n            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);\n            color: #e0e0e0; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 14px;\n            transition: background-color 0.2s, border-color 0.2s;\n        }\n        .theme-controls button:hover { background: rgba(255, 255, 255, 0.2); }\n        .theme-controls button.active { background: #847ad6; border-color: #847ad6; color: #fff; font-weight: bold; }\n    </style>\n</head>\n<body>\n\n    <div class=\"accordion-container theme-stars\">\n        <div class=\"particles-wrapper\"></div>\n        <div class=\"accordion-header\">\n            <span>点击展开或收拢思维链</span>\n        </div>\n        <div class=\"accordion-content\">\n            <div class=\"content-scroll-wrapper\">\n                <div class=\"theme-controls\">\n                    <button data-theme=\"stars\" class=\"active\">星空</button>\n                    <button data-theme=\"snow\">下雪</button>\n                    <button data-theme=\"bubbles\">气泡</button>\n                </div>\n                <div class=\"content-inner\">\n$1\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <script>\n        const container = document.querySelector('.accordion-container');\n        const header = document.querySelector('.accordion-header');\n        const content = document.querySelector('.accordion-content');\n        const particlesWrapper = document.querySelector('.particles-wrapper');\n        \n        // --- 1. 简化折叠逻辑 - 去掉动画 ---\n        header.addEventListener('click', function() {\n            container.classList.toggle('expanded');\n        });\n        \n        // --- 2. 主题切换与粒子效果 ---\n        const themeButtons = document.querySelectorAll('.theme-controls button');\n        const themes = ['stars', 'snow', 'bubbles'];\n        let particleInterval = null;\n\n        function clearParticles() {\n            if (particleInterval) clearInterval(particleInterval);\n            particleInterval = null;\n            if(particlesWrapper) particlesWrapper.innerHTML = '';\n        }\n\n        function createSnowflakes() {\n            particleInterval = setInterval(() => {\n                const snowflake = document.createElement('div');\n                snowflake.className = 'snowflake';\n                const size = Math.random() * 4 + 2;\n                const duration = Math.random() * 5 + 7;\n                snowflake.style.width = `${size}px`;\n                snowflake.style.height = `${size}px`;\n                snowflake.style.left = `${Math.random() * 100}%`;\n                snowflake.style.animationDuration = `${duration}s`;\n                snowflake.style.animationDelay = `${Math.random() * 5}s`;\n                snowflake.style.opacity = Math.random() * 0.7 + 0.3;\n                particlesWrapper.appendChild(snowflake);\n                setTimeout(() => snowflake.remove(), (duration + 5) * 1000);\n            }, 150);\n        }\n\n        function createBubbles() {\n            particleInterval = setInterval(() => {\n                const bubble = document.createElement('div');\n                bubble.className = 'bubble';\n                const size = Math.random() * 80 + 20;\n                const duration = Math.random() * 10 + 8;\n                const hue = Math.random() * 360;\n\n                bubble.style.width = `${size}px`;\n                bubble.style.height = `${size}px`;\n                bubble.style.top = `${Math.random() * 90}%`;\n                bubble.style.animationDuration = `${duration}s`;\n                bubble.style.animationDelay = `${Math.random() * 4}s`;\n                bubble.style.background = `radial-gradient(circle at 30% 30%, hsla(${hue}, 100%, 75%, 0.8), hsla(${hue}, 100%, 50%, 0.2))`;\n\n                if (Math.random() > 0.5) {\n                    bubble.classList.add('from-left');\n                    bubble.style.left = `-${size + 20}px`;\n                } else {\n                    bubble.classList.add('from-right');\n                    bubble.style.right = `-${size + 20}px`;\n                }\n                \n                particlesWrapper.appendChild(bubble);\n                setTimeout(() => bubble.remove(), (duration + 5) * 1000);\n            }, 300);\n        }\n\n        themeButtons.forEach(button => {\n            button.addEventListener('click', function(event) {\n                const selectedTheme = event.target.dataset.theme;\n                clearParticles();\n                themes.forEach(theme => container.classList.remove('theme-' + theme));\n                container.classList.add('theme-' + selectedTheme);\n                if (selectedTheme === 'snow') createSnowflakes();\n                else if (selectedTheme === 'bubbles') createBubbles();\n                themeButtons.forEach(btn => btn.classList.remove('active'));\n                event.target.classList.add('active');\n            });\n        });\n    </script>\n\n</body>\n</html>\n```",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": 2,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "18e85ae2-e4d5-4e68-82a8-a73e4c119094",
-                "scriptName": "2Kemini通用去除多余内容",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/(<disclaimer>.*?</disclaimer>)|(<guifan>.*?</guifan>)|```start|<content>|</content>|```end|<done>|`<done>`|(<!--\\s*consider\\s*:\\s*(.*?)\\s*-->)|(.*?</think(ing)?>(\\n)?)|(<think(ing)?>[\\s\\S]*<\\/think(ing)?>(\\n)?)/gs",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": null,
-                "markdownOnly": true,
-                "promptOnly": true
-            },
-            {
-                "id": "cc00f440-644d-4d46-bf0a-185eb6358709",
-                "scriptName": "3隐藏吐槽（关美化）",
-                "disabled": true,
-                "runOnEdit": true,
-                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": null,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "975fad18-340d-456b-ae93-0552a4650d6d",
-                "scriptName": "4省吐槽token",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/<tucao>[\\s\\S]*?<\\/tucao>/gsi",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": 6,
-                "maxDepth": null,
-                "markdownOnly": true,
-                "promptOnly": true
-            },
-            {
-                "id": "7fbf6a31-419f-4243-a1ac-f3816b1d7b27",
-                "scriptName": "5摘要其一",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/<details>\\s*<summary>\\s*摘要\\s*<\\/summary>[\\s\\S]*?<\\/details>/gsi",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": 10,
-                "markdownOnly": false,
-                "promptOnly": true
-            },
-            {
-                "id": "4ab3d5fc-833e-45e0-a515-ae76b5674b02",
-                "scriptName": "6摘要其二",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/([\\s\\S]*?<details>\\s*<summary>\\s*摘要\\s*<\\/summary>|<\\/details>[\\s\\S]*?$)/gs",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": 11,
-                "maxDepth": null,
-                "markdownOnly": false,
-                "promptOnly": true
-            },
-            {
-                "id": "721479b3-c473-46c5-988e-89c38d787ebb",
-                "scriptName": "7【可选美化】吐槽-美化一丢丢",
-                "disabled": true,
-                "runOnEdit": true,
-                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                "replaceString": "<html><head><meta charset=\"UTF-8\"><title>吐槽卡片</title><style>body{background:#1e1e1e;color:#f0f0f0;font-family:\"Segoe UI\",Tahoma,Geneva,Verdana,sans-serif;line-height:1.5;}details{margin:12px 0;border-radius:10px;background:linear-gradient(145deg,#2c2c2c,#252525);padding:0;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.3);transition:all 0.3s ease;}summary{cursor:pointer;padding:10px 16px;display:block;font-weight:bold;color:#ffd966;user-select:none;position:relative;background:linear-gradient(to right,#3a3a3a,#2a2a2a);border-bottom:1px solid #444;}summary::after{content:\" ▼\";position:absolute;right:16px;transition:transform 0.3s ease;}details[open] summary::after{content:\" ▲\";}.tucao-content{max-height:0;overflow:hidden;background:linear-gradient(145deg,#3c3c3c,#2e2e2e);color:#e0e0e0;padding:0 16px;transition:max-height 0.4s ease,padding 0.4s ease;}details[open] .tucao-content{padding:10px 16px;max-height:1000px;}</style></head><body><details><summary>吐槽</summary><div class=\"tucao-content\">$1</div></details></body></html>\n",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": null,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "d06cfd66-03eb-4127-93d5-8e1ab0de3cf2",
-                "scriptName": "7【可选美化】想看吐槽-碎碎念性能版",
-                "disabled": true,
-                "runOnEdit": true,
-                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                "replaceString": "<span class=\"custom-aurora-card-comp\"> <html> <head> <meta charset=\"UTF-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /> <title>一体化极光卡片</title> <style> body { background-color: #010409; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; box-sizing: border-box; line-height: 1.2; } .aurora-card-wrapper { margin: -0.2rem 0; transform: translateY(0.1rem); width: 100%; display: flex; justify-content: center; align-items: center; } .aurora-card { width: 100px; max-width: 900px; max-height: 18px; border-radius: 50px; position: relative; transition: width 0.7s cubic-bezier(0.35, 1, 0.65, 1), max-height 0.7s cubic-bezier(0.35, 1, 0.65, 1), border-radius 0.7s cubic-bezier(0.35, 1, 0.65, 1), transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease, backdrop-filter 0.3s ease; display: block; overflow: hidden; isolation: isolate; } .aurora-card[open] { width: 100%; max-height: 600px; border-radius: 18px; background-color: rgba(13, 17, 23, 0.8); background-image: radial-gradient( circle at 50% 0%, hsla(270, 95%, 75%, 0.053), transparent 80% ); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); } .aurora-card::before { content: \"\"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1s ease-in-out; } .aurora-card[open]::before { background-image: radial-gradient( ellipse 50% 70% at 15% 20%, hsla(180, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 60% 80% at 80% 85%, hsla(320, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 40% 60% at 50% 5%, hsla(270, 90%, 80%, 0.15), transparent 80% ); opacity: 1; } .aurora-card:hover { transform: translateY(-4px); } .aurora-card__summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; height: 18px; box-sizing: border-box; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 8px 8px; user-select: none; -webkit-user-select: none; } .aurora-card__summary::-webkit-details-marker { display: none; } .aurora-card__summary:focus-visible { outline: 2px solid hsl(190, 100%, 70%); outline-offset: 4px; } .aurora-card[open] > .aurora-card__summary { padding-top: 8px; padding-bottom: 8px; height: auto; background-color: transparent; } .aurora-card__summary::after { content: \"\"; position: absolute; bottom: 0; left: 50%; width: calc(100% - 48px); height: 1px; background: linear-gradient( to right, hsla(270, 95%, 75%, 0), hsla(270, 95%, 75%, 0.4), hsla(270, 95%, 75%, 0) ); opacity: 0; transform: translateX(-50%) scaleX(0); transform-origin: center; transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s; } .aurora-card[open] > .aurora-card__summary::after { opacity: 1; transform: translateX(-50%) scaleX(1); } .aurora-card__title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; background: linear-gradient( 90deg, hsl(190, 100%, 60%), hsl(270, 95%, 65%), hsl(320, 65%, 60%) ); background-clip: text; -webkit-background-clip: text; color: transparent; transition: font-size 0.4s ease; } .aurora-card[open] .aurora-card__title { font-size: 1rem; } .aurora-card__content { min-width: 0; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 0 12px; } .aurora-card[open] .aurora-card__content { padding: 0 12px 10px 12px; } .aurora-card__text { font-size: 0.9rem; font-weight: 400; text-align: left; white-space: pre-wrap; overflow-wrap: break-word; padding-right: 5px; max-height: 450px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.15) transparent; opacity: 0; transform: translateY(15px); transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s; will-change: opacity, transform; } .aurora-card[open] .aurora-card__text { opacity: 1; transform: translateY(0); } .aurora-card__text::-webkit-scrollbar { width: 8px; } .aurora-card__text::-webkit-scrollbar-track { background: transparent; } .aurora-card__text::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; transition: background-color 0.3s ease; } .aurora-card__text:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.35); } </style> </head> <body> <div class=\"aurora-card-wrapper\"> <details class=\"aurora-card\"> <summary class=\"aurora-card__summary\"> <span class=\"aurora-card__title\">💭碎碎念💭</span> </summary> <div class=\"aurora-card__content\"> <div class=\"aurora-card__text\">$1</div> </div> </details> </div> </body> </html> </span>",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": 10,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "9ac689be-1760-48b3-8f46-1b0a0563161d",
-                "scriptName": "7【可选美化】小气泡",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
-                "replaceString": "<style>\n/* --- 容器和按钮样式 --- */\n.tucao-wrapper {\n    display: block; /* 【修改点1】改为块级元素，让它独占一行，展开时能撑开空间 */\n    margin: 10px 0; /* 上下留出间距 */\n}\n\n.tucao-details {\n    /* details标签默认就是块级，无需设置 */\n}\n\n.tucao-summary {\n    display: inline-flex; /* 让按钮内容居中 */\n    align-items: center;\n    justify-content: center;\n    list-style: none; /* 隐藏默认箭头 */\n    cursor: pointer;\n    width: 20px;\n    height: 20px;\n    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);\n    border-radius: 50%;\n    transition: all 0.3s ease;\n    border: 2px solid rgba(255, 255, 255, 0.3);\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);\n}\n.tucao-summary::-webkit-details-marker { display: none; }\n.tucao-summary:hover { transform: scale(1.1); }\n.tucao-summary-icon { font-size: 10px; opacity: 0.8; }\n.tucao-details[open] > .tucao-summary { background: linear-gradient(135deg, #4ecdc4, #44a08d); }\n\n/* --- 内容区域样式 (核心修改) --- */\n.tucao-content {\n    /* 【修改点2】移除所有 position: absolute 和相关的定位属性 */\n    margin-top: 10px; /* 内容和按钮之间的间距 */\n    background: linear-gradient(135deg, #1f1f34, #1b2845);\n    border: 1px solid #4a5568;\n    border-radius: 12px;\n    padding: 12px 16px;\n    box-shadow: 0 8px 16px rgba(0,0,0,0.3);\n    overflow: hidden; /* 保证动画效果 */\n}\n\n/* --- 动画 --- */\n/* 当details展开时，内容通过details原生的机制显示出来 */\n/* 我们可以加一个简单的淡入动画，但复杂的max-height动画在文档流中可能效果不佳 */\n.tucao-details[open] .tucao-content {\n    animation: fadeIn 0.5s ease;\n}\n\n@keyframes fadeIn {\n    from { opacity: 0; transform: translateY(-10px); }\n    to { opacity: 1; transform: translateY(0); }\n}\n\n\n/* --- 文本和滚动条样式 (不变) --- */\n.tucao-header { color: #ffd700; font-weight: bold; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #4a5568; padding-bottom: 6px; }\n.tucao-text { white-space: pre-wrap; word-wrap: break-word; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; font-size: 14px; color: #e2e8f0; line-height: 1.6; max-height: 400px; overflow-y: auto; padding-right: 5px; }\n.tucao-text::-webkit-scrollbar { width: 6px; }\n.tucao-text::-webkit-scrollbar-track { background: transparent; }\n.tucao-text::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 3px; }\n</style>\n\n<!-- HTML部分 (无JS) -->\n<div class=\"tucao-wrapper\">\n    <details class=\"tucao-details\">\n        <summary class=\"tucao-summary\">\n            <span class=\"tucao-summary-icon\">💭</span>\n        </summary>\n        <div class=\"tucao-content\">\n            <div class=\"tucao-header\">💡 创作思路</div>\n            <div class=\"tucao-text\">$1</div>\n        </div>\n    </details>\n</div>",
-                "trimStrings": [],
-                "placement": [
-                    1,
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": 10,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "3c4dd38a-c649-4ee2-a877-93361e6bf8a6",
-                "scriptName": "8省选项token",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/<xx>[\\s\\S]*?<\\/xx>/gsi",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    1,
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": null,
-                "markdownOnly": false,
-                "promptOnly": true
-            },
-            {
-                "id": "57f4fbee-1008-4179-b165-384b7e8f5ed9",
-                "scriptName": "9美化选项栏Beta",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "<xx>\\s*?>选项一：\\s*([^>]+?)\\s*?>选项二：\\s*([^>]+?)\\s*?>选项三：\\s*([^>]+?)\\s*?>选项四：\\s*([^>]+?)\\s*<\\/xx>",
-                "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <style>\n      /* CSS样式 (无错误) */\n      .option-panel-container {\n        width: 100%;\n        max-width: 95%;\n        margin: 12px auto;\n        border-radius: 12px;\n        background: rgba(30, 30, 45, 0.85);\n        backdrop-filter: blur(10px);\n        -webkit-backdrop-filter: blur(10px);\n        border: 1px solid rgba(173, 216, 230, 0.2);\n        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);\n        font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        color: #e0e6f0;\n        overflow: hidden;\n      }\n      .option-panel-header {\n        padding: 12px 20px;\n        font-size: 1.1em;\n        font-weight: 600;\n        color: #98c379;\n        background: rgba(0, 0, 0, 0.2);\n        border-bottom: 1px solid rgba(173, 216, 230, 0.15);\n        text-align: center;\n        letter-spacing: 1px;\n      }\n      .option-list {\n        list-style: none;\n        padding: 15px 20px;\n        margin: 0;\n      }\n      .option-item {\n        background: rgba(255, 255, 255, 0.05);\n        border-radius: 8px;\n        margin-bottom: 10px;\n        transition: all 0.3s ease;\n        border-left: 4px solid transparent;\n      }\n      .option-item:last-child {\n        margin-bottom: 0;\n      }\n      .option-item:hover {\n        background: rgba(255, 255, 255, 0.1);\n        transform: translateX(5px);\n        border-left-color: #61afef;\n      }\n      .option-link {\n        display: block;\n        padding: 12px 15px;\n        text-decoration: none;\n        color: #dcdfe4;\n        font-size: 0.9em;\n        display: flex;\n        align-items: center;\n        cursor: pointer;\n      }\n      .option-icon {\n        margin-right: 12px;\n        font-size: 1.2em;\n        opacity: 0.8;\n        min-width: 20px;\n        text-align: center;\n      }\n      .option-item:nth-child(1) .option-icon {\n        color: #e5c07b;\n      }\n      .option-item:nth-child(2) .option-icon {\n        color: #e06c75;\n      }\n      .option-item:nth-child(3) .option-icon {\n        color: #56b6c2;\n      }\n      .option-item:nth-child(4) .option-icon {\n        color: #c678dd;\n      }\n    </style>\n  </head>\n  <body>\n    <!-- HTML结构 (保持不变) -->\n    <div class=\"option-panel-container\">\n      <div class=\"option-panel-header\">✨ Master, 请选择你的行动 ✨</div>\n      <ul class=\"option-list\" id=\"izumi-option-list\">\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$1\"\n          >\n            <span class=\"option-icon\">🧐</span>\n            <span>$1</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$2\"\n          >\n            <span class=\"option-icon\">🚀</span>\n            <span>$2</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$3\"\n          >\n            <span class=\"option-icon\">💬</span>\n            <span>$3</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$4\"\n          >\n            <span class=\"option-icon\">😈</span>\n            <span>$4</span>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <!-- JavaScript (仅修改一行) -->\n    <script>\n      /**\n       * 与SillyTavern环境通信，触发快速回复。\n       * @param {string} text - 要发送的文本。\n       */\n      const triggerQuickReply = (text) => {\n        // 检查文本是否有效，避免发送空内容\n        if (!text || text.trim() === \"\") {\n          console.warn(\"Attempted to send an empty message.\");\n          return;\n        }\n\n        // 检查SillyTavern环境并发送命令\n        if (typeof triggerSlash === \"function\") {\n          triggerSlash(`/send ${text}|/trigger`);\n        } else {\n          console.log(\"SillyTavern environment not detected. Mock send:\", text);\n        }\n      };\n\n      /**\n       * 处理选项列表的点击事件。\n       * @param {MouseEvent} event - 点击事件对象。\n       */\n      const handleOptionClick = (event) => {\n        // 使用 event.target.closest() 查找被点击的 .option-link 元素\n        const link = event.target.closest(\".option-link\");\n        if (!link) {\n          return; // 如果点击的不是 .option-link 或其子元素，则不执行任何操作\n        }\n\n        // 使用 .dataset 属性获取 data- 属性，这是更现代的写法\n        const fullText = link.dataset.optionText;\n\n        // 增加对 fullText 是否存在的检查，防止属性缺失导致错误\n        if (typeof fullText !== \"string\") {\n          console.error(\n            \"Clicked link is missing 'data-option-text' attribute.\",\n            link\n          );\n          return;\n        }\n\n        // 更稳健地移除首尾的方括号，仅当它们存在时才移除\n        const optionText =\n          fullText.startsWith(\"[\") && fullText.endsWith(\"]\")\n            ? fullText.slice(1, -1)\n            : fullText;\n\n        console.info(\"触发文本\", { fullText, optionText });\n\n        // 触发快速回复\n        triggerQuickReply(optionText);\n      };\n\n      /**\n       * 初始化事件监听器。\n       */\n      const initializeEventListeners = () => {\n        const optionList = document.getElementById(\"izumi-option-list\");\n\n        // 确认元素存在后再添加事件监听，避免页面上没有该元素时报错\n        if (optionList) {\n          optionList.addEventListener(\"click\", handleOptionClick);\n        } else {\n          console.warn(\n            \"Element with ID 'izumi-option-list' not found. No listener attached.\"\n          );\n        }\n      };\n\n      // 页面加载完成后执行初始化\n      document.addEventListener(\"DOMContentLoaded\", initializeEventListeners);\n    </script>\n  </body>\n</html>\n```",
-                "trimStrings": [],
-                "placement": [
-                    1,
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": 2,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "2224f255-a7f7-4a5c-a3bf-b0367251b35a",
-                "scriptName": "10【Gal】1.5弹幕防截断美化（泉此方，只有5层）",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "/<!-- Technical.*?<danmu>([\\s\\S]*?)<\\/danmu>.*?-->/gsi",
-                "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>B站风格-幸运星随机背景+随机颜色弹幕</title>\n    <style>\n        body { margin: 0; padding: 20px; box-sizing: border-box; }\n\n        /* --- 动画定义 --- */\n        @keyframes danmaku-scroll {\n            from { transform: translateX(100vw); }\n            to { transform: translateX(-100%); }\n        }\n\n        /* --- 容器样式（背景将由JS随机设置） --- */\n        .danmaku-super-container-rgb {\n            height: 350px;\n            border-radius: 10px;\n            position: relative;\n            overflow: hidden;\n            border: 1px solid rgba(0, 0, 0, 0.2);\n            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n            background-size: cover;\n            background-position: center;\n            background-repeat: no-repeat;\n        }\n\n        .danmaku-track-rgb {\n            position: absolute;\n            width: max-content;\n            left: 0;\n            animation-name: danmaku-scroll;\n            animation-timing-function: linear;\n            animation-iteration-count: infinite;\n        }\n\n        /* --- 弹幕文字（改为随机颜色，支持阴影，类似B站默认风格） --- */\n        .danmaku-content-multicolor-rgb {\n            white-space: pre;\n            padding: 0 30px;\n            font-weight: bold;\n            font-size: 22px;\n            color: #ffffff; /* 默认纯白，将被JS覆盖 */\n            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);\n        }\n    </style>\n</head>\n<body>\n\n    <div class=\"danmaku-super-container-rgb\" id=\"danmaku-container-final\"></div>\n    <div id=\"danmaku-data-source\" style=\"display: none;\">$1</div>\n\n    <script>\n        (function() {\n            const dataSourceElem = document.getElementById('danmaku-data-source');\n            const targetContainer = document.getElementById('danmaku-container-final');\n\n            if (!dataSourceElem || !targetContainer) return;\n\n            /* --- 随机背景图列表（替换为幸运星相关图片） --- */\n            const bgImages = [                \"https://static.zerochan.net/Izumi.Konata.full.887888.jpg\",                               \"https://www.hiclipart.com/free-transparent-background-png-clipart-xdntq\"\n\n            ];\n            const randomImg = bgImages[Math.floor(Math.random() * bgImages.length)];\n            targetContainer.style.backgroundImage = `url(${randomImg})`;\n\n            // B站常见弹幕颜色（十六进制格式）\n            const biliColors = [\n                \"#FFFFFF\", // 白色\n                \"#FF6B6B\", // 红色\n                \"#FFA500\", // 橙色\n                \"#FFFF00\", // 黄色\n                \"#77DD77\", // 绿色\n                \"#779ECB\", // 蓝色\n                \"#9B59B6\", // 紫色\n                \"#FF69B4\", // 粉色\n                \"#00CED1\", // 青色\n                \"#FFD700\"  // 金色\n            ];\n\n            const rawDanmus = (dataSourceElem.textContent || dataSourceElem.innerText).trim();\n            const danmuLines = rawDanmus.split(/\\r?\\n/).filter(line => line.trim() !== '');\n\n            const trackStyles = [\n                { top: '2%', duration: '20s', delay: '-1s' },\n                { top: '15%', duration: '28s', delay: '-11s' },\n                { top: '28%', duration: '24s', delay: '-4s' },\n                { top: '42%', duration: '33s', delay: '-2s' },\n                { top: '56%', duration: '18s', delay: '-16s' },\n                { top: '70%', duration: '30s', delay: '-7s' },\n                { top: '85%', duration: '22s', delay: '-13s' }\n            ];\n\n            function escapeHtml(text) {\n                const div = document.createElement('div');\n                div.appendChild(document.createTextNode(text));\n                return div.innerHTML;\n            }\n\n            let allTracksHtml = '';\n            danmuLines.forEach((line, index) => {\n                const style = trackStyles[index % trackStyles.length];\n                // 随机选择B站颜色\n                const randomColor = biliColors[Math.floor(Math.random() * biliColors.length)];\n                const safeLine = escapeHtml(line.trim());\n                \n                allTracksHtml += `\n    <div class=\"danmaku-track-rgb\" style=\"top: ${style.top}; animation-duration: ${style.duration}; animation-delay: ${style.delay};\">\n        <div class=\"danmaku-content-multicolor-rgb\" style=\"color: ${randomColor};\">${safeLine}</div>\n    </div>`;\n            });\n            targetContainer.innerHTML += allTracksHtml;\n        })();\n    </script>\n\n</body>\n</html> \n```",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": 5,
-                "markdownOnly": true,
-                "promptOnly": false
-            },
-            {
-                "id": "9abfa579-a898-4d7a-ac8a-d427114d015e",
-                "scriptName": "11去除防空回",
-                "disabled": false,
-                "runOnEdit": true,
-                "findRegex": "<Q>([\\s\\S]*?)<\\/WF>",
-                "replaceString": "",
-                "trimStrings": [],
-                "placement": [
-                    2
-                ],
-                "substituteRegex": 0,
-                "minDepth": null,
-                "maxDepth": null,
-                "markdownOnly": true,
-                "promptOnly": true
-            }
-        ]
-    },
+    "chat_completion_source": "makersuite",
+    "openai_model": "gpt-4-turbo",
+    "claude_model": "claude-3-5-sonnet-20240620",
+    "openrouter_model": "OR_Website",
+    "openrouter_use_fallback": false,
+    "openrouter_group_models": false,
+    "openrouter_sort_models": "alphabetically",
+    "openrouter_providers": [],
+    "openrouter_allow_fallbacks": true,
+    "openrouter_middleout": "on",
+    "ai21_model": "jamba-large",
+    "mistralai_model": "mistral-large-latest",
+    "cohere_model": "command-r-plus",
+    "perplexity_model": "sonar-pro",
+    "groq_model": "llama-3.3-70b-versatile",
+    "zerooneai_model": "yi-large",
+    "xai_model": "grok-3-beta",
+    "pollinations_model": "openai",
+    "aimlapi_model": "gpt-4o-mini-2024-07-18",
+    "custom_model": "",
+    "custom_url": "",
+    "custom_include_body": "",
+    "custom_exclude_body": "",
+    "custom_include_headers": "",
+    "custom_prompt_post_processing": "strict",
+    "google_model": "gemini-2.5-pro",
+    "vertexai_model": "gemini-2.0-flash-001",
     "temperature": 1.25,
     "frequency_penalty": 0,
     "presence_penalty": 0,
@@ -495,6 +45,8 @@
     "new_example_chat_prompt": "[Example Chat]",
     "continue_nudge_prompt": "[Continue the following message. Do not include ANY parts of the original message. Use capitalization and punctuation as if your reply is a part of the original message: {{lastChatMessage}}]",
     "bias_preset_selected": "Default (none)",
+    "reverse_proxy": "https://gcli.ggchan.dev/",
+    "proxy_password": "gg-gcli-RoQz0RfTQ8UopUWvd3eDjiXmh7vrRfvafx2BWlYkC_g",
     "max_context_unlocked": true,
     "wi_format": "{0}",
     "scenario_format": "[Circumstances and context of the dialogue: {{scenario}}]",
@@ -2732,7 +2284,7 @@
                 },
                 {
                     "identifier": "313b9a8f-dceb-47b6-ac53-a157004e4526",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "f987cf08-a24e-4c8c-9f1e-edd7cfb66301",
@@ -2748,7 +2300,7 @@
                 },
                 {
                     "identifier": "869bf19b-7764-4c01-8370-155f62ea5be4",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "c4eccf53-780a-4e13-85da-cc9a0dd6e2d2",
@@ -2792,11 +2344,11 @@
                 },
                 {
                     "identifier": "39c7a119-c95c-4bb7-b2f6-df9e2b2b6c58",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "82da9596-b36b-47cc-9f77-d91c7fff1919",
-                    "enabled": false
+                    "enabled": true
                 },
                 {
                     "identifier": "1ca7612a-89ec-406e-b1c4-eea8b72f7d23",
@@ -2812,11 +2364,11 @@
                 },
                 {
                     "identifier": "55d5d5f1-436e-4af3-9559-fd22c0c69cd3",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "621605d8-d0f0-49b8-9cab-be28ddbd9e38",
-                    "enabled": false
+                    "enabled": true
                 },
                 {
                     "identifier": "60a5070d-596f-435a-bfc3-e7a7244ff766",
@@ -3044,11 +2596,11 @@
                 },
                 {
                     "identifier": "11ec4938-f184-4c90-ae5a-0fbe9cf58b47",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "97fcdcd6-bc97-41ad-8ecd-f33266953bcd",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "b6e58b8b-dcce-4f4c-b460-1376205dd938",
@@ -3072,7 +2624,7 @@
                 },
                 {
                     "identifier": "921d1dc0-8a5b-48a6-a537-84ca028e51d0",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "227ce9ee-bd66-479c-a329-026609b4d4ee",
@@ -3112,7 +2664,7 @@
                 },
                 {
                     "identifier": "d8e4b241-be25-4009-9b37-f5a90a4c7427",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "e8d8ed8b-99f5-465e-91ba-895ff28322b5",
@@ -3124,7 +2676,7 @@
                 },
                 {
                     "identifier": "40688491-b413-46a6-aeb4-090107523203",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "2967434d-1be0-4cd4-9b2c-5adeca9be28d",
@@ -3152,7 +2704,7 @@
                 },
                 {
                     "identifier": "d6d69788-6791-4813-98db-6286e43858a3",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "3170ef67-7079-45ed-a613-ddf321aaa6f4",
@@ -3160,7 +2712,7 @@
                 },
                 {
                     "identifier": "6f283554-e07c-433d-bbf2-45fc9bb8d9a9",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "c2639d1e-011e-4868-bda0-c176fa50e9d4",
@@ -3184,11 +2736,11 @@
                 },
                 {
                     "identifier": "7a1f54a8-0391-45f2-ab6e-80730914a039",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "d192c080-d5a7-43f4-bd56-ddc30ec6b282",
-                    "enabled": false
+                    "enabled": true
                 },
                 {
                     "identifier": "1ce33611-315d-4f87-9284-7406578d1eff",
@@ -3213,14 +2765,19 @@
             ]
         }
     ],
+    "show_external_models": false,
     "assistant_prefill": "",
     "assistant_impersonation": "",
     "claude_use_sysprompt": false,
     "use_makersuite_sysprompt": true,
+    "vertexai_auth_mode": "express",
+    "vertexai_region": "us-central1",
+    "vertexai_express_project_id": "",
     "squash_system_messages": true,
     "image_inlining": true,
     "inline_image_quality": "auto",
     "video_inlining": true,
+    "bypass_status_check": false,
     "continue_prefill": true,
     "continue_postfix": " ",
     "function_calling": true,
@@ -3229,5 +2786,482 @@
     "enable_web_search": false,
     "request_images": false,
     "seed": -1,
-    "n": 1
+    "n": 1,
+    "extensions": {
+        "SPreset": {
+            "ChatSquash": {
+                "enabled": false,
+                "separate_chat_history": false,
+                "parse_clewd": true,
+                "role": "assistant",
+                "stop_string": "User:",
+                "user_prefix": "\n\nUser:",
+                "user_suffix": "",
+                "char_prefix": "\n\nAssistant:",
+                "char_suffix": "",
+                "prefix_system": "",
+                "suffix_system": "",
+                "enable_squashed_separator": false,
+                "squashed_separator_regex": false,
+                "squashed_separator_string": "",
+                "squashed_post_script_enable": false,
+                "squashed_post_script": ""
+            },
+            "RegexBinding": {
+                "regexes": [
+                    {
+                        "id": "4e0eefdf-19fb-40a3-9476-e8f4dca19166",
+                        "scriptName": "1美化最近2层思维链",
+                        "disabled": true,
+                        "runOnEdit": true,
+                        "findRegex": "/<thinking>([\\s\\S]*?)<\\/thinking>/g",
+                        "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>带高级主题的可展开内容</title>\n    <style>\n        /* --- 页面基础 --- */\n        body { background-color: #111; margin: 0; padding: 1em; font-family: sans-serif; }\n\n        /* --- 自包含的、带背景的折叠组件 --- */\n        .accordion-container {\n            position: relative; border: 1px solid rgba(132, 122, 214, 0.5);\n            border-radius: 8px; overflow: hidden; max-width: 100%;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: #e0e0e0;\n            transition: background-color 0.8s ease;\n        }\n\n        /* --- 动态粒子效果的容器 --- */\n        .particles-wrapper {\n            position: absolute; top: 0; left: 0; width: 100%; height: 100%;\n            z-index: 1; overflow: hidden; pointer-events: none;\n        }\n\n        /* --- 动态背景主题 --- */\n        /* 1. 星空 (CSS) */\n        .theme-stars {\n            background-color: #0c0a1f;\n            background-image: \n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='1' fill='%23fff'/%3E%3C/svg%3E\"),\n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23fff'/%3E%3C/svg%3E\");\n            animation: stars-move 200s linear infinite;\n        }\n        @keyframes stars-move { from { background-position: 0 0, 0 0; } to { background-position: -10000px 5000px, -7500px 3750px; } }\n\n        /* 2. 下雪 (JS驱动) */\n        .theme-snow { background-color: #344055; }\n        .snowflake {\n            position: absolute; top: -20px; border-radius: 50%;\n            background-color: white; animation: fall linear infinite;\n        }\n        @keyframes fall {\n            0% { transform: translateY(0) translateX(0); opacity: 1; }\n            50% { transform: translateY(50vh) translateX(40px); }\n            100% { transform: translateY(105vh) translateX(-10px); opacity: 0; }\n        }\n\n        /* 3. 气泡 (JS驱动, 从两侧进入) */\n        .theme-bubbles { background-color: #0d1a2f; }\n        .bubble { position: absolute; border-radius: 50%; opacity: 0; }\n        .bubble.from-left { animation: drift-ltr linear infinite; }\n        .bubble.from-right { animation: drift-rtl linear infinite; }\n        \n        /* 从左到右漂浮 */\n        @keyframes drift-ltr {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(30vw) translateY(-15vh); opacity: 0.7; }\n            80% { transform: translateX(70vw) translateY(10vh); opacity: 0.5; }\n            100% { transform: translateX(100vw) translateY(-5vh); opacity: 0; }\n        }\n        /* 从右到左漂浮 */\n        @keyframes drift-rtl {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(-30vw) translateY(-10vh); opacity: 0.7; }\n            80% { transform: translateX(-70vw) translateY(15vh); opacity: 0.5; }\n            100% { transform: translateX(-100vw) translateY(5vh); opacity: 0; }\n        }\n\n        /* --- 标题和内容样式 --- */\n        .accordion-header, .accordion-content { position: relative; z-index: 2; }\n        .accordion-header {\n            background: rgba(44, 42, 74, 0.8); backdrop-filter: blur(2px);\n            padding: 15px 20px; cursor: pointer; user-select: none; font-weight: bold;\n            display: flex; justify-content: space-between; align-items: center;\n        }\n        .accordion-header::after { content: '▼'; font-size: 0.8em; color: #a0a0c0; transition: transform 0.3s ease-out; }\n        .accordion-container.expanded .accordion-header::after { transform: rotate(180deg); }\n        \n        /* 简化内容区域 - 去掉动画，直接显示/隐藏 */\n        .accordion-content { \n            display: none;\n            background-color: transparent; \n        }\n        \n        /* 展开时直接显示，设置固定高度 */\n        .accordion-container.expanded .accordion-content {\n            display: block;\n            height: 500px; /* PC端固定高度 */\n        }\n        \n        /* 手机端适配 */\n        @media (max-width: 768px) {\n            .accordion-container.expanded .accordion-content {\n                height: 400px;\n            }\n        }\n        \n        @media (max-width: 480px) {\n            .accordion-container.expanded .accordion-content {\n                height: 350px;\n            }\n        }\n        \n        /* 内容滚动容器 */\n        .content-scroll-wrapper {\n            height: 100%;\n            overflow-y: auto;\n            overflow-x: hidden;\n        }\n        \n        /* 美化滚动条 */\n        .content-scroll-wrapper::-webkit-scrollbar {\n            width: 8px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-track {\n            background: rgba(255, 255, 255, 0.1);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb {\n            background: rgba(132, 122, 214, 0.6);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb:hover {\n            background: rgba(132, 122, 214, 0.8);\n        }\n        \n        /* 火狐浏览器滚动条样式 */\n        .content-scroll-wrapper {\n            scrollbar-width: thin;\n            scrollbar-color: rgba(132, 122, 214, 0.6) rgba(255, 255, 255, 0.1);\n        }\n        \n        .content-inner { \n            padding: 20px; \n            padding-top: 10px; \n            white-space: pre-wrap; \n            word-wrap: break-word;\n        }\n        \n        /* --- 主题切换按钮样式 --- */\n        .theme-controls { \n            padding: 10px 20px; \n            border-bottom: 1px solid rgba(255, 255, 255, 0.1); \n            display: flex; \n            flex-wrap: wrap; \n            gap: 10px; \n            flex-shrink: 0;\n        }\n        .theme-controls button {\n            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);\n            color: #e0e0e0; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 14px;\n            transition: background-color 0.2s, border-color 0.2s;\n        }\n        .theme-controls button:hover { background: rgba(255, 255, 255, 0.2); }\n        .theme-controls button.active { background: #847ad6; border-color: #847ad6; color: #fff; font-weight: bold; }\n    </style>\n</head>\n<body>\n\n    <div class=\"accordion-container theme-stars\">\n        <div class=\"particles-wrapper\"></div>\n        <div class=\"accordion-header\">\n            <span>点击展开或收拢思维链</span>\n        </div>\n        <div class=\"accordion-content\">\n            <div class=\"content-scroll-wrapper\">\n                <div class=\"theme-controls\">\n                    <button data-theme=\"stars\" class=\"active\">星空</button>\n                    <button data-theme=\"snow\">下雪</button>\n                    <button data-theme=\"bubbles\">气泡</button>\n                </div>\n                <div class=\"content-inner\">\n$1\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <script>\n        const container = document.querySelector('.accordion-container');\n        const header = document.querySelector('.accordion-header');\n        const content = document.querySelector('.accordion-content');\n        const particlesWrapper = document.querySelector('.particles-wrapper');\n        \n        // --- 1. 简化折叠逻辑 - 去掉动画 ---\n        header.addEventListener('click', function() {\n            container.classList.toggle('expanded');\n        });\n        \n        // --- 2. 主题切换与粒子效果 ---\n        const themeButtons = document.querySelectorAll('.theme-controls button');\n        const themes = ['stars', 'snow', 'bubbles'];\n        let particleInterval = null;\n\n        function clearParticles() {\n            if (particleInterval) clearInterval(particleInterval);\n            particleInterval = null;\n            if(particlesWrapper) particlesWrapper.innerHTML = '';\n        }\n\n        function createSnowflakes() {\n            particleInterval = setInterval(() => {\n                const snowflake = document.createElement('div');\n                snowflake.className = 'snowflake';\n                const size = Math.random() * 4 + 2;\n                const duration = Math.random() * 5 + 7;\n                snowflake.style.width = `${size}px`;\n                snowflake.style.height = `${size}px`;\n                snowflake.style.left = `${Math.random() * 100}%`;\n                snowflake.style.animationDuration = `${duration}s`;\n                snowflake.style.animationDelay = `${Math.random() * 5}s`;\n                snowflake.style.opacity = Math.random() * 0.7 + 0.3;\n                particlesWrapper.appendChild(snowflake);\n                setTimeout(() => snowflake.remove(), (duration + 5) * 1000);\n            }, 150);\n        }\n\n        function createBubbles() {\n            particleInterval = setInterval(() => {\n                const bubble = document.createElement('div');\n                bubble.className = 'bubble';\n                const size = Math.random() * 80 + 20;\n                const duration = Math.random() * 10 + 8;\n                const hue = Math.random() * 360;\n\n                bubble.style.width = `${size}px`;\n                bubble.style.height = `${size}px`;\n                bubble.style.top = `${Math.random() * 90}%`;\n                bubble.style.animationDuration = `${duration}s`;\n                bubble.style.animationDelay = `${Math.random() * 4}s`;\n                bubble.style.background = `radial-gradient(circle at 30% 30%, hsla(${hue}, 100%, 75%, 0.8), hsla(${hue}, 100%, 50%, 0.2))`;\n\n                if (Math.random() > 0.5) {\n                    bubble.classList.add('from-left');\n                    bubble.style.left = `-${size + 20}px`;\n                } else {\n                    bubble.classList.add('from-right');\n                    bubble.style.right = `-${size + 20}px`;\n                }\n                \n                particlesWrapper.appendChild(bubble);\n                setTimeout(() => bubble.remove(), (duration + 5) * 1000);\n            }, 300);\n        }\n\n        themeButtons.forEach(button => {\n            button.addEventListener('click', function(event) {\n                const selectedTheme = event.target.dataset.theme;\n                clearParticles();\n                themes.forEach(theme => container.classList.remove('theme-' + theme));\n                container.classList.add('theme-' + selectedTheme);\n                if (selectedTheme === 'snow') createSnowflakes();\n                else if (selectedTheme === 'bubbles') createBubbles();\n                themeButtons.forEach(btn => btn.classList.remove('active'));\n                event.target.classList.add('active');\n            });\n        });\n    </script>\n\n</body>\n</html>\n```",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": 2,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "efc5ccb1-3d4c-4695-b322-2a26c6111077",
+                        "scriptName": "2Kemini通用去除多余内容",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/(<disclaimer>.*?</disclaimer>)|(<guifan>.*?</guifan>)|```start|<content>|</content>|```end|<done>|`<done>`|(<!--\\s*consider\\s*:\\s*(.*?)\\s*-->)|(.*?</think(ing)?>(\\n)?)|(<think(ing)?>[\\s\\S]*<\\/think(ing)?>(\\n)?)/gs",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": null,
+                        "markdownOnly": true,
+                        "promptOnly": true
+                    },
+                    {
+                        "id": "052f9a62-191f-47cf-90ef-c1480986b0c0",
+                        "scriptName": "3隐藏吐槽（关美化）",
+                        "disabled": true,
+                        "runOnEdit": true,
+                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": null,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "59ed262c-680a-4a50-a9cb-cadc69f1c718",
+                        "scriptName": "4省吐槽token",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/<tucao>[\\s\\S]*?<\\/tucao>/gsi",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": 6,
+                        "maxDepth": null,
+                        "markdownOnly": true,
+                        "promptOnly": true
+                    },
+                    {
+                        "id": "8fbb82aa-e763-4ef6-b5ac-7e87fea47122",
+                        "scriptName": "5摘要其一",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/<details>\\s*<summary>\\s*摘要\\s*<\\/summary>[\\s\\S]*?<\\/details>/gsi",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": 10,
+                        "markdownOnly": false,
+                        "promptOnly": true
+                    },
+                    {
+                        "id": "3febdecd-d789-4f2d-906a-de4199df13c2",
+                        "scriptName": "6摘要其二",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/([\\s\\S]*?<details>\\s*<summary>\\s*摘要\\s*<\\/summary>|<\\/details>[\\s\\S]*?$)/gs",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": 11,
+                        "maxDepth": null,
+                        "markdownOnly": false,
+                        "promptOnly": true
+                    },
+                    {
+                        "id": "86bc18dd-3bc9-4f68-8914-2b6e44b0e003",
+                        "scriptName": "7【可选美化】吐槽-美化一丢丢",
+                        "disabled": true,
+                        "runOnEdit": true,
+                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                        "replaceString": "<html><head><meta charset=\"UTF-8\"><title>吐槽卡片</title><style>body{background:#1e1e1e;color:#f0f0f0;font-family:\"Segoe UI\",Tahoma,Geneva,Verdana,sans-serif;line-height:1.5;}details{margin:12px 0;border-radius:10px;background:linear-gradient(145deg,#2c2c2c,#252525);padding:0;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.3);transition:all 0.3s ease;}summary{cursor:pointer;padding:10px 16px;display:block;font-weight:bold;color:#ffd966;user-select:none;position:relative;background:linear-gradient(to right,#3a3a3a,#2a2a2a);border-bottom:1px solid #444;}summary::after{content:\" ▼\";position:absolute;right:16px;transition:transform 0.3s ease;}details[open] summary::after{content:\" ▲\";}.tucao-content{max-height:0;overflow:hidden;background:linear-gradient(145deg,#3c3c3c,#2e2e2e);color:#e0e0e0;padding:0 16px;transition:max-height 0.4s ease,padding 0.4s ease;}details[open] .tucao-content{padding:10px 16px;max-height:1000px;}</style></head><body><details><summary>吐槽</summary><div class=\"tucao-content\">$1</div></details></body></html>\n",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": null,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "ebaf1f36-34d2-46a0-92a4-65644e60bfa3",
+                        "scriptName": "7【可选美化】想看吐槽-碎碎念性能版",
+                        "disabled": true,
+                        "runOnEdit": true,
+                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                        "replaceString": "<span class=\"custom-aurora-card-comp\"> <html> <head> <meta charset=\"UTF-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /> <title>一体化极光卡片</title> <style> body { background-color: #010409; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; box-sizing: border-box; line-height: 1.2; } .aurora-card-wrapper { margin: -0.2rem 0; transform: translateY(0.1rem); width: 100%; display: flex; justify-content: center; align-items: center; } .aurora-card { width: 100px; max-width: 900px; max-height: 18px; border-radius: 50px; position: relative; transition: width 0.7s cubic-bezier(0.35, 1, 0.65, 1), max-height 0.7s cubic-bezier(0.35, 1, 0.65, 1), border-radius 0.7s cubic-bezier(0.35, 1, 0.65, 1), transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease, backdrop-filter 0.3s ease; display: block; overflow: hidden; isolation: isolate; } .aurora-card[open] { width: 100%; max-height: 600px; border-radius: 18px; background-color: rgba(13, 17, 23, 0.8); background-image: radial-gradient( circle at 50% 0%, hsla(270, 95%, 75%, 0.053), transparent 80% ); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); } .aurora-card::before { content: \"\"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1s ease-in-out; } .aurora-card[open]::before { background-image: radial-gradient( ellipse 50% 70% at 15% 20%, hsla(180, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 60% 80% at 80% 85%, hsla(320, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 40% 60% at 50% 5%, hsla(270, 90%, 80%, 0.15), transparent 80% ); opacity: 1; } .aurora-card:hover { transform: translateY(-4px); } .aurora-card__summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; height: 18px; box-sizing: border-box; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 8px 8px; user-select: none; -webkit-user-select: none; } .aurora-card__summary::-webkit-details-marker { display: none; } .aurora-card__summary:focus-visible { outline: 2px solid hsl(190, 100%, 70%); outline-offset: 4px; } .aurora-card[open] > .aurora-card__summary { padding-top: 8px; padding-bottom: 8px; height: auto; background-color: transparent; } .aurora-card__summary::after { content: \"\"; position: absolute; bottom: 0; left: 50%; width: calc(100% - 48px); height: 1px; background: linear-gradient( to right, hsla(270, 95%, 75%, 0), hsla(270, 95%, 75%, 0.4), hsla(270, 95%, 75%, 0) ); opacity: 0; transform: translateX(-50%) scaleX(0); transform-origin: center; transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s; } .aurora-card[open] > .aurora-card__summary::after { opacity: 1; transform: translateX(-50%) scaleX(1); } .aurora-card__title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; background: linear-gradient( 90deg, hsl(190, 100%, 60%), hsl(270, 95%, 65%), hsl(320, 65%, 60%) ); background-clip: text; -webkit-background-clip: text; color: transparent; transition: font-size 0.4s ease; } .aurora-card[open] .aurora-card__title { font-size: 1rem; } .aurora-card__content { min-width: 0; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 0 12px; } .aurora-card[open] .aurora-card__content { padding: 0 12px 10px 12px; } .aurora-card__text { font-size: 0.9rem; font-weight: 400; text-align: left; white-space: pre-wrap; overflow-wrap: break-word; padding-right: 5px; max-height: 450px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.15) transparent; opacity: 0; transform: translateY(15px); transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s; will-change: opacity, transform; } .aurora-card[open] .aurora-card__text { opacity: 1; transform: translateY(0); } .aurora-card__text::-webkit-scrollbar { width: 8px; } .aurora-card__text::-webkit-scrollbar-track { background: transparent; } .aurora-card__text::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; transition: background-color 0.3s ease; } .aurora-card__text:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.35); } </style> </head> <body> <div class=\"aurora-card-wrapper\"> <details class=\"aurora-card\"> <summary class=\"aurora-card__summary\"> <span class=\"aurora-card__title\">💭碎碎念💭</span> </summary> <div class=\"aurora-card__content\"> <div class=\"aurora-card__text\">$1</div> </div> </details> </div> </body> </html> </span>",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": 10,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "f7243640-5241-4e88-8617-0e5d133d9a90",
+                        "scriptName": "7【可选美化】小气泡",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                        "replaceString": "<style>\n/* --- 容器和按钮样式 --- */\n.tucao-wrapper {\n    display: block; /* 【修改点1】改为块级元素，让它独占一行，展开时能撑开空间 */\n    margin: 10px 0; /* 上下留出间距 */\n}\n\n.tucao-details {\n    /* details标签默认就是块级，无需设置 */\n}\n\n.tucao-summary {\n    display: inline-flex; /* 让按钮内容居中 */\n    align-items: center;\n    justify-content: center;\n    list-style: none; /* 隐藏默认箭头 */\n    cursor: pointer;\n    width: 20px;\n    height: 20px;\n    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);\n    border-radius: 50%;\n    transition: all 0.3s ease;\n    border: 2px solid rgba(255, 255, 255, 0.3);\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);\n}\n.tucao-summary::-webkit-details-marker { display: none; }\n.tucao-summary:hover { transform: scale(1.1); }\n.tucao-summary-icon { font-size: 10px; opacity: 0.8; }\n.tucao-details[open] > .tucao-summary { background: linear-gradient(135deg, #4ecdc4, #44a08d); }\n\n/* --- 内容区域样式 (核心修改) --- */\n.tucao-content {\n    /* 【修改点2】移除所有 position: absolute 和相关的定位属性 */\n    margin-top: 10px; /* 内容和按钮之间的间距 */\n    background: linear-gradient(135deg, #1f1f34, #1b2845);\n    border: 1px solid #4a5568;\n    border-radius: 12px;\n    padding: 12px 16px;\n    box-shadow: 0 8px 16px rgba(0,0,0,0.3);\n    overflow: hidden; /* 保证动画效果 */\n}\n\n/* --- 动画 --- */\n/* 当details展开时，内容通过details原生的机制显示出来 */\n/* 我们可以加一个简单的淡入动画，但复杂的max-height动画在文档流中可能效果不佳 */\n.tucao-details[open] .tucao-content {\n    animation: fadeIn 0.5s ease;\n}\n\n@keyframes fadeIn {\n    from { opacity: 0; transform: translateY(-10px); }\n    to { opacity: 1; transform: translateY(0); }\n}\n\n\n/* --- 文本和滚动条样式 (不变) --- */\n.tucao-header { color: #ffd700; font-weight: bold; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #4a5568; padding-bottom: 6px; }\n.tucao-text { white-space: pre-wrap; word-wrap: break-word; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; font-size: 14px; color: #e2e8f0; line-height: 1.6; max-height: 400px; overflow-y: auto; padding-right: 5px; }\n.tucao-text::-webkit-scrollbar { width: 6px; }\n.tucao-text::-webkit-scrollbar-track { background: transparent; }\n.tucao-text::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 3px; }\n</style>\n\n<!-- HTML部分 (无JS) -->\n<div class=\"tucao-wrapper\">\n    <details class=\"tucao-details\">\n        <summary class=\"tucao-summary\">\n            <span class=\"tucao-summary-icon\">💭</span>\n        </summary>\n        <div class=\"tucao-content\">\n            <div class=\"tucao-header\">💡 创作思路</div>\n            <div class=\"tucao-text\">$1</div>\n        </div>\n    </details>\n</div>",
+                        "trimStrings": [],
+                        "placement": [
+                            1,
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": 10,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "67ab0414-ed92-4b94-b146-12381eaae771",
+                        "scriptName": "8省选项token",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/<xx>[\\s\\S]*?<\\/xx>/gsi",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            1,
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": null,
+                        "markdownOnly": false,
+                        "promptOnly": true
+                    },
+                    {
+                        "id": "5e62c654-8076-45f5-a7cc-3a62e5c66fc2",
+                        "scriptName": "9美化选项栏Beta",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "<xx>\\s*?>选项一：\\s*([^>]+?)\\s*?>选项二：\\s*([^>]+?)\\s*?>选项三：\\s*([^>]+?)\\s*?>选项四：\\s*([^>]+?)\\s*<\\/xx>",
+                        "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <style>\n      /* CSS样式 (无错误) */\n      .option-panel-container {\n        width: 100%;\n        max-width: 95%;\n        margin: 12px auto;\n        border-radius: 12px;\n        background: rgba(30, 30, 45, 0.85);\n        backdrop-filter: blur(10px);\n        -webkit-backdrop-filter: blur(10px);\n        border: 1px solid rgba(173, 216, 230, 0.2);\n        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);\n        font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        color: #e0e6f0;\n        overflow: hidden;\n      }\n      .option-panel-header {\n        padding: 12px 20px;\n        font-size: 1.1em;\n        font-weight: 600;\n        color: #98c379;\n        background: rgba(0, 0, 0, 0.2);\n        border-bottom: 1px solid rgba(173, 216, 230, 0.15);\n        text-align: center;\n        letter-spacing: 1px;\n      }\n      .option-list {\n        list-style: none;\n        padding: 15px 20px;\n        margin: 0;\n      }\n      .option-item {\n        background: rgba(255, 255, 255, 0.05);\n        border-radius: 8px;\n        margin-bottom: 10px;\n        transition: all 0.3s ease;\n        border-left: 4px solid transparent;\n      }\n      .option-item:last-child {\n        margin-bottom: 0;\n      }\n      .option-item:hover {\n        background: rgba(255, 255, 255, 0.1);\n        transform: translateX(5px);\n        border-left-color: #61afef;\n      }\n      .option-link {\n        display: block;\n        padding: 12px 15px;\n        text-decoration: none;\n        color: #dcdfe4;\n        font-size: 0.9em;\n        display: flex;\n        align-items: center;\n        cursor: pointer;\n      }\n      .option-icon {\n        margin-right: 12px;\n        font-size: 1.2em;\n        opacity: 0.8;\n        min-width: 20px;\n        text-align: center;\n      }\n      .option-item:nth-child(1) .option-icon {\n        color: #e5c07b;\n      }\n      .option-item:nth-child(2) .option-icon {\n        color: #e06c75;\n      }\n      .option-item:nth-child(3) .option-icon {\n        color: #56b6c2;\n      }\n      .option-item:nth-child(4) .option-icon {\n        color: #c678dd;\n      }\n    </style>\n  </head>\n  <body>\n    <!-- HTML结构 (保持不变) -->\n    <div class=\"option-panel-container\">\n      <div class=\"option-panel-header\">✨ Master, 请选择你的行动 ✨</div>\n      <ul class=\"option-list\" id=\"izumi-option-list\">\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$1\"\n          >\n            <span class=\"option-icon\">🧐</span>\n            <span>$1</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$2\"\n          >\n            <span class=\"option-icon\">🚀</span>\n            <span>$2</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$3\"\n          >\n            <span class=\"option-icon\">💬</span>\n            <span>$3</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$4\"\n          >\n            <span class=\"option-icon\">😈</span>\n            <span>$4</span>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <!-- JavaScript (仅修改一行) -->\n    <script>\n      /**\n       * 与SillyTavern环境通信，触发快速回复。\n       * @param {string} text - 要发送的文本。\n       */\n      const triggerQuickReply = (text) => {\n        // 检查文本是否有效，避免发送空内容\n        if (!text || text.trim() === \"\") {\n          console.warn(\"Attempted to send an empty message.\");\n          return;\n        }\n\n        // 检查SillyTavern环境并发送命令\n        if (typeof triggerSlash === \"function\") {\n          triggerSlash(`/send ${text}|/trigger`);\n        } else {\n          console.log(\"SillyTavern environment not detected. Mock send:\", text);\n        }\n      };\n\n      /**\n       * 处理选项列表的点击事件。\n       * @param {MouseEvent} event - 点击事件对象。\n       */\n      const handleOptionClick = (event) => {\n        // 使用 event.target.closest() 查找被点击的 .option-link 元素\n        const link = event.target.closest(\".option-link\");\n        if (!link) {\n          return; // 如果点击的不是 .option-link 或其子元素，则不执行任何操作\n        }\n\n        // 使用 .dataset 属性获取 data- 属性，这是更现代的写法\n        const fullText = link.dataset.optionText;\n\n        // 增加对 fullText 是否存在的检查，防止属性缺失导致错误\n        if (typeof fullText !== \"string\") {\n          console.error(\n            \"Clicked link is missing 'data-option-text' attribute.\",\n            link\n          );\n          return;\n        }\n\n        // 更稳健地移除首尾的方括号，仅当它们存在时才移除\n        const optionText =\n          fullText.startsWith(\"[\") && fullText.endsWith(\"]\")\n            ? fullText.slice(1, -1)\n            : fullText;\n\n        console.info(\"触发文本\", { fullText, optionText });\n\n        // 触发快速回复\n        triggerQuickReply(optionText);\n      };\n\n      /**\n       * 初始化事件监听器。\n       */\n      const initializeEventListeners = () => {\n        const optionList = document.getElementById(\"izumi-option-list\");\n\n        // 确认元素存在后再添加事件监听，避免页面上没有该元素时报错\n        if (optionList) {\n          optionList.addEventListener(\"click\", handleOptionClick);\n        } else {\n          console.warn(\n            \"Element with ID 'izumi-option-list' not found. No listener attached.\"\n          );\n        }\n      };\n\n      // 页面加载完成后执行初始化\n      document.addEventListener(\"DOMContentLoaded\", initializeEventListeners);\n    </script>\n  </body>\n</html>\n```",
+                        "trimStrings": [],
+                        "placement": [
+                            1,
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": 2,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "34665d76-0f23-4c97-acd8-9e73f1b12f3c",
+                        "scriptName": "10【Gal】1.5弹幕防截断美化（泉此方，只有5层）",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "/<!-- Technical.*?<danmu>([\\s\\S]*?)<\\/danmu>.*?-->/gsi",
+                        "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>B站风格-幸运星随机背景+随机颜色弹幕</title>\n    <style>\n        body { margin: 0; padding: 20px; box-sizing: border-box; }\n\n        /* --- 动画定义 --- */\n        @keyframes danmaku-scroll {\n            from { transform: translateX(100vw); }\n            to { transform: translateX(-100%); }\n        }\n\n        /* --- 容器样式（背景将由JS随机设置） --- */\n        .danmaku-super-container-rgb {\n            height: 350px;\n            border-radius: 10px;\n            position: relative;\n            overflow: hidden;\n            border: 1px solid rgba(0, 0, 0, 0.2);\n            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n            background-size: cover;\n            background-position: center;\n            background-repeat: no-repeat;\n        }\n\n        .danmaku-track-rgb {\n            position: absolute;\n            width: max-content;\n            left: 0;\n            animation-name: danmaku-scroll;\n            animation-timing-function: linear;\n            animation-iteration-count: infinite;\n        }\n\n        /* --- 弹幕文字（改为随机颜色，支持阴影，类似B站默认风格） --- */\n        .danmaku-content-multicolor-rgb {\n            white-space: pre;\n            padding: 0 30px;\n            font-weight: bold;\n            font-size: 22px;\n            color: #ffffff; /* 默认纯白，将被JS覆盖 */\n            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);\n        }\n    </style>\n</head>\n<body>\n\n    <div class=\"danmaku-super-container-rgb\" id=\"danmaku-container-final\"></div>\n    <div id=\"danmaku-data-source\" style=\"display: none;\">$1</div>\n\n    <script>\n        (function() {\n            const dataSourceElem = document.getElementById('danmaku-data-source');\n            const targetContainer = document.getElementById('danmaku-container-final');\n\n            if (!dataSourceElem || !targetContainer) return;\n\n            /* --- 随机背景图列表（替换为幸运星相关图片） --- */\n            const bgImages = [                \"https://static.zerochan.net/Izumi.Konata.full.887888.jpg\",                               \"https://www.hiclipart.com/free-transparent-background-png-clipart-xdntq\"\n\n            ];\n            const randomImg = bgImages[Math.floor(Math.random() * bgImages.length)];\n            targetContainer.style.backgroundImage = `url(${randomImg})`;\n\n            // B站常见弹幕颜色（十六进制格式）\n            const biliColors = [\n                \"#FFFFFF\", // 白色\n                \"#FF6B6B\", // 红色\n                \"#FFA500\", // 橙色\n                \"#FFFF00\", // 黄色\n                \"#77DD77\", // 绿色\n                \"#779ECB\", // 蓝色\n                \"#9B59B6\", // 紫色\n                \"#FF69B4\", // 粉色\n                \"#00CED1\", // 青色\n                \"#FFD700\"  // 金色\n            ];\n\n            const rawDanmus = (dataSourceElem.textContent || dataSourceElem.innerText).trim();\n            const danmuLines = rawDanmus.split(/\\r?\\n/).filter(line => line.trim() !== '');\n\n            const trackStyles = [\n                { top: '2%', duration: '20s', delay: '-1s' },\n                { top: '15%', duration: '28s', delay: '-11s' },\n                { top: '28%', duration: '24s', delay: '-4s' },\n                { top: '42%', duration: '33s', delay: '-2s' },\n                { top: '56%', duration: '18s', delay: '-16s' },\n                { top: '70%', duration: '30s', delay: '-7s' },\n                { top: '85%', duration: '22s', delay: '-13s' }\n            ];\n\n            function escapeHtml(text) {\n                const div = document.createElement('div');\n                div.appendChild(document.createTextNode(text));\n                return div.innerHTML;\n            }\n\n            let allTracksHtml = '';\n            danmuLines.forEach((line, index) => {\n                const style = trackStyles[index % trackStyles.length];\n                // 随机选择B站颜色\n                const randomColor = biliColors[Math.floor(Math.random() * biliColors.length)];\n                const safeLine = escapeHtml(line.trim());\n                \n                allTracksHtml += `\n    <div class=\"danmaku-track-rgb\" style=\"top: ${style.top}; animation-duration: ${style.duration}; animation-delay: ${style.delay};\">\n        <div class=\"danmaku-content-multicolor-rgb\" style=\"color: ${randomColor};\">${safeLine}</div>\n    </div>`;\n            });\n            targetContainer.innerHTML += allTracksHtml;\n        })();\n    </script>\n\n</body>\n</html> \n```",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": 5,
+                        "markdownOnly": true,
+                        "promptOnly": false
+                    },
+                    {
+                        "id": "5fe57954-d867-4e49-a59f-3acfd305f752",
+                        "scriptName": "11去除防空回",
+                        "disabled": false,
+                        "runOnEdit": true,
+                        "findRegex": "<Q>([\\s\\S]*?)<\\/WF>",
+                        "replaceString": "",
+                        "trimStrings": [],
+                        "placement": [
+                            2
+                        ],
+                        "substituteRegex": 0,
+                        "minDepth": null,
+                        "maxDepth": null,
+                        "markdownOnly": true,
+                        "promptOnly": true
+                    }
+                ]
+            },
+            "MacroNest": false
+        },
+        "regex_scripts": [
+            {
+                "id": "f2047c97-8fc7-44df-916a-c752f2e079ce",
+                "scriptName": "1美化最近2层思维链",
+                "disabled": true,
+                "runOnEdit": true,
+                "findRegex": "/<thinking>([\\s\\S]*?)<\\/thinking>/g",
+                "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>带高级主题的可展开内容</title>\n    <style>\n        /* --- 页面基础 --- */\n        body { background-color: #111; margin: 0; padding: 1em; font-family: sans-serif; }\n\n        /* --- 自包含的、带背景的折叠组件 --- */\n        .accordion-container {\n            position: relative; border: 1px solid rgba(132, 122, 214, 0.5);\n            border-radius: 8px; overflow: hidden; max-width: 100%;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: #e0e0e0;\n            transition: background-color 0.8s ease;\n        }\n\n        /* --- 动态粒子效果的容器 --- */\n        .particles-wrapper {\n            position: absolute; top: 0; left: 0; width: 100%; height: 100%;\n            z-index: 1; overflow: hidden; pointer-events: none;\n        }\n\n        /* --- 动态背景主题 --- */\n        /* 1. 星空 (CSS) */\n        .theme-stars {\n            background-color: #0c0a1f;\n            background-image: \n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='1' fill='%23fff'/%3E%3C/svg%3E\"),\n                url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23fff'/%3E%3C/svg%3E\");\n            animation: stars-move 200s linear infinite;\n        }\n        @keyframes stars-move { from { background-position: 0 0, 0 0; } to { background-position: -10000px 5000px, -7500px 3750px; } }\n\n        /* 2. 下雪 (JS驱动) */\n        .theme-snow { background-color: #344055; }\n        .snowflake {\n            position: absolute; top: -20px; border-radius: 50%;\n            background-color: white; animation: fall linear infinite;\n        }\n        @keyframes fall {\n            0% { transform: translateY(0) translateX(0); opacity: 1; }\n            50% { transform: translateY(50vh) translateX(40px); }\n            100% { transform: translateY(105vh) translateX(-10px); opacity: 0; }\n        }\n\n        /* 3. 气泡 (JS驱动, 从两侧进入) */\n        .theme-bubbles { background-color: #0d1a2f; }\n        .bubble { position: absolute; border-radius: 50%; opacity: 0; }\n        .bubble.from-left { animation: drift-ltr linear infinite; }\n        .bubble.from-right { animation: drift-rtl linear infinite; }\n        \n        /* 从左到右漂浮 */\n        @keyframes drift-ltr {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(30vw) translateY(-15vh); opacity: 0.7; }\n            80% { transform: translateX(70vw) translateY(10vh); opacity: 0.5; }\n            100% { transform: translateX(100vw) translateY(-5vh); opacity: 0; }\n        }\n        /* 从右到左漂浮 */\n        @keyframes drift-rtl {\n            0% { transform: translateX(0) translateY(0); opacity: 0; }\n            20% { transform: translateX(-30vw) translateY(-10vh); opacity: 0.7; }\n            80% { transform: translateX(-70vw) translateY(15vh); opacity: 0.5; }\n            100% { transform: translateX(-100vw) translateY(5vh); opacity: 0; }\n        }\n\n        /* --- 标题和内容样式 --- */\n        .accordion-header, .accordion-content { position: relative; z-index: 2; }\n        .accordion-header {\n            background: rgba(44, 42, 74, 0.8); backdrop-filter: blur(2px);\n            padding: 15px 20px; cursor: pointer; user-select: none; font-weight: bold;\n            display: flex; justify-content: space-between; align-items: center;\n        }\n        .accordion-header::after { content: '▼'; font-size: 0.8em; color: #a0a0c0; transition: transform 0.3s ease-out; }\n        .accordion-container.expanded .accordion-header::after { transform: rotate(180deg); }\n        \n        /* 简化内容区域 - 去掉动画，直接显示/隐藏 */\n        .accordion-content { \n            display: none;\n            background-color: transparent; \n        }\n        \n        /* 展开时直接显示，设置固定高度 */\n        .accordion-container.expanded .accordion-content {\n            display: block;\n            height: 500px; /* PC端固定高度 */\n        }\n        \n        /* 手机端适配 */\n        @media (max-width: 768px) {\n            .accordion-container.expanded .accordion-content {\n                height: 400px;\n            }\n        }\n        \n        @media (max-width: 480px) {\n            .accordion-container.expanded .accordion-content {\n                height: 350px;\n            }\n        }\n        \n        /* 内容滚动容器 */\n        .content-scroll-wrapper {\n            height: 100%;\n            overflow-y: auto;\n            overflow-x: hidden;\n        }\n        \n        /* 美化滚动条 */\n        .content-scroll-wrapper::-webkit-scrollbar {\n            width: 8px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-track {\n            background: rgba(255, 255, 255, 0.1);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb {\n            background: rgba(132, 122, 214, 0.6);\n            border-radius: 4px;\n        }\n        \n        .content-scroll-wrapper::-webkit-scrollbar-thumb:hover {\n            background: rgba(132, 122, 214, 0.8);\n        }\n        \n        /* 火狐浏览器滚动条样式 */\n        .content-scroll-wrapper {\n            scrollbar-width: thin;\n            scrollbar-color: rgba(132, 122, 214, 0.6) rgba(255, 255, 255, 0.1);\n        }\n        \n        .content-inner { \n            padding: 20px; \n            padding-top: 10px; \n            white-space: pre-wrap; \n            word-wrap: break-word;\n        }\n        \n        /* --- 主题切换按钮样式 --- */\n        .theme-controls { \n            padding: 10px 20px; \n            border-bottom: 1px solid rgba(255, 255, 255, 0.1); \n            display: flex; \n            flex-wrap: wrap; \n            gap: 10px; \n            flex-shrink: 0;\n        }\n        .theme-controls button {\n            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);\n            color: #e0e0e0; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 14px;\n            transition: background-color 0.2s, border-color 0.2s;\n        }\n        .theme-controls button:hover { background: rgba(255, 255, 255, 0.2); }\n        .theme-controls button.active { background: #847ad6; border-color: #847ad6; color: #fff; font-weight: bold; }\n    </style>\n</head>\n<body>\n\n    <div class=\"accordion-container theme-stars\">\n        <div class=\"particles-wrapper\"></div>\n        <div class=\"accordion-header\">\n            <span>点击展开或收拢思维链</span>\n        </div>\n        <div class=\"accordion-content\">\n            <div class=\"content-scroll-wrapper\">\n                <div class=\"theme-controls\">\n                    <button data-theme=\"stars\" class=\"active\">星空</button>\n                    <button data-theme=\"snow\">下雪</button>\n                    <button data-theme=\"bubbles\">气泡</button>\n                </div>\n                <div class=\"content-inner\">\n$1\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <script>\n        const container = document.querySelector('.accordion-container');\n        const header = document.querySelector('.accordion-header');\n        const content = document.querySelector('.accordion-content');\n        const particlesWrapper = document.querySelector('.particles-wrapper');\n        \n        // --- 1. 简化折叠逻辑 - 去掉动画 ---\n        header.addEventListener('click', function() {\n            container.classList.toggle('expanded');\n        });\n        \n        // --- 2. 主题切换与粒子效果 ---\n        const themeButtons = document.querySelectorAll('.theme-controls button');\n        const themes = ['stars', 'snow', 'bubbles'];\n        let particleInterval = null;\n\n        function clearParticles() {\n            if (particleInterval) clearInterval(particleInterval);\n            particleInterval = null;\n            if(particlesWrapper) particlesWrapper.innerHTML = '';\n        }\n\n        function createSnowflakes() {\n            particleInterval = setInterval(() => {\n                const snowflake = document.createElement('div');\n                snowflake.className = 'snowflake';\n                const size = Math.random() * 4 + 2;\n                const duration = Math.random() * 5 + 7;\n                snowflake.style.width = `${size}px`;\n                snowflake.style.height = `${size}px`;\n                snowflake.style.left = `${Math.random() * 100}%`;\n                snowflake.style.animationDuration = `${duration}s`;\n                snowflake.style.animationDelay = `${Math.random() * 5}s`;\n                snowflake.style.opacity = Math.random() * 0.7 + 0.3;\n                particlesWrapper.appendChild(snowflake);\n                setTimeout(() => snowflake.remove(), (duration + 5) * 1000);\n            }, 150);\n        }\n\n        function createBubbles() {\n            particleInterval = setInterval(() => {\n                const bubble = document.createElement('div');\n                bubble.className = 'bubble';\n                const size = Math.random() * 80 + 20;\n                const duration = Math.random() * 10 + 8;\n                const hue = Math.random() * 360;\n\n                bubble.style.width = `${size}px`;\n                bubble.style.height = `${size}px`;\n                bubble.style.top = `${Math.random() * 90}%`;\n                bubble.style.animationDuration = `${duration}s`;\n                bubble.style.animationDelay = `${Math.random() * 4}s`;\n                bubble.style.background = `radial-gradient(circle at 30% 30%, hsla(${hue}, 100%, 75%, 0.8), hsla(${hue}, 100%, 50%, 0.2))`;\n\n                if (Math.random() > 0.5) {\n                    bubble.classList.add('from-left');\n                    bubble.style.left = `-${size + 20}px`;\n                } else {\n                    bubble.classList.add('from-right');\n                    bubble.style.right = `-${size + 20}px`;\n                }\n                \n                particlesWrapper.appendChild(bubble);\n                setTimeout(() => bubble.remove(), (duration + 5) * 1000);\n            }, 300);\n        }\n\n        themeButtons.forEach(button => {\n            button.addEventListener('click', function(event) {\n                const selectedTheme = event.target.dataset.theme;\n                clearParticles();\n                themes.forEach(theme => container.classList.remove('theme-' + theme));\n                container.classList.add('theme-' + selectedTheme);\n                if (selectedTheme === 'snow') createSnowflakes();\n                else if (selectedTheme === 'bubbles') createBubbles();\n                themeButtons.forEach(btn => btn.classList.remove('active'));\n                event.target.classList.add('active');\n            });\n        });\n    </script>\n\n</body>\n</html>\n```",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 2,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "18e85ae2-e4d5-4e68-82a8-a73e4c119094",
+                "scriptName": "2Kemini通用去除多余内容",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/(<disclaimer>.*?</disclaimer>)|(<guifan>.*?</guifan>)|```start|<content>|</content>|```end|<done>|`<done>`|(<!--\\s*consider\\s*:\\s*(.*?)\\s*-->)|(.*?</think(ing)?>(\\n)?)|(<think(ing)?>[\\s\\S]*<\\/think(ing)?>(\\n)?)/gs",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": true,
+                "promptOnly": true
+            },
+            {
+                "id": "cc00f440-644d-4d46-bf0a-185eb6358709",
+                "scriptName": "3隐藏吐槽（关美化）",
+                "disabled": true,
+                "runOnEdit": true,
+                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "975fad18-340d-456b-ae93-0552a4650d6d",
+                "scriptName": "4省吐槽token",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/<tucao>[\\s\\S]*?<\\/tucao>/gsi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": 6,
+                "maxDepth": null,
+                "markdownOnly": true,
+                "promptOnly": true
+            },
+            {
+                "id": "7fbf6a31-419f-4243-a1ac-f3816b1d7b27",
+                "scriptName": "5摘要其一",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/<details>\\s*<summary>\\s*摘要\\s*<\\/summary>[\\s\\S]*?<\\/details>/gsi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 10,
+                "markdownOnly": false,
+                "promptOnly": true
+            },
+            {
+                "id": "4ab3d5fc-833e-45e0-a515-ae76b5674b02",
+                "scriptName": "6摘要其二",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/([\\s\\S]*?<details>\\s*<summary>\\s*摘要\\s*<\\/summary>|<\\/details>[\\s\\S]*?$)/gs",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": 11,
+                "maxDepth": null,
+                "markdownOnly": false,
+                "promptOnly": true
+            },
+            {
+                "id": "721479b3-c473-46c5-988e-89c38d787ebb",
+                "scriptName": "7【可选美化】吐槽-美化一丢丢",
+                "disabled": true,
+                "runOnEdit": true,
+                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                "replaceString": "<html><head><meta charset=\"UTF-8\"><title>吐槽卡片</title><style>body{background:#1e1e1e;color:#f0f0f0;font-family:\"Segoe UI\",Tahoma,Geneva,Verdana,sans-serif;line-height:1.5;}details{margin:12px 0;border-radius:10px;background:linear-gradient(145deg,#2c2c2c,#252525);padding:0;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.3);transition:all 0.3s ease;}summary{cursor:pointer;padding:10px 16px;display:block;font-weight:bold;color:#ffd966;user-select:none;position:relative;background:linear-gradient(to right,#3a3a3a,#2a2a2a);border-bottom:1px solid #444;}summary::after{content:\" ▼\";position:absolute;right:16px;transition:transform 0.3s ease;}details[open] summary::after{content:\" ▲\";}.tucao-content{max-height:0;overflow:hidden;background:linear-gradient(145deg,#3c3c3c,#2e2e2e);color:#e0e0e0;padding:0 16px;transition:max-height 0.4s ease,padding 0.4s ease;}details[open] .tucao-content{padding:10px 16px;max-height:1000px;}</style></head><body><details><summary>吐槽</summary><div class=\"tucao-content\">$1</div></details></body></html>\n",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "d06cfd66-03eb-4127-93d5-8e1ab0de3cf2",
+                "scriptName": "7【可选美化】想看吐槽-碎碎念性能版",
+                "disabled": true,
+                "runOnEdit": true,
+                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                "replaceString": "<span class=\"custom-aurora-card-comp\"> <html> <head> <meta charset=\"UTF-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /> <title>一体化极光卡片</title> <style> body { background-color: #010409; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; box-sizing: border-box; line-height: 1.2; } .aurora-card-wrapper { margin: -0.2rem 0; transform: translateY(0.1rem); width: 100%; display: flex; justify-content: center; align-items: center; } .aurora-card { width: 100px; max-width: 900px; max-height: 18px; border-radius: 50px; position: relative; transition: width 0.7s cubic-bezier(0.35, 1, 0.65, 1), max-height 0.7s cubic-bezier(0.35, 1, 0.65, 1), border-radius 0.7s cubic-bezier(0.35, 1, 0.65, 1), transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease, backdrop-filter 0.3s ease; display: block; overflow: hidden; isolation: isolate; } .aurora-card[open] { width: 100%; max-height: 600px; border-radius: 18px; background-color: rgba(13, 17, 23, 0.8); background-image: radial-gradient( circle at 50% 0%, hsla(270, 95%, 75%, 0.053), transparent 80% ); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); } .aurora-card::before { content: \"\"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1s ease-in-out; } .aurora-card[open]::before { background-image: radial-gradient( ellipse 50% 70% at 15% 20%, hsla(180, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 60% 80% at 80% 85%, hsla(320, 80%, 75%, 0.18), transparent 80% ), radial-gradient( ellipse 40% 60% at 50% 5%, hsla(270, 90%, 80%, 0.15), transparent 80% ); opacity: 1; } .aurora-card:hover { transform: translateY(-4px); } .aurora-card__summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; height: 18px; box-sizing: border-box; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 8px 8px; user-select: none; -webkit-user-select: none; } .aurora-card__summary::-webkit-details-marker { display: none; } .aurora-card__summary:focus-visible { outline: 2px solid hsl(190, 100%, 70%); outline-offset: 4px; } .aurora-card[open] > .aurora-card__summary { padding-top: 8px; padding-bottom: 8px; height: auto; background-color: transparent; } .aurora-card__summary::after { content: \"\"; position: absolute; bottom: 0; left: 50%; width: calc(100% - 48px); height: 1px; background: linear-gradient( to right, hsla(270, 95%, 75%, 0), hsla(270, 95%, 75%, 0.4), hsla(270, 95%, 75%, 0) ); opacity: 0; transform: translateX(-50%) scaleX(0); transform-origin: center; transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s; } .aurora-card[open] > .aurora-card__summary::after { opacity: 1; transform: translateX(-50%) scaleX(1); } .aurora-card__title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; background: linear-gradient( 90deg, hsl(190, 100%, 60%), hsl(270, 95%, 65%), hsl(320, 65%, 60%) ); background-clip: text; -webkit-background-clip: text; color: transparent; transition: font-size 0.4s ease; } .aurora-card[open] .aurora-card__title { font-size: 1rem; } .aurora-card__content { min-width: 0; position: relative; z-index: 1; background-color: transparent; transition: background-color 0.3s ease, padding 0.3s ease; padding: 0 12px; } .aurora-card[open] .aurora-card__content { padding: 0 12px 10px 12px; } .aurora-card__text { font-size: 0.9rem; font-weight: 400; text-align: left; white-space: pre-wrap; overflow-wrap: break-word; padding-right: 5px; max-height: 450px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.15) transparent; opacity: 0; transform: translateY(15px); transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s; will-change: opacity, transform; } .aurora-card[open] .aurora-card__text { opacity: 1; transform: translateY(0); } .aurora-card__text::-webkit-scrollbar { width: 8px; } .aurora-card__text::-webkit-scrollbar-track { background: transparent; } .aurora-card__text::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; transition: background-color 0.3s ease; } .aurora-card__text:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.35); } </style> </head> <body> <div class=\"aurora-card-wrapper\"> <details class=\"aurora-card\"> <summary class=\"aurora-card__summary\"> <span class=\"aurora-card__title\">💭碎碎念💭</span> </summary> <div class=\"aurora-card__content\"> <div class=\"aurora-card__text\">$1</div> </div> </details> </div> </body> </html> </span>",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 10,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "9ac689be-1760-48b3-8f46-1b0a0563161d",
+                "scriptName": "7【可选美化】小气泡",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/<tucao>([\\s\\S]*?)<\\/tucao>/g",
+                "replaceString": "<style>\n/* --- 容器和按钮样式 --- */\n.tucao-wrapper {\n    display: block; /* 【修改点1】改为块级元素，让它独占一行，展开时能撑开空间 */\n    margin: 10px 0; /* 上下留出间距 */\n}\n\n.tucao-details {\n    /* details标签默认就是块级，无需设置 */\n}\n\n.tucao-summary {\n    display: inline-flex; /* 让按钮内容居中 */\n    align-items: center;\n    justify-content: center;\n    list-style: none; /* 隐藏默认箭头 */\n    cursor: pointer;\n    width: 20px;\n    height: 20px;\n    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);\n    border-radius: 50%;\n    transition: all 0.3s ease;\n    border: 2px solid rgba(255, 255, 255, 0.3);\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);\n}\n.tucao-summary::-webkit-details-marker { display: none; }\n.tucao-summary:hover { transform: scale(1.1); }\n.tucao-summary-icon { font-size: 10px; opacity: 0.8; }\n.tucao-details[open] > .tucao-summary { background: linear-gradient(135deg, #4ecdc4, #44a08d); }\n\n/* --- 内容区域样式 (核心修改) --- */\n.tucao-content {\n    /* 【修改点2】移除所有 position: absolute 和相关的定位属性 */\n    margin-top: 10px; /* 内容和按钮之间的间距 */\n    background: linear-gradient(135deg, #1f1f34, #1b2845);\n    border: 1px solid #4a5568;\n    border-radius: 12px;\n    padding: 12px 16px;\n    box-shadow: 0 8px 16px rgba(0,0,0,0.3);\n    overflow: hidden; /* 保证动画效果 */\n}\n\n/* --- 动画 --- */\n/* 当details展开时，内容通过details原生的机制显示出来 */\n/* 我们可以加一个简单的淡入动画，但复杂的max-height动画在文档流中可能效果不佳 */\n.tucao-details[open] .tucao-content {\n    animation: fadeIn 0.5s ease;\n}\n\n@keyframes fadeIn {\n    from { opacity: 0; transform: translateY(-10px); }\n    to { opacity: 1; transform: translateY(0); }\n}\n\n\n/* --- 文本和滚动条样式 (不变) --- */\n.tucao-header { color: #ffd700; font-weight: bold; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #4a5568; padding-bottom: 6px; }\n.tucao-text { white-space: pre-wrap; word-wrap: break-word; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; font-size: 14px; color: #e2e8f0; line-height: 1.6; max-height: 400px; overflow-y: auto; padding-right: 5px; }\n.tucao-text::-webkit-scrollbar { width: 6px; }\n.tucao-text::-webkit-scrollbar-track { background: transparent; }\n.tucao-text::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 3px; }\n</style>\n\n<!-- HTML部分 (无JS) -->\n<div class=\"tucao-wrapper\">\n    <details class=\"tucao-details\">\n        <summary class=\"tucao-summary\">\n            <span class=\"tucao-summary-icon\">💭</span>\n        </summary>\n        <div class=\"tucao-content\">\n            <div class=\"tucao-header\">💡 创作思路</div>\n            <div class=\"tucao-text\">$1</div>\n        </div>\n    </details>\n</div>",
+                "trimStrings": [],
+                "placement": [
+                    1,
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 10,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "3c4dd38a-c649-4ee2-a877-93361e6bf8a6",
+                "scriptName": "8省选项token",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/<xx>[\\s\\S]*?<\\/xx>/gsi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    1,
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": false,
+                "promptOnly": true
+            },
+            {
+                "id": "57f4fbee-1008-4179-b165-384b7e8f5ed9",
+                "scriptName": "9美化选项栏Beta",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "<xx>\\s*?>选项一：\\s*([^>]+?)\\s*?>选项二：\\s*([^>]+?)\\s*?>选项三：\\s*([^>]+?)\\s*?>选项四：\\s*([^>]+?)\\s*<\\/xx>",
+                "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <style>\n      /* CSS样式 (无错误) */\n      .option-panel-container {\n        width: 100%;\n        max-width: 95%;\n        margin: 12px auto;\n        border-radius: 12px;\n        background: rgba(30, 30, 45, 0.85);\n        backdrop-filter: blur(10px);\n        -webkit-backdrop-filter: blur(10px);\n        border: 1px solid rgba(173, 216, 230, 0.2);\n        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);\n        font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        color: #e0e6f0;\n        overflow: hidden;\n      }\n      .option-panel-header {\n        padding: 12px 20px;\n        font-size: 1.1em;\n        font-weight: 600;\n        color: #98c379;\n        background: rgba(0, 0, 0, 0.2);\n        border-bottom: 1px solid rgba(173, 216, 230, 0.15);\n        text-align: center;\n        letter-spacing: 1px;\n      }\n      .option-list {\n        list-style: none;\n        padding: 15px 20px;\n        margin: 0;\n      }\n      .option-item {\n        background: rgba(255, 255, 255, 0.05);\n        border-radius: 8px;\n        margin-bottom: 10px;\n        transition: all 0.3s ease;\n        border-left: 4px solid transparent;\n      }\n      .option-item:last-child {\n        margin-bottom: 0;\n      }\n      .option-item:hover {\n        background: rgba(255, 255, 255, 0.1);\n        transform: translateX(5px);\n        border-left-color: #61afef;\n      }\n      .option-link {\n        display: block;\n        padding: 12px 15px;\n        text-decoration: none;\n        color: #dcdfe4;\n        font-size: 0.9em;\n        display: flex;\n        align-items: center;\n        cursor: pointer;\n      }\n      .option-icon {\n        margin-right: 12px;\n        font-size: 1.2em;\n        opacity: 0.8;\n        min-width: 20px;\n        text-align: center;\n      }\n      .option-item:nth-child(1) .option-icon {\n        color: #e5c07b;\n      }\n      .option-item:nth-child(2) .option-icon {\n        color: #e06c75;\n      }\n      .option-item:nth-child(3) .option-icon {\n        color: #56b6c2;\n      }\n      .option-item:nth-child(4) .option-icon {\n        color: #c678dd;\n      }\n    </style>\n  </head>\n  <body>\n    <!-- HTML结构 (保持不变) -->\n    <div class=\"option-panel-container\">\n      <div class=\"option-panel-header\">✨ Master, 请选择你的行动 ✨</div>\n      <ul class=\"option-list\" id=\"izumi-option-list\">\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$1\"\n          >\n            <span class=\"option-icon\">🧐</span>\n            <span>$1</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$2\"\n          >\n            <span class=\"option-icon\">🚀</span>\n            <span>$2</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$3\"\n          >\n            <span class=\"option-icon\">💬</span>\n            <span>$3</span>\n          </a>\n        </li>\n        <li class=\"option-item\">\n          <a\n            href=\"javascript:void(0);\"\n            class=\"option-link\"\n            data-option-text=\"$4\"\n          >\n            <span class=\"option-icon\">😈</span>\n            <span>$4</span>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <!-- JavaScript (仅修改一行) -->\n    <script>\n      /**\n       * 与SillyTavern环境通信，触发快速回复。\n       * @param {string} text - 要发送的文本。\n       */\n      const triggerQuickReply = (text) => {\n        // 检查文本是否有效，避免发送空内容\n        if (!text || text.trim() === \"\") {\n          console.warn(\"Attempted to send an empty message.\");\n          return;\n        }\n\n        // 检查SillyTavern环境并发送命令\n        if (typeof triggerSlash === \"function\") {\n          triggerSlash(`/send ${text}|/trigger`);\n        } else {\n          console.log(\"SillyTavern environment not detected. Mock send:\", text);\n        }\n      };\n\n      /**\n       * 处理选项列表的点击事件。\n       * @param {MouseEvent} event - 点击事件对象。\n       */\n      const handleOptionClick = (event) => {\n        // 使用 event.target.closest() 查找被点击的 .option-link 元素\n        const link = event.target.closest(\".option-link\");\n        if (!link) {\n          return; // 如果点击的不是 .option-link 或其子元素，则不执行任何操作\n        }\n\n        // 使用 .dataset 属性获取 data- 属性，这是更现代的写法\n        const fullText = link.dataset.optionText;\n\n        // 增加对 fullText 是否存在的检查，防止属性缺失导致错误\n        if (typeof fullText !== \"string\") {\n          console.error(\n            \"Clicked link is missing 'data-option-text' attribute.\",\n            link\n          );\n          return;\n        }\n\n        // 更稳健地移除首尾的方括号，仅当它们存在时才移除\n        const optionText =\n          fullText.startsWith(\"[\") && fullText.endsWith(\"]\")\n            ? fullText.slice(1, -1)\n            : fullText;\n\n        console.info(\"触发文本\", { fullText, optionText });\n\n        // 触发快速回复\n        triggerQuickReply(optionText);\n      };\n\n      /**\n       * 初始化事件监听器。\n       */\n      const initializeEventListeners = () => {\n        const optionList = document.getElementById(\"izumi-option-list\");\n\n        // 确认元素存在后再添加事件监听，避免页面上没有该元素时报错\n        if (optionList) {\n          optionList.addEventListener(\"click\", handleOptionClick);\n        } else {\n          console.warn(\n            \"Element with ID 'izumi-option-list' not found. No listener attached.\"\n          );\n        }\n      };\n\n      // 页面加载完成后执行初始化\n      document.addEventListener(\"DOMContentLoaded\", initializeEventListeners);\n    </script>\n  </body>\n</html>\n```",
+                "trimStrings": [],
+                "placement": [
+                    1,
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 2,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "2224f255-a7f7-4a5c-a3bf-b0367251b35a",
+                "scriptName": "10【Gal】1.5弹幕防截断美化（泉此方，只有5层）",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "/<!-- Technical.*?<danmu>([\\s\\S]*?)<\\/danmu>.*?-->/gsi",
+                "replaceString": "```\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>B站风格-幸运星随机背景+随机颜色弹幕</title>\n    <style>\n        body { margin: 0; padding: 20px; box-sizing: border-box; }\n\n        /* --- 动画定义 --- */\n        @keyframes danmaku-scroll {\n            from { transform: translateX(100vw); }\n            to { transform: translateX(-100%); }\n        }\n\n        /* --- 容器样式（背景将由JS随机设置） --- */\n        .danmaku-super-container-rgb {\n            height: 350px;\n            border-radius: 10px;\n            position: relative;\n            overflow: hidden;\n            border: 1px solid rgba(0, 0, 0, 0.2);\n            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n            background-size: cover;\n            background-position: center;\n            background-repeat: no-repeat;\n        }\n\n        .danmaku-track-rgb {\n            position: absolute;\n            width: max-content;\n            left: 0;\n            animation-name: danmaku-scroll;\n            animation-timing-function: linear;\n            animation-iteration-count: infinite;\n        }\n\n        /* --- 弹幕文字（改为随机颜色，支持阴影，类似B站默认风格） --- */\n        .danmaku-content-multicolor-rgb {\n            white-space: pre;\n            padding: 0 30px;\n            font-weight: bold;\n            font-size: 22px;\n            color: #ffffff; /* 默认纯白，将被JS覆盖 */\n            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);\n        }\n    </style>\n</head>\n<body>\n\n    <div class=\"danmaku-super-container-rgb\" id=\"danmaku-container-final\"></div>\n    <div id=\"danmaku-data-source\" style=\"display: none;\">$1</div>\n\n    <script>\n        (function() {\n            const dataSourceElem = document.getElementById('danmaku-data-source');\n            const targetContainer = document.getElementById('danmaku-container-final');\n\n            if (!dataSourceElem || !targetContainer) return;\n\n            /* --- 随机背景图列表（替换为幸运星相关图片） --- */\n            const bgImages = [                \"https://static.zerochan.net/Izumi.Konata.full.887888.jpg\",                               \"https://www.hiclipart.com/free-transparent-background-png-clipart-xdntq\"\n\n            ];\n            const randomImg = bgImages[Math.floor(Math.random() * bgImages.length)];\n            targetContainer.style.backgroundImage = `url(${randomImg})`;\n\n            // B站常见弹幕颜色（十六进制格式）\n            const biliColors = [\n                \"#FFFFFF\", // 白色\n                \"#FF6B6B\", // 红色\n                \"#FFA500\", // 橙色\n                \"#FFFF00\", // 黄色\n                \"#77DD77\", // 绿色\n                \"#779ECB\", // 蓝色\n                \"#9B59B6\", // 紫色\n                \"#FF69B4\", // 粉色\n                \"#00CED1\", // 青色\n                \"#FFD700\"  // 金色\n            ];\n\n            const rawDanmus = (dataSourceElem.textContent || dataSourceElem.innerText).trim();\n            const danmuLines = rawDanmus.split(/\\r?\\n/).filter(line => line.trim() !== '');\n\n            const trackStyles = [\n                { top: '2%', duration: '20s', delay: '-1s' },\n                { top: '15%', duration: '28s', delay: '-11s' },\n                { top: '28%', duration: '24s', delay: '-4s' },\n                { top: '42%', duration: '33s', delay: '-2s' },\n                { top: '56%', duration: '18s', delay: '-16s' },\n                { top: '70%', duration: '30s', delay: '-7s' },\n                { top: '85%', duration: '22s', delay: '-13s' }\n            ];\n\n            function escapeHtml(text) {\n                const div = document.createElement('div');\n                div.appendChild(document.createTextNode(text));\n                return div.innerHTML;\n            }\n\n            let allTracksHtml = '';\n            danmuLines.forEach((line, index) => {\n                const style = trackStyles[index % trackStyles.length];\n                // 随机选择B站颜色\n                const randomColor = biliColors[Math.floor(Math.random() * biliColors.length)];\n                const safeLine = escapeHtml(line.trim());\n                \n                allTracksHtml += `\n    <div class=\"danmaku-track-rgb\" style=\"top: ${style.top}; animation-duration: ${style.duration}; animation-delay: ${style.delay};\">\n        <div class=\"danmaku-content-multicolor-rgb\" style=\"color: ${randomColor};\">${safeLine}</div>\n    </div>`;\n            });\n            targetContainer.innerHTML += allTracksHtml;\n        })();\n    </script>\n\n</body>\n</html> \n```",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 5,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "9abfa579-a898-4d7a-ac8a-d427114d015e",
+                "scriptName": "11去除防空回",
+                "disabled": false,
+                "runOnEdit": true,
+                "findRegex": "<Q>([\\s\\S]*?)<\\/WF>",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": true,
+                "promptOnly": true
+            }
+        ]
+    }
 }
