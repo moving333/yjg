@@ -2,7 +2,7 @@
     "firstRun": false,
     "accountStorage": {
         "__migrated": "1",
-        "NavOpened": "true",
+        "NavOpened": "false",
         "LNavOpened": "true",
         "SelectedNavTab": "rm_button_characters",
         "AlertWI_归来的路明非.png": "true",
@@ -47,7 +47,7 @@
     },
     "currentVersion": "1.13.2",
     "username": "古月",
-    "active_character": "魔卡少女樱.png",
+    "active_character": "世界调制模式·重制版1.png",
     "active_group": null,
     "user_avatar": "user-default.png",
     "amount_gen": 350,
@@ -2672,7 +2672,7 @@
                     },
                     {
                         "identifier": "0fb9ef19-6676-4acb-a844-6c870a81a2df",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "9f6fb39c-5373-47a0-a3d9-dc6fcbbe83de",
@@ -2688,7 +2688,7 @@
                     },
                     {
                         "identifier": "80aa69d4-0bcf-4f95-a0be-60a50cfb5376",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "968c1caa-a85b-42c0-a81a-840c372d61a8",
