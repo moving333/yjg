@@ -844,7 +844,7 @@
                 "LAST_SEND_TOKENS": 17196,
                 "LAST_SEND_CHARS": 24556,
                 "orbV5_prismfox_pos": "{\"x\":334,\"y\":4,\"theme\":\"bg-glass\",\"model\":\"gemini\"}",
-                "orbV2_pos": "{\"x\":317,\"y\":57}"
+                "orbV2_pos": "{\"x\":304,\"y\":38}"
             }
         },
         "attachments": [],
@@ -3227,7 +3227,7 @@
                     },
                     {
                         "identifier": "2cba9894-62f1-409d-9ed4-f09ab417a963",
-                        "enabled": true
+                        "enabled": false
                     },
                     {
                         "identifier": "da84d55f-76a8-489f-859f-9935c6452b42",
@@ -3267,7 +3267,7 @@
                     },
                     {
                         "identifier": "59b5cacb-1407-49fa-869a-e55c0922c0f2",
-                        "enabled": false
+                        "enabled": true
                     },
                     {
                         "identifier": "265ae0c4-824a-4b46-b036-7165dcbfb1c2",
@@ -3466,7 +3466,7 @@
         "personality_format": "{{personality}}",
         "openai_model": "gpt-4-turbo",
         "claude_model": "claude-3-5-sonnet-20240620",
-        "google_model": "gemini-3-flash-preview",
+        "google_model": "gemini-2.5-pro",
         "vertexai_model": "gemini-2.0-flash-001",
         "ai21_model": "jamba-large",
         "mistralai_model": "mistral-large-latest",
