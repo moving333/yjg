@@ -1,4 +1,40 @@
 {
+    "chat_completion_source": "custom",
+    "openai_model": "gpt-4-turbo",
+    "claude_model": "claude-3-5-sonnet-20240620",
+    "openrouter_model": "OR_Website",
+    "openrouter_use_fallback": false,
+    "openrouter_group_models": false,
+    "openrouter_sort_models": "alphabetically",
+    "openrouter_providers": [],
+    "openrouter_allow_fallbacks": true,
+    "openrouter_middleout": "on",
+    "ai21_model": "jamba-large",
+    "mistralai_model": "mistral-large-latest",
+    "cohere_model": "command-r-plus",
+    "perplexity_model": "sonar-pro",
+    "groq_model": "llama-3.3-70b-versatile",
+    "xai_model": "grok-3-beta",
+    "pollinations_model": "openai",
+    "aimlapi_model": "gpt-4o-mini-2024-07-18",
+    "electronhub_model": "gpt-4o-mini",
+    "electronhub_sort_models": "alphabetically",
+    "electronhub_group_models": false,
+    "moonshot_model": "kimi-latest",
+    "fireworks_model": "accounts/fireworks/models/kimi-k2-instruct",
+    "cometapi_model": "gpt-4o",
+    "custom_model": "deepseek-flash",
+    "custom_url": "https://api.deepseek.com",
+    "custom_include_body": "",
+    "custom_exclude_body": "",
+    "custom_include_headers": "",
+    "custom_prompt_post_processing": "",
+    "google_model": "gemini-pro",
+    "vertexai_model": "gemini-2.0-flash-001",
+    "azure_base_url": "",
+    "azure_deployment_name": "",
+    "azure_api_version": "2024-02-15-preview",
+    "azure_openai_model": "",
     "temperature": 1.09,
     "frequency_penalty": 0,
     "presence_penalty": 0,
@@ -7,10 +43,9 @@
     "top_a": 0,
     "min_p": 0,
     "repetition_penalty": 1,
-    "max_context_unlocked": true,
-    "tool_reasoning_mode": "disabled",
     "openai_max_context": 2000000,
     "openai_max_tokens": 65535,
+    "wrap_in_quotes": false,
     "names_behavior": 0,
     "send_if_empty": "",
     "impersonation_prompt": "[Write your next reply from the point of view of {{user}}, using the chat history so far as a guideline for the writing style of {{user}}. Don't write as {{char}} or system. Don't describe actions of {{char}}.]",
@@ -19,11 +54,14 @@
     "new_example_chat_prompt": "",
     "continue_nudge_prompt": "",
     "bias_preset_selected": "Default (none)",
+    "reverse_proxy": "https://gcli.ggchan.dev/",
+    "proxy_password": "gg-gcli-RoQz0RfTQ8UopUWvd3eDjiXmh7vrRfvafx2BWlYkC_g",
+    "max_context_unlocked": true,
     "wi_format": "{0}",
     "scenario_format": "{{scenario}}",
     "personality_format": "{{personality}}",
     "group_nudge_prompt": "[Write the next reply only as {{char}}.]",
-    "stream_openai": true,
+    "stream_openai": false,
     "prompts": [
         {
             "identifier": "9c015364-9395-46a6-b6dc-fca5637e9f06",
@@ -1009,7 +1047,7 @@
                 },
                 {
                     "identifier": "0fb9ef19-6676-4acb-a844-6c870a81a2df",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "9f6fb39c-5373-47a0-a3d9-dc6fcbbe83de",
@@ -1045,7 +1083,7 @@
                 },
                 {
                     "identifier": "ee33ae12-feea-42fd-98fe-97c995903f11",
-                    "enabled": false
+                    "enabled": true
                 },
                 {
                     "identifier": "b9c29eab-3a14-4d7f-a8b0-fdd268c2d0ab",
@@ -1069,7 +1107,7 @@
                 },
                 {
                     "identifier": "5e89beb6-bcb8-4854-af27-49dcb2e6292a",
-                    "enabled": false
+                    "enabled": true
                 },
                 {
                     "identifier": "630b20d3-2d85-4b20-85ce-cc5e483e14b8",
@@ -1093,7 +1131,7 @@
                 },
                 {
                     "identifier": "eb65ec28-14a7-401c-887a-e6e22c3295c9",
-                    "enabled": false
+                    "enabled": true
                 },
                 {
                     "identifier": "42303fec-82ae-4ec4-96a8-4cd424d782e5",
@@ -1109,7 +1147,7 @@
                 },
                 {
                     "identifier": "046af93d-0c63-4561-b0b2-052cd265fecd",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "3867af9e-9bad-4fdf-9ef8-83ca07d8c68e",
@@ -1117,7 +1155,7 @@
                 },
                 {
                     "identifier": "48863da8-9556-4f14-b5bf-1816e4d4207b",
-                    "enabled": true
+                    "enabled": false
                 },
                 {
                     "identifier": "cb34b310-4802-4f79-8456-85e70aa55721",
@@ -1134,25 +1172,28 @@
             ]
         }
     ],
+    "show_external_models": false,
     "assistant_prefill": "",
     "assistant_impersonation": "",
-    "use_sysprompt": true,
+    "claude_use_sysprompt": false,
+    "use_makersuite_sysprompt": true,
+    "vertexai_auth_mode": "express",
+    "vertexai_region": "us-central1",
+    "vertexai_express_project_id": "",
     "squash_system_messages": false,
-    "media_inlining": true,
+    "image_inlining": false,
     "inline_image_quality": "auto",
+    "video_inlining": false,
+    "bypass_status_check": false,
     "continue_prefill": true,
     "continue_postfix": " ",
     "function_calling": true,
-    "tool_call_recurse_limit": 5,
     "show_thoughts": true,
     "reasoning_effort": "",
-    "verbosity": "auto",
     "enable_web_search": false,
+    "request_images": false,
     "seed": -1,
     "n": 1,
-    "request_images": false,
-    "request_image_aspect_ratio": "",
-    "request_image_resolution": "",
     "extensions": {
         "SPreset": {
             "ChatSquash": {
