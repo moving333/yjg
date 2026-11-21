@@ -391,6 +391,6 @@ gemini:
     # Leave empty to use the API-default value.
     personGeneration: 'allow_adult'
 # -- SERVER PLUGIN CONFIGURATION --
-enableServerPlugins: true
+enableServerPlugins: false
 # Attempt to automatically update server plugins on startup
-enableServerPluginsAutoUpdate: false
+enableServerPluginsAutoUpdate: true
